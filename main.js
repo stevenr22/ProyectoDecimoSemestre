@@ -16,3 +16,15 @@ showPasswordCheckbox.addEventListener('change', function () {
         passwordInput.type = 'password';
     }
 });
+
+//VALIDAR INPUTS
+function validarInput(input) {
+  // Elimina caracteres no permitidos del valor del input
+  input.value = input.value.replace(/[^A-Za-z ]/g, '');
+}
+
+//REDIGIR
+function redirigirPagina() {
+  // Puedes cambiar 'otra_pagina.html' por la URL de la página a la que deseas redirigir
+  window.location.href = '../módulos/menu.html';
+}
