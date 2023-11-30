@@ -34,34 +34,43 @@ $(document).ready(function(){
 	$('.btn-exit-system').on('click', function(e){
 		e.preventDefault();
 		Swal.fire({
-			title: 'Are you sure to close the session?',
-			text: "You are about to close the session and exit the system",
+			title: '¿Quierés cerrar la sesión?',
+			text: "Estás a punto de cerrar la sesión y salir del sistema.",
 			type: 'question',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, exit!',
-			cancelButtonText: 'No, cancel'
+			confirmButtonText: 'Si, salir!',
+			cancelButtonText: 'No, cancelar'
 		}).then((result) => {
 			if (result.value) {
-				window.location="index.html";
+				window.location="../módulos/login.html";
 			}
 		});
 	});
 });
+
+//MODIFICO EL SCROLL
 (function($){
     $(window).on("load",function(){
+        // Personalización para .nav-lateral-content
         $(".nav-lateral-content").mCustomScrollbar({
-        	theme:"light-thin",
-        	scrollbarPosition: "inside",
-        	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
+            theme: "my-custom-theme", // Cambia a un tema personalizado
+            scrollbarPosition: "outside", // Cambia la posición del pulgar del scroll
+            autoHideScrollbar: true,
+            scrollButtons: { enable: true },
+            scrollInertia: 300, // Ajusta la velocidad del scroll
+            // Puedes agregar más configuraciones según tus necesidades
         });
+
+        // Personalización para .page-content
         $(".page-content").mCustomScrollbar({
-        	theme:"dark-thin",
-        	scrollbarPosition: "inside",
-        	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
+            theme: "dark-thin",
+            scrollbarPosition: "inside",
+            autoHideScrollbar: true,
+            scrollButtons: { enable: true },
+            scrollInertia: 300,
+            // Puedes agregar más configuraciones según tus necesidades
         });
     });
 })(jQuery);

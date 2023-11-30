@@ -20,3 +20,17 @@ body {
     height: 80px; 
     border-radius: 50%;
 }
+
+
+  .form-group .row {
+    margin-bottom: 10px;
+  }
+    /* Ajusta el margen inferior del título */
+    .card-title {
+      margin-bottom: 20px;
+    }
+
+    /* Ajusta el margen entre los campos de entrada */
+    #formRegistro .input-field {
+      margin-bottom: 10px;
+    }
