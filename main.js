@@ -23,8 +23,10 @@ function validarInput(input) {
   input.value = input.value.replace(/[^A-Za-z ]/g, '');
 }
 
-//REDIGIR
+//REDIRIGIR
 function redirigirPagina() {
   // Puedes cambiar 'otra_pagina.html' por la URL de la página a la que deseas redirigir
-  window.location.href = '../módulos/menu.html';
+  window.location.href = '../módulos/dashboard.php';
 }
+
+
