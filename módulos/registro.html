@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Importar los estilos de Materialize -->
   <link rel="stylesheet" href="../recursos/Fmaterialize/css/materialize.min.css">
   <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,13 +21,11 @@
             <div class="avatar-container">
               <img src="../recursos/img/user.png" class="avatar" alt="Avatar Image">
             </div>
-            <!-- Título "Registre sus datos" centrado y en negrita -->
             <span class="card-title center-align" style="font-weight: bold;">Registre sus datos</span>
 
             <div class="row">
               <form class="col s12" id="formRegistro">
 
-                <!-- Primer columna de campos -->
                 <div class="row">
                   <div class="input-field col s12 m6">
                     <input id="username" type="text" class="validate">
@@ -40,7 +37,6 @@
                   </div>
                 </div>
 
-                <!-- Segunda columna de campos -->
                 <div class="row">
                   <div class="input-field col s12 m6">
                     <input id="nombres" type="text" class="validate" pattern="[A-Za-z]+" oninput="validarInput(this)">
@@ -76,7 +72,6 @@
     </div>
   </div>
 
-  <!-- Importar los scripts de Materialize y jQuery (necesario para Materialize) -->
   <script src="../recursos/jquery/jquery3.7.1.min.js"></script>
   <script src="../recursos/Fmaterialize/js/materialize.min.js"></script>
   <script src="../main.js"></script>
