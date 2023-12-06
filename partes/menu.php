@@ -1,0 +1,158 @@
+<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+    <ul id="sidebarnav">
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Inicio</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../módulos/dashboard.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+            </a>
+        </li>
+
+
+
+            
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Insumos</span>
+        </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-bug"></i>
+            </span>
+            <span class="hide-menu">Insecticidas</span>
+            </a>
+        </li>
+            
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-brand-tinder"></i>
+            </span>
+            <span class="hide-menu">Mangos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-wall"></i>
+            </span>
+            <span class="hide-menu">Parcelas</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-tool"></i>
+            </span>
+            <span class="hide-menu">Herramientas</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-tractor"></i>
+            </span>
+            <span class="hide-menu">Maquinaria</span>
+            </a>
+        </li>
+
+
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Gestión insumos</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-stack"></i>
+            </span>
+            <span class="hide-menu">Stock disponible</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+                <i class="ti ti-stack-push"></i>
+            </span>
+            <span class="hide-menu">Insumos operando</span>
+            </a>
+        </li>
+
+
+        <li class="nav-small-cap">
+          <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+          <span class="hide-menu">Estadísticas</span>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-chart-bar"></i>
+            </span>
+            <span class="hide-menu">Insumos operando</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-chart-arrows-vertical"></i>
+            </span>
+            <span class="hide-menu">Tendencia de producción</span>
+          </a>
+        </li>
+
+
+           
+
+
+        <li class="nav-small-cap">
+          <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+          <span class="hide-menu">Proveedores</span>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-user-plus"></i>
+            </span>
+            <span class="hide-menu">Registro proveedor</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-notification"></i>
+            </span>
+            <span class="hide-menu">Solicitud de insumos</span>
+          </a>
+        </li>
+
+
+
+        <li class="nav-small-cap">
+          <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+          <span class="hide-menu">Control de usuarios</span>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-edit"></i>
+            </span>
+            <span class="hide-menu">Asignar rol</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" aria-expanded="false">
+            <span>
+              <i class="ti ti-pencil-plus"></i>
+            </span>
+            <span class="hide-menu">Crear rol</span>
+          </a>
+        </li>
+      </ul>
+    </nav>

@@ -1,0 +1,12 @@
+#linkNombre a {
+    cursor: pointer;
+    text-decoration: none; /* Esto elimina el subrayado predeterminado del enlace */
+    color: #000; /* Cambia el color del texto del enlace */
+    transition: color 0.3s ease; /* Agrega una transición suave al cambio de color */
+  font-weight: bold;
+}
+
+#linkNombre a:hover {
+    color: #49BEFF; /* Cambia el color del texto del enlace al pasar el mouse sobre él */
+}
+
