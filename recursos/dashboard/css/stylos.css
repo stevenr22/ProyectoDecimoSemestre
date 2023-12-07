@@ -10,3 +10,40 @@
     color: #49BEFF; /* Cambia el color del texto del enlace al pasar el mouse sobre él */
 }
 
+body .page-wrapper .card {
+  border: 2px solid rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+  border-radius: 5px;
+}
+
+body .page-wrapper .card .card-header {
+  background-color: rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+}
+
+
+body .page-wrapper .card .card-body {
+  border-radius: 5px;
+}
+body .page-wrapper .card .card-footer {
+  background-color: white;
+}
+body .page-wrapper .card .card-header .card-title {
+  color: black;
+  font-weight: bold;
+  font-size: 22px;
+}
+label{
+  font-weight: bold;
+}
+
+body .page-wrapper .card .modal .modal-dialog .modal-content{
+  border: 2px solid rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+  border-radius: 5px;
+}
+body .page-wrapper .card .modal .modal-dialog .modal-content .modal-header {
+  background-color: rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+}
+body .page-wrapper .card .modal .modal-dialog .modal-content .modal-header .modal-title {
+  color: black;
+  font-weight: bold;
+  font-size: 22px;
+}
