@@ -374,8 +374,7 @@
                     }
                 } else {
                     // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...", " ", {
-                        closeButton: true,
+                    toastr.info("Continuando...", "", {
                         progressBar: true,
                         positionClass: "toast-top-right",
                         timeOut: 3000,
@@ -386,8 +385,11 @@
                         hideEasing: "linear",
                         showMethod: "fadeIn",
                         hideMethod: "fadeOut",
-                        // Agrega estilos adicionales según sea necesario
+                        backgroundColor: "#e74c3c",  // Corregido de "background-color" a "backgroundColor"
+                        border: "1px solid #c0392b",
+                        color: "#ffffff"
                     });
+
                     
                 }
             });
