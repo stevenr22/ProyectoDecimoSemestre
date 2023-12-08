@@ -77,20 +77,19 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" onclick="abrirModal()">
+                        <button class="btn btn-primary" id="openModalBtn">
                             <i class="ti ti-pencil"></i> Editar
                         </button>
                     </div>
                     <!--MODAL-->
-                    <div class="modal fade" tabindex="-1" id="miModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Editar perfil</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="" class="form-group">
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Modal Encabezado</h2>
+                                <button class="close" id="closeModalBtn">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" class="form-group">
                                         <div class="row">
                                             <div class="col">
                                                 <label for="Nombres">Nombres: </label>
@@ -125,17 +124,14 @@
                                             </div>
                                         
                                         </div>
-                                    </form>
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Guardar cambios</button>
-                                    <button type="button" class="btn btn-danger me-auto" data-bs-dismiss="modal">Cerrar</button>
-                                </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Aceptar</button>
+                                <button type="button" class="btn btn-danger me-auto">Cerrar</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 
                 <div class="card-footer">
@@ -145,10 +141,33 @@
         </div>
     </div>
   <script>
-     function abrirModal() {
-        // Abre el modal utilizando jQuery
-        $('#miModal').modal('show');
-    }
+     //ABRIR MODAL
+         
+        var modal = document.getElementById('myModal');
+        var openModalBtn = document.getElementById('openModalBtn');
+        var closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Evento para abrir el modal
+        openModalBtn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        // Evento para cerrar el modal
+        closeModalBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Cierra el modal si se hace clic fuera de él
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+
+
+
+
     
   </script>
     

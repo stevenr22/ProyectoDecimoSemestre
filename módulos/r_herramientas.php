@@ -35,34 +35,7 @@
                     </div>
                     <div class="card-body">
                    
-                        <form action="" class="form-group" id="formHerrami">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="Nombre">Nombre: </label>
-                                    <input type="text" class="form-control" id="nom_herra">
-                                </div>
-                                <div class="col">
-                                    <label for="Tipo">Tipo: </label>
-                                    <input type="text" name="t_herra" id="t_herra" class="form-control"><br>
-                                    
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                   
-                                    <select name="t_parcela" id="t_parcela" class="form-select">
-                                        <option value="" selected disabled></option>
 
-                                        <option value="Parcela A">Parcela A</option>
-                                        <option value="Parcela B">Parcela B</option>
-                                        <option value="Parcela C">Parcela C</option>
-                                        <option value="Parcela D">Parcela D</option>
-                                    </select>
-
-                                </div>
-                            </div>
-                            
-                        </form>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary" onclick="info();">Registrar</button>

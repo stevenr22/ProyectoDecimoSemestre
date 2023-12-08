@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Modal Ejemplo</title>
+</head>
+<body>
+
+<!-- Botón para abrir el modal -->
+<button id="openModalBtn">Abrir Modal</button>
+
+<!-- El modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Modal Encabezado</h2>
+
+            <button class="close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>¡Este es el cuerpo del modal!</p>
+        </div>
+        <div class="modal-footer">
+            <button></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Obtener elementos del DOM
+    var modal = document.getElementById('myModal');
+    var openModalBtn = document.getElementById('openModalBtn');
+    var closeModalBtn = document.getElementById('closeModalBtn');
+
+    // Evento para abrir el modal
+    openModalBtn.onclick = function() {
+        modal.style.display = 'block';
+    }
+
+    // Evento para cerrar el modal
+    closeModalBtn.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    // Cierra el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/noti/toasty.css">
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -34,15 +35,20 @@
                         <div class="card-title">Insumos disponibles</div>
                     </div>  
                 </div>
+                <div class="col-md-4">
+                    <button type="button" id="openModalBtn" class="btn btn-info" > + Registrar nuevo insumo</button>
+
+                </div><br>
+               
                 <div class="card-body table-responsive">
-                    <table id="mitabla" class="table table-striped table-bordered" style="width:100%">
+                    <table id="mitabla" class="table table-bordered" style="width:100%">
                         <thead>
                             <th>CÓDIGO</th>
                             <th>TIPO</th>
                             <th>NOMBRE</th>
                             <th>PROVEEDOR</th>
                             <th>USO</th>
-                            <th>ACCIONES</th>
+                            <th>ESTADO</th>
 
 
                         </thead>
@@ -54,24 +60,412 @@
                                 <td>Ecua S.A.</td>
                                 <td>Aplicación en parcela A</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-info"  data-bs-toggle="tooltip"  data-bs-title="Sincronizar producto"><i class="ti ti-pencil" ></i></button>
-
-                                    <button class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                                    Operando
                                 </td>
                             </tr>
                         </tbody>
 
                     </table>
                 </div>
+
+           
+          
+             
+
+                <!-- MODAL OPCION -->
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Modal Encabezado</h2>
+                            <button class="close" onclick="cerrarModal();">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="formCate">
+                                <label for="selectCate">Seleccione la categoría del insumo: </label>
+                                <div id="mensajeError" class="error-message"></div><br>
+
+                              
+                                <select name="cate" id="cate" class="form-select">
+                                    <option value="" selected disabled></option>
+                                    <option value="Insecticidas">Insecticidas</option>
+                                    <option value="Mangos">Mangos</option>
+                                    <option value="Parcelas">Parcelas</option>
+                                    <option value="Herramientas">Herramientas</option>
+                                    <option value="Maquinarias">Maquinarias</option>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="validarYCerrarModal();">Aceptar</button>
+                            <button type="button" class="btn btn-danger me-auto" onclick="cerrarModal();">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
+
+                <!-- SEGUNDO MODAL INSECTICIDA -->
+                <div id="segundoModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Insecticida</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formInsec">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombrei">Nombre insecticida: </label>
+                                        <input type="text" class="form-control" id="nom_insec">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Gramo">Gramo: </label>
+                                        <input type="number" name="number_insec" id="num_insec" class="form-control">
+                                        
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto"onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
+                <!-- TERCER MODAL MANGOS -->
+                <div id="tercerModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Mangos</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formMango">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombre">Nombre: </label>
+                                        <input type="text" class="form-control" id="nom_mango">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Tipo">Tipo: </label>
+                                        <input type="text" name="t_mango" id="t_mango" class="form-control">
+                                        
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
+                <!-- CUARTO MODAL PARCELAS -->
+                <div id="cuartoModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Parcelas</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formParce">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombre">Nombre: </label>
+                                        <input type="text" class="form-control" id="nom_parce">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Ancho">Ancho: </label>
+                                        <input type="number" name="ancho_parce" id="ancho_parce" class="form-control">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Alto">Alto: </label>
+                                        <input type="number" name="ancho_parce" id="ancho_parce" class="form-control">
+
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
+                <!-- QUINTO MODAL HERRAMIENTAS -->
+                <div id="quintoModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Herramientas</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formMango">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombre">Nombre: </label>
+                                        <input type="text" class="form-control" id="nom_mango">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Tipo">Tipo: </label>
+                                        <input type="text" name="t_mango" id="t_mango" class="form-control">
+                                        
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
+                <!-- SEXTO MODAL MAQUINARIA -->
+                <div id="sextoModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Maquinarias</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formMaqui">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombre">Nombre: </label>
+                                        <input type="text" class="form-control" id="nom_maqui">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Tipo">Tipo: </label>
+                                        <input type="text" name="t_maqui" id="t_maqui" class="form-control"><br>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                    
+                                        <select name="t_parcela" id="t_parcela" class="form-select">
+                                            <option value="" selected disabled></option>
+
+                                            <option value="Parcela A">Parcela A</option>
+                                            <option value="Parcela B">Parcela B</option>
+                                            <option value="Parcela C">Parcela C</option>
+                                            <option value="Parcela D">Parcela D</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--FIN MODAL-->
                 
 
-                <div class="card-footer">
-                    <?php include("../partes/footer.php");?>
-                </div>
+               
+
+
+
             </div>
 
         </div>
 
     </div>
+    <script>
+        // Obtener elementos del DOM
+        var modal = document.getElementById('myModal');
+        var openModalBtn = document.getElementById('openModalBtn');
+
+        // Evento para abrir el modal
+        openModalBtn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+       
+
+        function validarYCerrarModal() {
+            var selectedValue = document.getElementById('cate').value;
+            if (selectedValue === "") {
+                // Si no se ha seleccionado ninguna opción, mostrar una notificación
+                mostrarError("Por favor, selecciona una categoría antes de continuar.");
+            } 
+           
+            else {
+                // Si se ha seleccionado una opción, realizar la limpieza y cerrar el modal
+              
+               
+                cerrarModal();
+                if(selectedValue =="Insecticidas"){
+                    mostrarSegundoModal();
+                }else if(selectedValue=="Mangos"){
+                    mostrartercerModal();
+                }else if(selectedValue =="Parcelas"){
+                    mostrarcuartoModal();
+                }else if(selectedValue =="Herramientas"){
+                    mostrarquintooModal();
+                }else if(selectedValue =="Maquinarias"){
+                    mostrarsextoModal();
+                }
+            }
+        }
+
+        function cerrarModal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+            limpiarSeleccion();
+            ocultarError();
+            
+        }
+
+//----------------------------------------------------------------
+        function cerrarGeneral() {
+            var modal_insec = document.getElementById("segundoModal");
+            var modal_mango = document.getElementById("tercerModal");
+            var modal_parcela = document.getElementById("cuartoModal");
+            var modal_maqui = document.getElementById("quintoModal");
+            var modal_herra = document.getElementById("sextoModal");
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Quieres cerrar este modal?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, estoy seguro',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Usuario hizo clic en "Sí, estoy seguro"
+                    if (modal_insec) {
+                        modal_insec.style.display = 'none';
+                    }
+                    if (modal_mango) {
+                        modal_mango.style.display = 'none';
+                    }
+                    if (modal_parcela) {
+                        modal_parcela.style.display = 'none';
+                    }
+                    if (modal_maqui) {
+                        modal_maqui.style.display = 'none';
+                    }
+                    if (modal_herra) {
+                        modal_herra.style.display = 'none';
+                    }
+                } else {
+                    // Usuario hizo clic en "Cancelar"
+                    toastr.info("Continuando...");
+                }
+            });
+        }
+
+
+       
+
+      
+
+        
+
+//----------------------------------------------------------------
+
+
+
+        function mensaje(){
+            Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: '¿Quieres finalizar el proceso?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, estoy seguro',
+                    cancelButtonText: 'Cancelar'
+            });
+        }
+
+        
+      
+
+        function limpiarSeleccion() {
+            // Limpiar o restablecer los valores de los elementos seleccionados
+            document.getElementById('cate').value = "";
+        }
+        
+        function mostrarError(mensaje) {
+            var mensajeError = document.getElementById('mensajeError');
+            mensajeError.textContent = mensaje;
+            mensajeError.style.display = 'block';
+        }
+        function ocultarError() {
+            var mensajeError = document.getElementById('mensajeError');
+            mensajeError.textContent = "";
+            mensajeError.style.display = 'none';
+        }
+
+
+ //MODALES---------------------------------------------------------------------------------------------
+        function mostrarSegundoModal() {
+            var segundoModal = document.getElementById('segundoModal');
+            segundoModal.style.display = 'block';
+        }
+        function mostrartercerModal() {
+            var segundoModal = document.getElementById('tercerModal');
+            segundoModal.style.display = 'block';
+        }
+        function mostrarcuartoModal() {
+            var segundoModal = document.getElementById('cuartoModal');
+            segundoModal.style.display = 'block';
+        }
+        function mostrarquintooModal() {
+            var segundoModal = document.getElementById('quintoModal');
+            segundoModal.style.display = 'block';
+        }
+        function mostrarsextoModal() {
+            var segundoModal = document.getElementById('sextoModal');
+            segundoModal.style.display = 'block';
+        }
+
+       
+
+       
+
+      
+        
+
+        // Evento para cerrar el modal cuando se hace clic fuera de él
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+
+
+
+
+
+        
+    </script>
+    <script src="../recursos/noti/toasty.js"></script>
 </body>
 </html>

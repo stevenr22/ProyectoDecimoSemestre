@@ -47,3 +47,15 @@ body .page-wrapper .card .modal .modal-dialog .modal-content .modal-header .moda
   font-weight: bold;
   font-size: 22px;
 }
+
+
+.error-message {
+  color: rgba(236, 57, 57, 0.616);
+  background-color: #FEE7E1;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none;
+  border: 1px solid rgba(242, 75, 75, 0.728); /* Añadir borde rojo */
+  border-radius: 10px;
+  padding: 5px; /* Añadir relleno para mejorar el aspecto visual */
+}
