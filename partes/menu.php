@@ -22,7 +22,7 @@
         </li>
 
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/r_insecticidas.php" aria-expanded="false">
             <span>
                 <i class="ti ti-bug"></i>
             </span>
@@ -31,7 +31,7 @@
         </li>
             
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
             <span>
                 <i class="ti ti-brand-tinder"></i>
             </span>
@@ -39,7 +39,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/r_parcelas.php" aria-expanded="false">
             <span>
                 <i class="ti ti-wall"></i>
             </span>
@@ -47,7 +47,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/r_herramientas.php" aria-expanded="false">
             <span>
                 <i class="ti ti-tool"></i>
             </span>
@@ -55,7 +55,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/r_maquinaria.php" aria-expanded="false">
             <span>
                 <i class="ti ti-tractor"></i>
             </span>
@@ -69,7 +69,7 @@
             <span class="hide-menu">Gestión insumos</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/stock.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack"></i>
             </span>
@@ -77,7 +77,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="#" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/insumos_operando.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack-push"></i>
             </span>
@@ -91,15 +91,15 @@
           <span class="hide-menu">Estadísticas</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/tendencia_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-chart-bar"></i>
             </span>
-            <span class="hide-menu">Insumos operando</span>
+            <span class="hide-menu">Tendencia de insumos</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/tendencia_produccion.php" aria-expanded="false">
             <span>
               <i class="ti ti-chart-arrows-vertical"></i>
             </span>
@@ -116,7 +116,7 @@
           <span class="hide-menu">Proveedores</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/r_proveedor.php" aria-expanded="false">
             <span>
               <i class="ti ti-user-plus"></i>
             </span>
@@ -124,7 +124,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/soli_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-notification"></i>
             </span>
@@ -139,7 +139,7 @@
           <span class="hide-menu">Control de usuarios</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/asignar_rol.php" aria-expanded="false">
             <span>
               <i class="ti ti-edit"></i>
             </span>
@@ -147,7 +147,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="#" aria-expanded="false">
+          <a class="sidebar-link" href="../módulos/crear_rol.php" aria-expanded="false">
             <span>
               <i class="ti ti-pencil-plus"></i>
             </span>

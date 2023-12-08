@@ -1,7 +1,4 @@
-
-
-  
-  //Ejecutando funciones
+//Ejecutando funciones
 document.getElementById("btn__iniciar-sesion").addEventListener("click", iniciarSesion);
 document.getElementById("btn__registrarse").addEventListener("click", register);
 window.addEventListener("resize", anchoPage);
@@ -102,6 +99,10 @@ function togglePasswordVisibility() {
 function validarSoloLetrasYPacios(input) {
     input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
 }
+
+
+
+
 
 
 
