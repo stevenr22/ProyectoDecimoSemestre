@@ -73,17 +73,18 @@
             <span>
                 <i class="ti ti-stack"></i>
             </span>
-            <span class="hide-menu">Stock disponible</span>
+            <span class="hide-menu">Stock operando</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/insumos_operando.php" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/stock.php" aria-expanded="false">
             <span>
-                <i class="ti ti-stack-push"></i>
+                <i class="ti ti-stack"></i>
             </span>
-            <span class="hide-menu">Insumos operando</span>
+            <span class="hide-menu">Control de inventario</span>
             </a>
         </li>
+        
 
 
         <li class="nav-small-cap">
@@ -113,7 +114,7 @@
 
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-          <span class="hide-menu">Proveedores</span>
+          <span class="hide-menu">Gestión de Proveedores</span>
         </li>
         <li class="sidebar-item">
           <a class="sidebar-link" href="../módulos/r_proveedor.php" aria-expanded="false">
@@ -131,6 +132,14 @@
             <span class="hide-menu">Solicitud de insumos</span>
           </a>
         </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../módulos/soli_insumos.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-notification"></i>
+            </span>
+            <span class="hide-menu">Historial de solicitudes</span>
+          </a>
+        </li>
 
 
 
@@ -143,7 +152,7 @@
             <span>
               <i class="ti ti-edit"></i>
             </span>
-            <span class="hide-menu">Asignar rol</span>
+            <span class="hide-menu">Autenticación y autorización</span>
           </a>
         </li>
         <li class="sidebar-item">
@@ -151,7 +160,7 @@
             <span>
               <i class="ti ti-pencil-plus"></i>
             </span>
-            <span class="hide-menu">Crear rol</span>
+            <span class="hide-menu">Registrar usuarios</span>
           </a>
         </li>
       </ul>

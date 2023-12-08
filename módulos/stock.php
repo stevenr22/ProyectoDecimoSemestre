@@ -347,7 +347,7 @@
 
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: '¿Quieres cerrar este modal?',
+                text: '¿Quieres finalizar el proceso de registro?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -405,19 +405,6 @@
 //----------------------------------------------------------------
 
 
-
-        function mensaje(){
-            Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: '¿Quieres finalizar el proceso?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, estoy seguro',
-                    cancelButtonText: 'Cancelar'
-            });
-        }
 
         
       
