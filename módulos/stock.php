@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
-    <link rel="stylesheet" href="../recursos/noti/toasty.css">
+    <link rel="stylesheet" href="../recursos/noti/toastr.css">
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -374,7 +374,21 @@
                     }
                 } else {
                     // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...");
+                    toastr.info("Continuando...", " ", {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 3000,
+                        extendedTimeOut: 1000,
+                        showDuration: 300,
+                        hideDuration: 1000,
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        // Agrega estilos adicionales según sea necesario
+                    });
+                    
                 }
             });
         }
@@ -466,6 +480,6 @@
 
         
     </script>
-    <script src="../recursos/noti/toasty.js"></script>
+    <script src="../recursos/noti/toastr.min.js"></script>
 </body>
 </html>
