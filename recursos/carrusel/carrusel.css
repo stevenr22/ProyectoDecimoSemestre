@@ -1,0 +1,17 @@
+.slider-for img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+  }
+
+ 
+
+
+  .slider-nav img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
