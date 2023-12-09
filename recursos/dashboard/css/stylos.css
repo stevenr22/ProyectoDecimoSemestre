@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+body{
+  background-color: #F4F6F9;
+}
+
 #linkNombre a:hover {
     color: #49BEFF; /* Cambia el color del texto del enlace al pasar el mouse sobre él */
 }
