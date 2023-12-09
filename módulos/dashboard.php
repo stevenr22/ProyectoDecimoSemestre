@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel de control .:|:. Mango</title>
   <?php include("../partes/enlaces.php");?>
+  <link rel="stylesheet" href="../recursos/carrusel/carrusel.css">
 
 </head>
 
@@ -38,28 +39,71 @@
       <div class="container-fluid">
         <!--  Row 1 -->
         <div class="row">
-          <div class="col-lg-12 d-flex align-items-strech">
+
+          <div class="col-lg-6 d-flex align-items-strech">
             <div class="card w-100">
-              <div class="card-body">
+              <div class="card-body" id="naranja">
                 <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                  
+                  <div class="iz">
+                    <h3>3</h3>
+              
+                    <h4>Usuarios Registrados</h4>
+
+                  </div>
                  
+                  <div class="icon">
+                    <i class="ti ti-user-plus"></i>
+                  </div>
+                    
+                    
+                  
                 </div>
-         
+          
+              </div>
+            </div>
+          </div>
+        
+
+
+        
+          <div class="col-lg-6 d-flex align-items-strech">
+            <div class="card w-100" >
+              <div class="card-body" id="verde" >
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9" >
+                  <div class="iz">
+                    <h3 style="color: white;">3</h3>
+              
+                    <h4 style="color: white;">Visitas</h4>
+
+                  </div>
+                 
+                  <div class="icon">
+                    <i class="ti ti-chart-donut"></i>
+                  </div>
+                    
+                    
+                  
+                </div>
+          
               </div>
             </div>
           </div>
         </div>
 
-
+        <!--CARRUSEL-->
         <div class="row">
           <div class="col-lg-12 d-flex align-items-strech">
             <div class="card w-100">
-              <div class="card-body">
-                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+              <div class="card-body bg-danger">
+                <div class="card-title"><h2><b>CARRUSEL DE IMAGENES</b></h2></div>
+                
+
+               
+                  
                   
                  
                 </div>
+               
          
               </div>
             </div>
@@ -67,24 +111,7 @@
         </div>
 
 
-        <div class="row">
-          <div class="col-lg-12 d-flex align-items-strech">
-            <div class="card w-100">
-              <div class="card-body">
-                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                  
-                 
-                </div>
-         
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="py-6 px-6 text-center">
-          <?php include("../partes/footer.php");?>
-        </div>
+        
       </div>
     </div>
   </div>

@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Insumos disponibles</div>
+                        <div class="card-title">Historial de nuevos Insumos</div>
                     </div>  
                 </div>
                 <div class="col-md-4">
@@ -44,11 +44,11 @@
                     <table id="mitabla" class="table table-bordered" style="width:100%">
                         <thead>
                             <th>CÓDIGO</th>
-                            <th>TIPO</th>
+                            <th>CATEGORÍA</th>
                             <th>NOMBRE</th>
                             <th>PROVEEDOR</th>
-                            <th>USO</th>
-                            <th>ESTADO</th>
+                            <th>Fecha de registro</th>
+                            <th>ACCIONES</th>
 
 
                         </thead>
@@ -58,9 +58,9 @@
                                 <td>Insecticida</td>
                                 <td>Sulfato de amonio</td>
                                 <td>Ecua S.A.</td>
-                                <td>Aplicación en parcela A</td>
+                                <th>12-02-2023</th>
                                 <td>
-                                    Operando
+                                    <button class="btn btn-danger"><i class="ti ti-file-description"></i></button>
                                 </td>
                             </tr>
                         </tbody>

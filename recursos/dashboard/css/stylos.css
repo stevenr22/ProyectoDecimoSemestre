@@ -11,7 +11,7 @@
 }
 
 body .page-wrapper .card {
-  border: 2px solid rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+  
   border-radius: 5px;
 }
 
@@ -58,4 +58,36 @@ body .page-wrapper .card .modal .modal-dialog .modal-content .modal-header .moda
   border: 1px solid rgba(242, 75, 75, 0.728); /* Añadir borde rojo */
   border-radius: 10px;
   padding: 5px; /* Añadir relleno para mejorar el aspecto visual */
+}
+
+
+
+body .container-fluid #naranja{
+  background-color: #FFC107;
+
+
+}
+body .container-fluid .card-body .iz h3{
+  font-weight: bold;
+  font-size: 40px;
+
+ 
+}
+
+body .container-fluid .card-body .icon {
+  font-size: 50px;
+  transition: font-size 0.1s ease; /* Transición para el cambio de tamaño con duración de 0.3 segundos y función de temporización ease */
+}
+
+body .container-fluid .card-body .icon:hover {
+  font-size: 55px; /* Tamaño aumentado al pasar el cursor */
+}
+
+body .container-fluid #verde{
+  background-color: #28A745;
+
+}
+body .container-fluid .card-body .iz{
+  font-weight: bold;
+  font-size: 40px;
 }

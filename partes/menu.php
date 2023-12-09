@@ -18,17 +18,33 @@
             
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-            <span class="hide-menu">Insumos</span>
+            <span class="hide-menu">Uso de insumos</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-corner-down-left-double"></i>
+            </span>
+            <span class="hide-menu">Registrar uso de insumos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-corner-down-left-double"></i>
+            </span>
+            <span class="hide-menu">Seguimiento de insumos<br>por parcela</span>
+            </a>
         </li>
 
-        <li class="sidebar-item">
+        <!--li class="sidebar-item">
             <a class="sidebar-link" href="../módulos/r_insecticidas.php" aria-expanded="false">
             <span>
                 <i class="ti ti-bug"></i>
             </span>
             <span class="hide-menu">Insecticidas</span>
             </a>
-        </li>
+        </!li>
             
         <li class="sidebar-item">
             <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
@@ -54,14 +70,14 @@
             <span class="hide-menu">Herramientas</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        <li-- class="sidebar-item">
             <a class="sidebar-link" href="../módulos/r_maquinaria.php" aria-expanded="false">
             <span>
                 <i class="ti ti-tractor"></i>
             </span>
             <span class="hide-menu">Maquinaria</span>
             </a>
-        </li>
+        </li-->
 
 
         <li class="nav-small-cap">
@@ -73,11 +89,20 @@
             <span>
                 <i class="ti ti-stack"></i>
             </span>
-            <span class="hide-menu">Stock operando</span>
+            <span class="hide-menu">Recepción de insumos</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/stock.php" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos/stock_disponible.php" aria-expanded="false">
+            <span>
+                <i class="ti ti-stack"></i>
+            </span>
+            <span class="hide-menu">Stock disponible</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../módulos/control_stock.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack"></i>
             </span>
@@ -135,7 +160,7 @@
         <li class="sidebar-item">
           <a class="sidebar-link" href="../módulos/soli_insumos.php" aria-expanded="false">
             <span>
-              <i class="ti ti-notification"></i>
+              <i class="ti ti-list-check"></i>
             </span>
             <span class="hide-menu">Historial de solicitudes</span>
           </a>

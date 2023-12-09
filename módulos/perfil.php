@@ -134,9 +134,7 @@
                     </div>
                 </div>
                 
-                <div class="card-footer">
-                    <?php include("../partes/footer.php");?>
-                </div>
+                
             </div>
         </div>
     </div>
