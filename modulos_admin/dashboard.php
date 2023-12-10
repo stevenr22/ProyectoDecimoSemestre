@@ -137,7 +137,7 @@
               <div class="card-body">
                 <div class="card-title"><h2><b>Producción mundial</b></h2></div>
                 <div class="table-responsive">
-                  <table  id="mitabla" class="table table-striped table-bordered" cellspacing="0">
+                  <table  id="miTabla2" class="table table-striped table-bordered" cellspacing="0">
                     <thead>
                         <th><b>Pais</b></th>
                         <th><b>Tipo mango</b></th>

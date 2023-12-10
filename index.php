@@ -1,4 +1,4 @@
 <?php
-    header("location:módulos/credenciales.html");
+    header("location:modulos_admin/credenciales.html");
     exit;
 ?>

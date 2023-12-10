@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../recursos/bootstrap/bootstrap.css">
+    <title>Generar PDF</title>
+
+    <!-- Agrega el enlace al script de pdfmake -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
+    <link rel="stylesheet" href="../recursos/alertas/sweetalert2.css">
+</head>
+<body>
+    <h1>Crear Archivos PDF</h1>
+    <br>
+    <table id="miTabla" class="table table-bordered" style="width:100%">
+        <thead>
+            <th>CÓDIGO</th>
+            <th>CATEGORÍA</th>
+            <th>NOMBRE</th>
+            <th>PROVEEDOR</th>
+            <th>Fecha de registro</th>
+            <th>ACCIONES</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td>
+                <td>Insecticida</td>
+                <td>Sulfato de amonio</td>
+                <td>Ecua S.A.</td>
+                <td>12-02-2023</td>
+                <td>
+                    <div class="tooltip-button">
+                        <button class="btn btn-danger" onclick="confirmarDescargaPDF();" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
+                            GENERAR
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <!-- Agrega más filas si es necesario -->
+        </tbody>
+    </table>
+
+    <script type="text/javascript" src="../recursos/alertas/sweetalert2.js"></script>
+    
+    <script type="text/javascript">
+        function exportarTablaPDF() {
+            var rows = [];
+            var headers = [];
+
+            // Obtener encabezados de la tabla excluyendo la columna ACCIONES
+            document.querySelectorAll('#miTabla thead th:not(:last-child)').forEach(function(header) {
+                headers.push({ text: header.innerText, style: 'tableHeader' });
+            });
+
+            // Obtener datos de la tabla excluyendo la columna ACCIONES
+            document.querySelectorAll('#miTabla tbody tr').forEach(function(row) {
+                var rowData = [];
+                row.querySelectorAll('td:not(:last-child)').forEach(function(cell) {
+                    rowData.push(cell.innerText);
+                });
+                rows.push(rowData);
+            });
+
+            var docDefinition = {
+                content: [
+                    { text: 'Reporte PDF', style: 'header' },
+                    {
+                        table: {
+                            headerRows: 1,
+                            body: [headers].concat(rows),
+                            widths: ['auto', 'auto', 'auto', 'auto', 'auto'] // Ancho de las columnas
+                        },
+                        style: 'tableStyle'
+                    }
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        margin: [0, 0, 0, 10]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    },
+                    tableStyle: {
+                        margin: [0, 5, 0, 15], // Margen de la tabla
+                        fontSize: 10,
+                        color: 'black'
+                    }
+                }
+            };
+
+            pdfMake.createPdf(docDefinition).download('Reporte.pdf');
+        }
+
+        function confirmarDescargaPDF() {
+            Swal.fire({
+                title: '¿Desea descargar el PDF?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, descargar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    exportarTablaPDF();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -21,7 +21,7 @@
 
     </ul>
     <div id="linkNombre" class="col-md-6 text-center">
-      <a href="../módulos/dashboard.php">
+      <a href="../modulos_admin/dashboard.php">
         Steven Rojas Guerrero | Administrador
       </a>     
     </div>
@@ -37,7 +37,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
             <div class="message-body">
-              <a href="../módulos/perfil.php" class="d-flex align-items-center gap-2 dropdown-item">
+              <a href="../modulos_admin/perfil.php" class="d-flex align-items-center gap-2 dropdown-item">
                 <i class="ti ti-user fs-6"></i>
                 <p class="mb-0 fs-3">Mi perfil</p>
               </a>

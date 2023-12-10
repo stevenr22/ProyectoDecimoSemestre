@@ -5,7 +5,7 @@
             <span class="hide-menu">Inicio</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/dashboard.php" aria-expanded="false">
+            <a class="sidebar-link" href="../módulos_admin/dashboard.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -21,7 +21,7 @@
             <span class="hide-menu">Uso de insumos</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/r_uso_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-corner-down-left-double"></i>
             </span>
@@ -29,7 +29,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/r_mangos.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/segui_insu_parce.php" aria-expanded="false">
             <span>
               <i class="ti ti-corner-down-left-double"></i>
             </span>
@@ -85,7 +85,7 @@
             <span class="hide-menu">Gestión insumos</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/stock.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/recep_insuxprove.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack"></i>
             </span>
@@ -93,7 +93,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/stock_disponible.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/stock_disponible.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack"></i>
             </span>
@@ -102,7 +102,7 @@
         </li>
 
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos/control_stock.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/control_inven.php" aria-expanded="false">
             <span>
                 <i class="ti ti-stack"></i>
             </span>
@@ -117,7 +117,7 @@
           <span class="hide-menu">Estadísticas</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/tendencia_insumos.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/tendencia_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-chart-bar"></i>
             </span>
@@ -125,7 +125,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/tendencia_produccion.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/tendencia_produccion.php" aria-expanded="false">
             <span>
               <i class="ti ti-chart-arrows-vertical"></i>
             </span>
@@ -142,7 +142,7 @@
           <span class="hide-menu">Gestión de Proveedores</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/r_proveedor.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/r_proveedor.php" aria-expanded="false">
             <span>
               <i class="ti ti-user-plus"></i>
             </span>
@@ -150,7 +150,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/soli_insumos.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/soli_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-notification"></i>
             </span>
@@ -158,7 +158,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/soli_insumos.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/historial_solici.php" aria-expanded="false">
             <span>
               <i class="ti ti-list-check"></i>
             </span>
@@ -173,7 +173,7 @@
           <span class="hide-menu">Control de usuarios</span>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/asignar_rol.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/auten_autori.php" aria-expanded="false">
             <span>
               <i class="ti ti-edit"></i>
             </span>
@@ -181,7 +181,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link" href="../módulos/crear_rol.php" aria-expanded="false">
+          <a class="sidebar-link" href="../modulos_admin/regis_usu.php" aria-expanded="false">
             <span>
               <i class="ti ti-pencil-plus"></i>
             </span>
