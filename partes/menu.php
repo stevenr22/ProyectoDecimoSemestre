@@ -5,7 +5,7 @@
             <span class="hide-menu">Inicio</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../módulos_admin/dashboard.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_admin/dashboard.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
