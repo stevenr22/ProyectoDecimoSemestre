@@ -137,8 +137,7 @@
                     mostrarSegundoModal();
                 }else if(selectedValue=="Mangos"){
                     mostrartercerModal();
-                }else if(selectedValue =="Parcelas"){
-                    mostrarcuartoModal();
+                
                 }else if(selectedValue =="Herramientas"){
                     mostrarquintooModal();
                 }else if(selectedValue =="Maquinarias"){
@@ -159,7 +158,6 @@
         function cerrarGeneral() {
             var modal_insec = document.getElementById("segundoModal");
             var modal_mango = document.getElementById("tercerModal");
-            var modal_parcela = document.getElementById("cuartoModal");
             var modal_maqui = document.getElementById("quintoModal");
             var modal_herra = document.getElementById("sextoModal");
 
@@ -181,9 +179,7 @@
                     if (modal_mango) {
                         modal_mango.style.display = 'none';
                     }
-                    if (modal_parcela) {
-                        modal_parcela.style.display = 'none';
-                    }
+                    
                     if (modal_maqui) {
                         modal_maqui.style.display = 'none';
                     }
@@ -247,10 +243,7 @@
             var segundoModal = document.getElementById('tercerModal');
             segundoModal.style.display = 'block';
         }
-        function mostrarcuartoModal() {
-            var segundoModal = document.getElementById('cuartoModal');
-            segundoModal.style.display = 'block';
-        }
+      
         function mostrarquintooModal() {
             var segundoModal = document.getElementById('quintoModal');
             segundoModal.style.display = 'block';
@@ -267,12 +260,7 @@
       
         
 
-        // Evento para cerrar el modal cuando se hace clic fuera de él
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+        
 
 
         function exportarTablaPDF() {

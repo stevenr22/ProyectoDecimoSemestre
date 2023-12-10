@@ -14,7 +14,19 @@
         </li>
 
 
-
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Parcelas</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_admin/r_parcelas.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-chart-area-line"></i>
+            </span>
+            <span class="hide-menu">Registrar parcelas</span>
+            </a>
+        </li>
+       
             
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -177,7 +189,7 @@
             <span>
               <i class="ti ti-edit"></i>
             </span>
-            <span class="hide-menu">Autenticación y autorización</span>
+            <span class="hide-menu">Autenticación de usuarios</span>
           </a>
         </li>
         <li class="sidebar-item">

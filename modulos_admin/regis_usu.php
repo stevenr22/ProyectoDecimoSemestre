@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Perfil .:|:. Mango</title>
+    <title> Crear rol .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
 
@@ -33,58 +33,50 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Perfil</b></h2></div>
+                        <div class="card-title"><h2><b>Roles registrados</b></h2></div>
                     </div>  
                 </div>
-             
+                <div class="col-md-4">
+                    <button type="button" id="openModalRol" class="btn btn-info" > + Registrar nuevo rol</button>
+
+                </div><br>
 
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
-                                <form action="" class="form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Nombres">Nombres: </label>
-                                            <input type="text" class="form-control" id="nombre_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Apellidos">Apellidos: </label>
-                                            <input type="text" class="form-control" id="apellido_pag">
+                                <div class="table-responsive">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Correo">Correo electrónico: </label>
-                                            <input type="text" class="form-control" id="correo_pag"><br>
+                                    <table id="tabla_roles" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <th><b>Código</b></th>
+                                            <th><b>Cargo</b></th>
+                                            <th><b>Descripción</b></th>
+                                            <th><b>Acciones</b></th>
 
-                                        </div>
-                                        <div class="col">
-                                            <label for="Usuario">Nombre de usuario: </label>
-                                            <input type="text" class="form-control" id="nusu_pag">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Cedula">N° de cédula: </label>
-                                            <input type="text" class="form-control" id="cedula_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Rol">Rol asignado: </label>
-                                            <input type="text" class="form-control" id="rol_pag">
-                                        </div>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>001</td>
+                                                <td>Administrador</td>
+                                                <td>Control del sistema</td>
+                                                <td>
+                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar rol" id="editarRol"><i class="ti ti-pencil"></i></button>
+                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar rol" id="eliminarRol"><i class="ti ti-trash-x"></i></button>
+                                                </td>
                                             
-                                    </div>
-                                </form>
-                               
-                                <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
-                               
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+
+
+                                </div>
                                 
                             </div>
-                            
 
                         
                         </div>
@@ -96,21 +88,28 @@
     </div>
     <script>
         // Obtener elementos del DOM
-        var modal_peril = document.getElementById('modalPerfil');
-        var openModalBtnPerfil = document.getElementById('btn_modal_perfil');
+        var modal_rol = document.getElementById('modalRol');
+        var openModalBtnRol = document.getElementById('openModalRol');
 
         // Evento para abrir el modal
-        openModalBtnPerfil.onclick = function() {
-            modal_peril.style.display = 'block';
+        openModalBtnRol.onclick = function() {
+            modal_rol.style.display = 'block';
         }
 
        
 
-  
+   
+
+        function cerrarModal() {
+            var modal_rol = document.getElementById('modalRol');
+            modal_rol.style.display = 'none';
+           
+            
+        }
 
 //----------------------------------------------------------------
         function cerrarGeneral() {
-            var modal_peril = document.getElementById("modalPerfil");
+            var modal_rol = document.getElementById("modalRol");
            
 
             Swal.fire({
@@ -125,8 +124,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_peril) {
-                        modal_peril.style.display = 'none';
+                    if (modal_rol) {
+                        modal_rol.style.display = 'none';
                     }
                   
                 } else {
@@ -151,7 +150,7 @@
                 }
             });
         }
-     
+       
     </script>
 
  

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Perfil .:|:. Mango</title>
+    <title> Parcelas .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
 
@@ -33,58 +33,58 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Perfil</b></h2></div>
+                        <div class="card-title"><h2><b>Registro de parcelas</b></h2></div>
                     </div>  
                 </div>
-             
+                <div class="col-md-4">
+                    <button type="button" id="btn_modal_parce" class="btn btn-info" > + Registrar nueva parcela</button>
+
+                </div><br>
 
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
-                                <form action="" class="form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Nombres">Nombres: </label>
-                                            <input type="text" class="form-control" id="nombre_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Apellidos">Apellidos: </label>
-                                            <input type="text" class="form-control" id="apellido_pag">
+                                <div class="table-responsive">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Correo">Correo electrónico: </label>
-                                            <input type="text" class="form-control" id="correo_pag"><br>
+                                    <table id="miParcela" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <th>CÓDIGO</th>
+                                            <th>NOMBRE</th>
+                                            <th>ANCHO</th>
+                                            <th>ALTO</th>
+                                            <th>Fecha de registro</th>
+                                            <th>ESTADO</th>
+                                            <th>ACCIONES</th>
 
-                                        </div>
-                                        <div class="col">
-                                            <label for="Usuario">Nombre de usuario: </label>
-                                            <input type="text" class="form-control" id="nusu_pag">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Cedula">N° de cédula: </label>
-                                            <input type="text" class="form-control" id="cedula_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Rol">Rol asignado: </label>
-                                            <input type="text" class="form-control" id="rol_pag">
-                                        </div>
-                                            
-                                    </div>
-                                </form>
-                               
-                                <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
-                               
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>001</td>
+                                                <td>Parcela A</td>
+                                                <td>34</td>
+                                                <td>43</td>
+                                                <td>12-02-2023</td>
+                                                <td>Operando</td>
+                                                <td>
+                                                   
+                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar solicitud" id="editarparce"><i class="ti ti-pencil"></i></button>
+                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar solicitud" id="eliminarparce"><i class="ti ti-trash-x"></i></button>
+                                                  
+                                                </td>
+                                              
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
                                 
                             </div>
-                            
 
                         
                         </div>
@@ -96,21 +96,22 @@
     </div>
     <script>
         // Obtener elementos del DOM
-        var modal_peril = document.getElementById('modalPerfil');
-        var openModalBtnPerfil = document.getElementById('btn_modal_perfil');
+        var modal_parce = document.getElementById('modalParcela');
+        var openModalBtnParce = document.getElementById('btn_modal_parce');
 
         // Evento para abrir el modal
-        openModalBtnPerfil.onclick = function() {
-            modal_peril.style.display = 'block';
+        openModalBtnParce.onclick = function() {
+            modal_parce.style.display = 'block';
         }
 
        
 
-  
+   
+
 
 //----------------------------------------------------------------
         function cerrarGeneral() {
-            var modal_peril = document.getElementById("modalPerfil");
+            var modal_parce = document.getElementById("modalParcela");
            
 
             Swal.fire({
@@ -125,8 +126,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_peril) {
-                        modal_peril.style.display = 'none';
+                    if (modal_parce) {
+                        modal_parce.style.display = 'none';
                     }
                   
                 } else {
@@ -162,18 +163,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
