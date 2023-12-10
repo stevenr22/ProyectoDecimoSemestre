@@ -44,18 +44,49 @@
                                             <input type="date" id="fechUso" class="form-control">
                                         </div>
                                         <div class="col">
-                                            
+                                            <label for="selectParcela">Seleccione la parcela a aplicar</label>
+                                            <select name="selectParcela" class="form-select" id="selectParcela">
+                                                <option value="">A</option>
+                                                <option value="">B</option>
+                                                <option value="">C</option>
+                                                <option value="">D</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"></div>
-                                        <div class="col"></div>
+                                        <div class="col">
+                                            <label for="selecttipoIns">Seleccione el tipo de insumo</label>
+                                            <select name="selecttipoIns" class="form-select" id="selecttipoIns">
+                                                <option value="">A</option>
+                                                <option value="">B</option>
+                                                <option value="">C</option>
+                                                <option value="">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="Canti">Cantidad: </label>
+                                            <input type="number" id="Canti" class="form-control">
+                                        </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"></div>
-                                        <div class="col"></div>
+                                        <div class="col">
+                                            <label for="selecRespon">Seleccione el responsable</label>
+                                            <select name="selecRespon" class="form-select" id="selecRespon">
+                                                <option value="">A</option>
+                                                <option value="">B</option>
+                                                <option value="">C</option>
+                                                <option value="">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="Nombre_insu">Nombre del insumo: </label>
+                                            <input type="text" id="nom_insu" class="form-control" placeholder="Ingrese el nombre del insumo">
+                                        </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" onclick="registrar();" id="btn_regis" class="btn btn-info">Registrar</button>
                             </div>
 
                         </div>
@@ -67,6 +98,21 @@
 
         </div>
     </div>
+
+    <script>
+        function registrar(){
+            var btn_registrar = document.getElementById("btn_regis");
+            if (btn_registrar){
+                Swal.fire({
+                title: "Registro exitoso!",
+                text: "Los insumos fueron aplicados con exito!",
+                icon: "success"
+                });
+
+            }
+        }
+        
+    </script>
     
 </body>
 </html>

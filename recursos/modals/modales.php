@@ -206,3 +206,55 @@
                 </div>
 
                 <!--FIN MODAL-->
+
+
+
+ <!-- MODAL REGISTRO PROVEEDOR -->
+ <div id="modalProveedor" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Registrar nuevo proveedor</h2>
+                            <button class="close" onclick="cerrarGeneral()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-group" id="formProveedor">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="Nombreprov">Nombre empresa: </label>
+                                        <input type="text" class="form-control" id="nom_prove" placeholder="Ingrese el nombre de la empresa">
+                                    </div>
+                                    <div class="col">
+                                        <label for="Contacto">Nombre del trabajador: </label>
+                                        <input type="text" name="nomb_trab_prov" id="nomb_trab_prov" class="form-control" placeholder="Ingrese nombre del trabajador"><br>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="direc">Dirección: </label>
+                                        <input type="text" class="form-control" id="direc" placeholder="Ingrese la dirección">
+                                    </div>
+                                    <div class="col">
+                                        <label for="tele">N° de teléfono: </label>
+                                        <input type="tel" name="telefo" id="telefo" class="form-control" placeholder="Ingrese el número de teléfono"><br>
+                                        
+                                    </div>
+                                </div>
+
+                                
+                                    
+                                    <label for="fechregis">Fecha de registro: </label>
+                                    <input type="date" class="form-control" id="fech_regis_prov">
+                                  
+                                    
+                              
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger me-auto"onclick="cerrarGeneral()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>

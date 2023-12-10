@@ -8,7 +8,7 @@
 <link href="../recursos/select2/select2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../recursos/modals/modal.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-<link rel="stylesheet" href="../recursos/tablas/tablas.css">
+
 
 
 
