@@ -6,6 +6,8 @@
     <title>Recepción insumos .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    
+
 
 </head>
 <body>
@@ -67,7 +69,7 @@
                                                 <td>12-02-2023</td>
                                                 <td>
                                                    
-                                                    <button class="btn btn-danger" id="btnPDF" onclick="exportarPDF();" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
+                                                    <button class="btn btn-danger" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
                                                         <i class="ti ti-file-description"></i>
                                                     </button>
                                                   
@@ -109,6 +111,8 @@
         </div>
 
     </div>
+
+
     <script>
         // Obtener elementos del DOM
         var modal = document.getElementById('myModal');
@@ -254,16 +258,7 @@
         }
 
        
-
-       
-
-      
-        
-
-        
-
-
-        function exportarTablaPDF() {
+        /*function exportarTablaPDF() {
             var rows = [];
             var headers = [];
 
@@ -340,10 +335,59 @@
                     exportarTablaPDF();
                 }
             });
-        }
+        }*/
+
+
+
+     
+
+
+    $(document).ready(function() {
+        $("#btnPDF").on("click", function() {
+            // Obtén los datos de la fila
+            var codigo = $("#miTabla tbody tr td:nth-child(1)").text();
+            var categoria = $("#miTabla tbody tr td:nth-child(2)").text();
+            var nombre = $("#miTabla tbody tr td:nth-child(3)").text();
+            var proveedor = $("#miTabla tbody tr td:nth-child(4)").text();
+            var fechaRegistro = $("#miTabla tbody tr td:nth-child(5)").text();
+
+            // Crea un objeto con los datos
+            var data = {
+                codigo: codigo,
+                categoria: categoria,
+                nombre: nombre,
+                proveedor: proveedor,
+                fechaRegistro: fechaRegistro
+            };
+
+            // Realiza la solicitud AJAX
+            $.ajax({
+                type: "POST",
+                url: "generar_pdf.php",
+                data: data,
+                success: function(response) {
+                    // Maneja la respuesta (puede ser un enlace al PDF generado)
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+
+
+
+
+
+       
 
  
     </script>
+    
+
+    
+
  
 
 
