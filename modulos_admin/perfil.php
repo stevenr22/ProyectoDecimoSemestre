@@ -44,40 +44,30 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <form action="" class="form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Nombres">Nombres: </label>
-                                            <input type="text" class="form-control" id="nombre_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Apellidos">Apellidos: </label>
-                                            <input type="text" class="form-control" id="apellido_pag">
+                                  
+                                    <label for="Nombres">Nombres: </label>
+                                    <input type="text" class="form-control" id="nombre_pag"><br>
+                                       
+                                    <label for="Apellidos">Apellidos: </label>
+                                    <input type="text" class="form-control" id="apellido_pag"><br>
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Correo">Correo electrónico: </label>
-                                            <input type="text" class="form-control" id="correo_pag"><br>
+                                       
+                                    <label for="Correo">Correo electrónico: </label>
+                                    <input type="text" class="form-control" id="correo_pag"><br>
 
-                                        </div>
-                                        <div class="col">
-                                            <label for="Usuario">Nombre de usuario: </label>
-                                            <input type="text" class="form-control" id="nusu_pag">
+                                     
+                                    <label for="Usuario">Nombre de usuario: </label>
+                                    <input type="text" class="form-control" id="nusu_pag"><br>
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="Cedula">N° de cédula: </label>
-                                            <input type="text" class="form-control" id="cedula_pag"><br>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Rol">Rol asignado: </label>
-                                            <input type="text" class="form-control" id="rol_pag">
-                                        </div>
+                                       
+                                    <label for="Cedula">N° de cédula: </label>
+                                    <input type="text" class="form-control" id="cedula_pag"><br>
+                                      
+                                    <label for="Rol">Rol asignado: </label>
+                                    <input type="text" class="form-control" id="rol_pag"><br>
+                                       
                                             
-                                    </div>
+                                   
                                 </form>
                                
                                 <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>

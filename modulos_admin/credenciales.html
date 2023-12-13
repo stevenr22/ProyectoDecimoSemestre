@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../recursos/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../recursos/alertas/sweetalert2.css">
+
 
 </head>
 <body id="colorF">
@@ -43,23 +45,28 @@
                     </form>
 
                     <!--Register-->
-                    <form class="formulario__register" id="formRegistro">
+                    <form class="formulario__register" method="post" id="formRegistro">
                         <h2>Regístrarse</h2>
-                        <input type="text" placeholder="Nombre completo" id="Rnombre" class="form-control" oninput="validarSoloLetrasYPacios(this)">
-                        <input type="email" placeholder="Correo electrónico" id="Rcorreo"  class="form-control">
+                        <input type="text" placeholder="Nombre completo" id="RNnombre" class="form-control" oninput="validarSoloLetrasYPacios(this)">
+                        <input type="email" placeholder="Correo electrónico" id="RNcorreo"  class="form-control">
                         <input type="text" class="form-control" placeholder="Ingrese su usuario" name="RNusu" id="RNusu">
                         <input type="password" class="form-control" placeholder="Ingrese su contraseña" name="RNcontra" id="RNcontra">
                         <span class="eye-icon2" id="eyeIcon2" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
 
                         
-                        <button class="btn btn-primary" type="button" >Registrar</button>
+                        <button class="btn btn-primary" type="submit" >Registrar</button>
                     </form>
                 </div>
             </div>
 
         </main>
+        <script src="../recursos/jquery/jquery3.7.1.min.js"></script>
+        <script src="../recursos/alertas/sweetalert2.js"></script>
 
         <script src="../js/main.js"></script>
+        
+        <script src="../js/ajax.js"></script>
+   
        
 </body>
 </html>
