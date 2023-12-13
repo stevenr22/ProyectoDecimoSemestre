@@ -69,7 +69,7 @@
                                                 <td>12-02-2023</td>
                                                 <td>
                                                    
-                                                    <button class="btn btn-danger" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
+                                                    <button class="btn btn-danger" onclick="exportarPDF();" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
                                                         <i class="ti ti-file-description"></i>
                                                     </button>
                                                   
@@ -258,129 +258,30 @@
         }
 
        
-        /*function exportarTablaPDF() {
-            var rows = [];
-            var headers = [];
+    
 
-            // Obtener encabezados de la tabla excluyendo la columna ACCIONES
-            document.querySelectorAll('#miTabla thead th:not(:last-child)').forEach(function(header) {
-                headers.push({ text: header.innerText, style: 'tableHeader' });
-            });
-
-            // Obtener datos de la tabla excluyendo la columna ACCIONES
-            document.querySelectorAll('#miTabla tbody tr').forEach(function(row) {
-                var rowData = [];
-                row.querySelectorAll('td:not(:last-child)').forEach(function(cell) {
-                    rowData.push(cell.innerText);
+//--------------------------------------------------------------------------
+        function exportarPDF(){
+            var btn_pdf = document.getElementById("btnPDF");
+           
+            toastr.success("Descargando...", "", {
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 3000,
+                    extendedTimeOut: 1000,
+                    showDuration: 300,
+                    hideDuration: 1000,
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut"
                 });
-                rows.push(rowData);
-            });
+                window.location.href = '../reportes/reporte_histo_nue_insu.php';
 
-            var docDefinition = {
-                content: [
-                    { text: 'Reporte PDF', style: 'header' },
-                    {
-                        table: {
-                            headerRows: 1,
-                            body: [headers].concat(rows),
-                            widths: ['auto', 'auto', 'auto', 'auto', 'auto'] // Ancho de las columnas
-                        },
-                        style: 'tableStyle'
-                    }
-                ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 12,
-                        color: 'black'
-                    },
-                    tableStyle: {
-                        margin: [0, 5, 0, 15], // Margen de la tabla
-                        fontSize: 10,
-                        color: 'black'
-                    }
-                }
-            };
+                    
 
-            pdfMake.createPdf(docDefinition).download('Reporte.pdf');
+            
         }
-
-        function exportarPDF() {
-            Swal.fire({
-                title: '¿Desea descargar el PDF?',
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, descargar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    toastr.success("Descargando...", "", {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                       
-                    });
-                    exportarTablaPDF();
-                }
-            });
-        }*/
-
-
-
-     
-
-
-    $(document).ready(function() {
-        $("#btnPDF").on("click", function() {
-            // Obtén los datos de la fila
-            var codigo = $("#miTabla tbody tr td:nth-child(1)").text();
-            var categoria = $("#miTabla tbody tr td:nth-child(2)").text();
-            var nombre = $("#miTabla tbody tr td:nth-child(3)").text();
-            var proveedor = $("#miTabla tbody tr td:nth-child(4)").text();
-            var fechaRegistro = $("#miTabla tbody tr td:nth-child(5)").text();
-
-            // Crea un objeto con los datos
-            var data = {
-                codigo: codigo,
-                categoria: categoria,
-                nombre: nombre,
-                proveedor: proveedor,
-                fechaRegistro: fechaRegistro
-            };
-
-            // Realiza la solicitud AJAX
-            $.ajax({
-                type: "POST",
-                url: "generar_pdf.php",
-                data: data,
-                success: function(response) {
-                    // Maneja la respuesta (puede ser un enlace al PDF generado)
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-
-
-
-
-
-       
 
  
     </script>
