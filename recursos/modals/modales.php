@@ -100,6 +100,7 @@
                    
                 <label for="Ancho">Ancho: </label>
                 <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho" class="form-control">
+                
 
                 <label for="Alto">Alto: </label>
                 <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el alto" class="form-control">
@@ -303,7 +304,7 @@
 
 
 <!-- MODAL EDITAR PERFIL -->
-<div id="modalPerfil" class="modal">
+<div id="modalPerfil"  class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Editar perfil</h2>
