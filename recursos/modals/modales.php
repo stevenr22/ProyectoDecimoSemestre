@@ -317,38 +317,39 @@
         </div>
         <div class="modal-body">
             <form class="form-group" id="formPerfil">
-                <input type="hidden" id="DBid_usu_en_sesion" value="<?php echo $_SESSION['DBid_usu']; ?>">
+                <input type="hidden" id="DBid_usu_en_sesion" value="<?php echo $_SESSION['DBid_usu'];?>">
 
 
 
-                <label for="Nombres">Nombre completo: </label>
-                <input type="text" class="form-control" id="nombre_comple_pag" 
-                    value="<?php echo $datos["DBnom_completo"];?>"><br>
+                <label >Nombre completo: </label>
+                <input type="text" class="form-control" name="nombre_comple_pag2" id="nombre_comple_pag" 
+                    value="<?php echo $datos["DBnom_completoV2"];?>"><br>
 
 
 
-                <label for="Correo">Correo electrónico: </label>
-                <input type="text" class="form-control" id="correo_pag" 
-                    value="<?php echo $datos["DBcorreo"];?>"><br>
+
+
+                <label >Correo electrónico: </label>
+                <input type="email" class="form-control" id="correo_pag" 
+                    value="<?php echo $datos["DBcorreoV2"];?>"><br>
 
 
                 <label for="Usuario">Nombre de usuario: </label>
                 <input type="text" class="form-control" id="nusu_pag" 
-                    value="<?php echo $datos["DBnom_usu"];?>"><br>
+                    value="<?php echo $datos["DBnom_usuV2"];?>"><br>
 
 
 
 
-                <label for="Rol">Rol asignado: </label>
+                <label >Rol asignado: </label>
                 <input type="text" class="form-control readonly-field" id="rol_pag" readonly
-                    value="<?php echo $datos["DBcargo"];?>"><br>
+                    value="<?php echo $datos["DBcargoV2"];?>"><br>
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btn_edit_perfil">Actualizar</button>
-                        <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                  
+                <button type="submit" id="btnActualizar" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
 
-                    </div>
-
+             
             </form>
          
            

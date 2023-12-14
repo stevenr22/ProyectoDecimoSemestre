@@ -52,22 +52,22 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                               
                                   
                                     <label for="Nombres">Nombre completo: </label>
-                                    <input type="text" class="form-control readonly-field" id="nombre_comple_pag" readonly value="<?php echo $datos["DBnom_completo"];?>"><br>
+                                    <input type="text" class="form-control readonly-field" id="nombre_comple_pag" readonly value="<?php echo $datos["DBnom_completoV2"];?>"><br>
                                        
                                   
                                        
                                     <label for="Correo">Correo electrónico: </label>
-                                    <input type="text" class="form-control readonly-field" id="correo_pag" readonly value="<?php echo $datos["DBcorreo"];?>"><br>
+                                    <input type="text" class="form-control readonly-field" id="correo_pag" readonly value="<?php echo $datos["DBcorreoV2"];?>"><br>
 
                                      
                                     <label for="Usuario">Nombre de usuario: </label>
-                                    <input type="text" class="form-control readonly-field" id="nusu_pag" readonly value="<?php echo $datos["DBnom_usu"];?>"><br>
+                                    <input type="text" class="form-control readonly-field" id="nusu_pag" readonly value="<?php echo $datos["DBnom_usuV2"];?>"><br>
 
                                        
 
                                       
                                     <label for="Rol">Rol asignado: </label>
-                                    <input type="text" class="form-control readonly-field" id="rol_pag" readonly value="<?php echo $datos["DBcargo"];?>"><br>
+                                    <input type="text" class="form-control readonly-field" id="rol_pag" readonly value="<?php echo $datos["DBcargoV2"];?>"><br>
                                        
                                             
                                    
@@ -146,12 +146,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             });
         }
 
+
+
+  
+
         
 
 
       
      
     </script>
+    <script src="../js/ajax.js"></script>
+
 
  
 

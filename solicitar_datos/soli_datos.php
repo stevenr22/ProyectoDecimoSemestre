@@ -11,14 +11,14 @@
         $dato = array();
         if ($result->num_rows > 0) {
             $fila = $result->fetch_assoc();
-            $dato["DBnom_completo"] = $fila["nombre_completo"];
+            $dato["DBnom_completoV2"] = $fila["nombre_completo"];
          
-            $dato["DBnom_usu"] = $fila["nombre_usu"];
-            $dato["DBcargo"] = $fila["cargo"];
+            $dato["DBnom_usuV2"] = $fila["nombre_usu"];
+            $dato["DBcargoV2"] = $fila["cargo"];
    
-            $dato["DBcorreo"] = $fila["correo"];
+            $dato["DBcorreoV2"] = $fila["correo"];
 
-            $dato["DBid_rol"] = $fila["id_rol"];
+            $dato["DBid_rolV2"] = $fila["id_rol"];
 
                 
                

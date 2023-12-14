@@ -3,7 +3,9 @@ session_start();
 include("../bd/conexion.php");
 // Verificar si se reciben los datos del formulario
 if(isset($_POST['nombre_comple_pag'], 
-$_POST['correo_pag'], $_POST['nusu_pag'], $_POST['DBid_usu_en_sesion'])) {
+        $_POST['correo_pag'], 
+        $_POST['nusu_pag'], 
+        $_POST['DBid_usu_en_sesion'])) {
     // Obtener los valores enviados por POST
     $nombre_comple_pag = $_POST['nombre_comple_pag'];
     $correo_pag = $_POST['correo_pag'];
@@ -11,9 +13,10 @@ $_POST['correo_pag'], $_POST['nusu_pag'], $_POST['DBid_usu_en_sesion'])) {
     $DBid_usu_en_sesion = $_POST['DBid_usu_en_sesion'];
 
 
+
   
     $query = "UPDATE usuario SET nombre_usu='$nusu_pag', nombre_completo='$nombre_comple_pag', 
-   correo='$correo_pag' WHERE id_usu='$DBid_usu_en_sesion'";
+    correo='$correo_pag' WHERE id_usu='$DBid_usu_en_sesion'";
     $resultado = mysqli_query($conn, $query);
 
     // Verificar si la actualización fue exitosa

@@ -31,6 +31,6 @@
 
 <script src="../js/tablas.js"></script>
 
-<script src="../js/ajax.js"></script>
+
 
 

@@ -26,7 +26,7 @@
     ?>
     <div id="linkNombre" class="col-md-6 text-center">
       <a href="../inicio/dashboard.php">
-        <?php echo $datos["DBnom_completo"];?> | <?php echo $datos["DBcargo"];?>
+        <?php echo $datos["DBnom_completoV2"];?> | <?php echo $datos["DBcargoV2"];?>
       </a>     
     </div>
 
