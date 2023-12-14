@@ -13,7 +13,8 @@
             </a>
         </li>
 
-
+        <?php
+          if($_SESSION['DBcargo'] == 'Administrador'){?>
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">Parcelas</span>
@@ -26,20 +27,37 @@
             <span class="hide-menu">Registrar parcelas</span>
             </a>
         </li>
+        <?php
+          }
+        ?>
        
-            
+       <?php
+          if($_SESSION['DBcargo'] == 'Empleado'){?>
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">Uso de insumos</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../modulos_admin/r_uso_insumos.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_trabajador/r_uso_insumos.php" aria-expanded="false">
             <span>
               <i class="ti ti-corner-down-left-double"></i>
             </span>
             <span class="hide-menu">Registrar uso de insumos</span>
             </a>
         </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_trabajador/r_solicitud.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-corner-down-left-double"></i>
+            </span>
+            <span class="hide-menu">Registrar de solicitud</span>
+            </a>
+        </li>
+        <?php
+          }
+        ?>
+          <?php
+          if($_SESSION['DBcargo'] == 'Administrador'){?>
         <li class="sidebar-item">
             <a class="sidebar-link" href="../modulos_admin/segui_insu_parce.php" aria-expanded="false">
             <span>
@@ -48,6 +66,9 @@
             <span class="hide-menu">Seguimiento de insumos<br>por parcela</span>
             </a>
         </li>
+        <?php
+          }
+        ?>
 
         <!--li class="sidebar-item">
             <a class="sidebar-link" href="../módulos/r_insecticidas.php" aria-expanded="false">
@@ -91,7 +112,8 @@
             </a>
         </li-->
 
-
+        <?php
+          if($_SESSION['DBcargo'] == 'Administrador'){?>
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">Gestión insumos</span>
@@ -121,9 +143,13 @@
             <span class="hide-menu">Control de inventario</span>
             </a>
         </li>
+        <?php
+          }
+        ?>
         
 
-
+        <?php
+            if($_SESSION['DBcargo'] == 'Gerente' || $_SESSION['DBcargo'] == 'Administrador'){?>
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
           <span class="hide-menu">Estadísticas</span>
@@ -144,11 +170,16 @@
             <span class="hide-menu">Tendencia de producción</span>
           </a>
         </li>
+        <?php
+          }
+        ?>
+      
 
 
            
 
-
+      <?php
+          if($_SESSION['DBcargo'] == 'Administrador'){?>
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
           <span class="hide-menu">Gestión de Proveedores</span>
@@ -201,4 +232,58 @@
           </a>
         </li>
       </ul>
+      <?php
+        }
+      ?>
+
+
+
+        <?php
+          if($_SESSION['DBcargo'] == 'Gerente'){?>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Gestión inventario</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_gerente/gestion_inventario.php" aria-expanded="false">
+            <span>
+                <i class="ti ti-stack"></i>
+            </span>
+            <span class="hide-menu">Control de inventario</span>
+            </a>
+        </li>
+
+
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Gestión proveedores</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_gerente/gestion_proveedores.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-truck-delivery"></i>
+            </span>
+            <span class="hide-menu">Control proveedores</span>
+            </a>
+        </li>
+
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Gestión solicitudes</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_gerente/solicitudes_recibidas.php" aria-expanded="false">
+            <span>
+              <i class="ti ti-truck-delivery"></i>
+            </span>
+            <span class="hide-menu">Solicitudes recibidas</span>
+            </a>
+        </li>
+        <?php
+          }
+        ?>
+
+
+
+
     </nav>
