@@ -1,3 +1,8 @@
+<?php
+session_start();
+include('../bd/conexion.php');
+if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

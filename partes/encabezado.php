@@ -20,9 +20,13 @@
             
 
     </ul>
+    <?php 
+      include("../solicitar_datos/soli_datos.php"); 
+      $datos = obtenerDatos();
+    ?>
     <div id="linkNombre" class="col-md-6 text-center">
       <a href="../modulos_admin/dashboard.php">
-        Steven Rojas Guerrero | Administrador
+        <?php echo $datos["DBnom_completo"];?> | <?php echo $datos["DBcargo"];?>
       </a>     
     </div>
 
@@ -42,7 +46,7 @@
                 <p class="mb-0 fs-3">Mi perfil</p>
               </a>
                    
-              <a href="../index.php" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar sesión</a>
+              <a href="../validacion_datos/cerrar_sesion.php" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar sesión</a>
             </div>
           </div>
         </li>

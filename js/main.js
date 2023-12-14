@@ -105,11 +105,3 @@ function validarSoloLetrasYPacios(input) {
 
 
 
-
-//REDIRIGIR
-function redirigirPagina() {
-  // Puedes cambiar 'otra_pagina.html' por la URL de la página a la que deseas redirigir
-  window.location.href = '../modulos_admin/dashboard.php';
-}
-
-
