@@ -1,8 +1,8 @@
 <?php
 session_start();
-include('../bd/conexion.php');
 if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -48,28 +48,26 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
-                                <form action="" class="form-group">
+                                <form  class="form-group">
+                              
                                   
-                                    <label for="Nombres">Nombres: </label>
-                                    <input type="text" class="form-control" id="nombre_pag"><br>
+                                    <label for="Nombres">Nombre completo: </label>
+                                    <input type="text" class="form-control readonly-field" id="nombre_comple_pag" readonly value="<?php echo $datos["DBnom_completo"];?>"><br>
                                        
-                                    <label for="Apellidos">Apellidos: </label>
-                                    <input type="text" class="form-control" id="apellido_pag"><br>
-
+                                  
                                        
                                     <label for="Correo">Correo electrónico: </label>
-                                    <input type="text" class="form-control" id="correo_pag"><br>
+                                    <input type="text" class="form-control readonly-field" id="correo_pag" readonly value="<?php echo $datos["DBcorreo"];?>"><br>
 
                                      
                                     <label for="Usuario">Nombre de usuario: </label>
-                                    <input type="text" class="form-control" id="nusu_pag"><br>
+                                    <input type="text" class="form-control readonly-field" id="nusu_pag" readonly value="<?php echo $datos["DBnom_usu"];?>"><br>
 
                                        
-                                    <label for="Cedula">N° de cédula: </label>
-                                    <input type="text" class="form-control" id="cedula_pag"><br>
+
                                       
                                     <label for="Rol">Rol asignado: </label>
-                                    <input type="text" class="form-control" id="rol_pag"><br>
+                                    <input type="text" class="form-control readonly-field" id="rol_pag" readonly value="<?php echo $datos["DBcargo"];?>"><br>
                                        
                                             
                                    
@@ -89,6 +87,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             </div>
         </div>
     </div>
+    
     <script>
         // Obtener elementos del DOM
         var modal_peril = document.getElementById('modalPerfil');
@@ -146,6 +145,11 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 }
             });
         }
+
+        
+
+
+      
      
     </script>
 

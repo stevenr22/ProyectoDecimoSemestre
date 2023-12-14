@@ -38,14 +38,14 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-group" id="formInsec">
-               
+
                 <label for="Nombrei">Nombre insecticida: </label>
                 <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_insec">
-                   
+
                 <label for="Gramo">Gramo: </label>
                 <input type="number" name="number_insec" id="num_insec" class="form-control">
 
-                   
+
 
             </form>
         </div>
@@ -66,14 +66,15 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-group" id="formMango">
-               
+
                 <label for="Nombre">Nombre: </label>
                 <input type="text" class="form-control" placeholder="Ingrese nombre del mango" id="nom_mango">
-                    
-                <label for="Tipo">Tipo: </label>
-                <input type="text" name="t_mango" id="t_mango" placeholder="Ingrese el tipo de mang" class="form-control">
 
-                    
+                <label for="Tipo">Tipo: </label>
+                <input type="text" name="t_mango" id="t_mango" placeholder="Ingrese el tipo de mang"
+                    class="form-control">
+
+
 
             </form>
         </div>
@@ -94,16 +95,18 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-group" id="formParce">
-               
+
                 <label for="Nombre">Nombre: </label>
                 <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce">
-                   
+
                 <label for="Ancho">Ancho: </label>
-                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho" class="form-control">
-                
+                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho"
+                    class="form-control">
+
 
                 <label for="Alto">Alto: </label>
-                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el alto" class="form-control">
+                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el alto"
+                    class="form-control">
             </form>
         </div>
         <div class="modal-footer">
@@ -123,14 +126,15 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-group" id="formMango">
-               
+
                 <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre de la herramienta" id="nom_mango">
-                   
+                <input type="text" class="form-control" placeholder="Ingrese el nombre de la herramienta"
+                    id="nom_mango">
+
                 <label for="Tipo">Tipo: </label>
                 <input type="text" name="t_mango" id="t_mango" placeholder="Ingrese el tipo" class="form-control">
 
-                   
+
 
             </form>
         </div>
@@ -151,14 +155,14 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-group" id="formMaqui">
-               
+
                 <label for="Nombre">Nombre: </label>
                 <input type="text" class="form-control" placeholder="Ingrese el nombre de la maquinaria" id="nom_maqui">
-                   
+
                 <label for="Tipo">Tipo: </label>
                 <input type="text" name="t_maqui" id="t_maqui" placeholder="Ingrese el tipo" class="form-control"><br>
 
-                   
+
 
                 <select name="t_parcela" id="t_parcela" class="form-select">
                     <option value="" selected disabled></option>
@@ -169,7 +173,7 @@
                     <option value="Parcela D">Parcela D</option>
                 </select>
 
-                   
+
 
             </form>
         </div>
@@ -254,7 +258,8 @@
 
 
                 <label for="Descripcion">Funciones: </label>
-                <input type="text" name="decrip_rol" id="decrip_rol" class="form-control" placeholder="Ingrese las funciones"><br>
+                <input type="text" name="decrip_rol" id="decrip_rol" class="form-control"
+                    placeholder="Ingrese las funciones"><br>
 
             </form>
         </div>
@@ -304,39 +309,52 @@
 
 
 <!-- MODAL EDITAR PERFIL -->
-<div id="modalPerfil"  class="modal">
+<div id="modalPerfil" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Editar perfil</h2>
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="" class="form-group" id="formPerfil">
-               
-                <label for="Nombres">Nombres: </label>
-                <input type="text" class="form-control" id="nombre"><br>
-                  
-                <label for="Apellidos">Apellidos: </label>
-                <input type="text" class="form-control" id="apellido">
+            <form class="form-group" id="formPerfil">
+                <input type="hidden" id="DBid_usu_en_sesion" value="<?php echo $_SESSION['DBid_usu']; ?>">
 
-                   
+
+
+                <label for="Nombres">Nombre completo: </label>
+                <input type="text" class="form-control" id="nombre_comple_pag" 
+                    value="<?php echo $datos["DBnom_completo"];?>"><br>
+
+
+
                 <label for="Correo">Correo electrónico: </label>
-                <input type="text" class="form-control" id="correo"><br>
+                <input type="text" class="form-control" id="correo_pag" 
+                    value="<?php echo $datos["DBcorreo"];?>"><br>
 
-                   
+
                 <label for="Usuario">Nombre de usuario: </label>
-                <input type="text" class="form-control" id="nusu">
+                <input type="text" class="form-control" id="nusu_pag" 
+                    value="<?php echo $datos["DBnom_usu"];?>"><br>
 
-                <label for="Cedula">N° de cédula: </label>
-                <input type="text" class="form-control" id="cedula"><br>
-                  
+
+
+
                 <label for="Rol">Rol asignado: </label>
-                <input type="text" class="form-control" id="rol">
+                <input type="text" class="form-control readonly-field" id="rol_pag" readonly
+                    value="<?php echo $datos["DBcargo"];?>"><br>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btn_edit_perfil">Actualizar</button>
+                        <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+
+                    </div>
+
             </form>
+         
+           
+         
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="btn_edit_perfil">Actualizar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
+
+       
     </div>
 </div>

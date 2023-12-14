@@ -90,3 +90,51 @@ $("#formLogin").submit(function(e){
     });
 });
 
+
+  //ACTUALIZAR INFORMACION DELPERFIL
+  $("#formPerfil").submit(function(e){
+    e.preventDefault();
+
+    // Obtener los valores de los campos de entrada
+    var nombre_comple_pag = $.trim($("#nombre_comple_pag").val());
+    var correo_pag = $.trim($("#correo_pag").val());
+    var nusu_pag = $.trim($("#nusu_pag").val());
+    var DBid_usu_en_sesion = $.trim($("#DBid_usu_en_sesion").val());
+
+    // Enviar los datos mediante AJAX
+    $.ajax({
+        url: "../actualizaciones/actualizar_perfil.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+            nombre_comple_pag: nombre_comple_pag,
+            correo_pag: correo_pag,
+            nusu_pag: nusu_pag,
+            DBid_usu_en_sesion: DBid_usu_en_sesion
+        
+        },
+        success: function(response) {
+            if (response.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Actualización exitosa!',
+                }).then((result) => {
+                    if(result.value){
+                        window.location.href = "../inicio/perfil.php";
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: response.message,
+                    icon: 'warning'
+                });
+            }
+        },
+        error: function() {
+            Swal.fire({
+                title: 'Error en la solicitud',
+                icon: 'error'
+            });
+        }
+    });
+});

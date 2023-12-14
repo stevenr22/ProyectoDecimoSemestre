@@ -1,8 +1,4 @@
-<?php
-session_start();
-include('../bd/conexion.php');
-if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
-?>
+<?php include("../autorizacion/admin.php");?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

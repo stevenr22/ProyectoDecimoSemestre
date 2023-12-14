@@ -50,7 +50,14 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
               <div class="card-body" id="naranja">
                 <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
                   <div class="iz">
-                    <h3>3</h3>
+                  <?php
+                    include("../bd/conexion.php");
+                    $sql = "SELECT count(id_usu) as cantidad_usuarios from usuario";
+                    $resultado = mysqli_query($conn, $sql);
+                    $fila = mysqli_fetch_array($resultado);
+                    $cantidad_usuarios = $fila['cantidad_usuarios'];
+                  ?>
+                    <h3><?php echo $cantidad_usuarios; ?></h3>
                     <h4>Usuarios Registrados</h4>
                   </div>
                   <div class="icon">
@@ -65,7 +72,15 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
               <div class="card-body" id="verde" >
                 <div class="d-sm-flex d-block align-items-center justify-content-between mb-9" >
                   <div class="iz">
-                    <h3 style="color: white;">3</h3>
+                  <?php
+                    include("../bd/conexion.php");
+                    $sql = "SELECT count(id_usu) as cantidad_usuarios from usuario";
+                    $resultado = mysqli_query($conn, $sql);
+                    $fila = mysqli_fetch_array($resultado);
+                    $cantidad_usuarios = $fila['cantidad_usuarios'];
+                  ?>
+                    
+                    <h3 style="color: white;"><?php echo $cantidad_usuarios; ?></h3>
               
                     <h4 style="color: white;">Visitas</h4>
 
