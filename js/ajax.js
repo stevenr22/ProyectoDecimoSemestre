@@ -66,7 +66,7 @@ $("#formLogin").submit(function(e){
                         window.location.href = "../dashboard/index.php";
                     }
                 });*/
-                window.location.href = "../modulos_admin/dashboard.php";
+                window.location.href = "../inicio/dashboard.php";
             } else if (response.type === 'warning') {
                 // Mostrar mensaje de alerta según el tipo
                 Swal.fire({
