@@ -15,6 +15,7 @@
 
 <!-- Scripts de jQuery y otros -->
 <script src="../recursos/jquery/jquery3.7.1.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="../recursos/dashboard/js/bootstrap.bundle.min.js"></script>
 <script src="../recursos/dashboard/js/sidebarmenu.js"></script>
@@ -28,8 +29,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
 <script src="../recursos/noti/toastr.min.js"></script>
-
 <script src="../js/tablas.js"></script>
+
+
 
 
 

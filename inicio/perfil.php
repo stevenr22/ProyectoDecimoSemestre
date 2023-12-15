@@ -12,6 +12,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
 
+
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -69,11 +70,11 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <label for="Rol">Rol asignado: </label>
                                     <input type="text" class="form-control readonly-field" id="rol_pag" readonly value="<?php echo $datos["DBcargoV2"];?>"><br>
                                        
-                                            
+                                    <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
+  
                                    
                                 </form>
                                
-                                <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
                                
                                 
                             </div>
@@ -87,6 +88,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             </div>
         </div>
     </div>
+  
     
     <script>
         // Obtener elementos del DOM
@@ -146,17 +148,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             });
         }
 
-
+    </script>
+   
+   <script src="../js/ajax.js"></script>
 
   
+ 
 
-        
 
+    
+   
 
-      
-     
-    </script>
-    <script src="../js/ajax.js"></script>
+    
 
 
  

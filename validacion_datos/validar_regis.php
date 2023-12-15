@@ -8,10 +8,10 @@ $response = array(); // Inicializamos el array de respuesta
 $usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '';
 $correo = (isset($_POST['correo'])) ? $_POST['correo'] : '';
 $nombre_completo = (isset($_POST['nombre_completo'])) ? $_POST['nombre_completo'] : '';
-$contraseña = (isset($_POST['contraseña'])) ? $_POST['contraseña'] : '';
+$clave = (isset($_POST['clave'])) ? $_POST['clave'] : '';
 
 
-if (empty($nombre_completo) || empty($correo) || empty($usuario) || empty($contraseña)) {
+if (empty($nombre_completo) || empty($correo) || empty($usuario) || empty($clave)) {
     $response['status'] = 'warning';
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
@@ -25,8 +25,8 @@ if (empty($nombre_completo) || empty($correo) || empty($usuario) || empty($contr
         $asignar_idRol = mysqli_query($conn, "SELECT id_rol FROM rol WHERE cargo = 'Empleado'");
         $id = mysqli_fetch_array($asignar_idRol);
        
-        $sql = "INSERT INTO usuario (nombre_usu, contraseña, nombre_completo, correo, id_rol) 
-        VALUES ('$usuario', '$contraseña','$nombre_completo','$correo','$id[0]')";
+        $sql = "INSERT INTO usuario (nombre_usu, clave, nombre_completo, correo, id_rol) 
+        VALUES ('$usuario', '$clave','$nombre_completo','$correo','$id[0]')";
         $resultado =  mysqli_query($conn,$sql);
 
         if($resultado) {

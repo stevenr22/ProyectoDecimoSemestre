@@ -6,14 +6,14 @@ $("#formRegistro").submit(function(e){
     var nombre_completo = $.trim($("#RNnombre").val());
     var correo = $.trim($("#RNcorreo").val());
     var usuario = $.trim($("#RNusu").val());
-    var contraseña = $.trim($("#RNcontra").val());
+    var clave = $.trim($("#RNcontra").val());
 
     // Enviar los datos mediante AJAX
     $.ajax({
         url: "../validacion_datos/validar_regis.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
         type: "POST",
         dataType: "json",
-        data: {nombre_completo: nombre_completo, correo: correo, usuario: usuario, contraseña: contraseña},
+        data: {nombre_completo: nombre_completo, correo: correo, usuario: usuario, clave: clave},
         success: function(response) {
             if (response.status === 'success') {
                 Swal.fire({
@@ -91,67 +91,24 @@ $("#formLogin").submit(function(e){
 });
 
 
-  //ACTUALIZAR INFORMACION DELPERFIL
-  $("#formPerfil").submit(function(e){
-    e.preventDefault();
-
-    // Obtener los valores de los campos de entrada
-    var nombre_comple_pag = $.trim($("#nombre_comple_pag").val());
-    var correo_pag = $.trim($("#correo_pag").val());
-    var nusu_pag = $.trim($("#nusu_pag").val());
-    var DBid_usu_en_sesion = $.trim($("#DBid_usu_en_sesion").val());
-
-    // Enviar los datos mediante AJAX
-    $.ajax({
-        url: "../actualizaciones/actualizar_perfil.php",
-        type: "POST",
-        dataType: "json",
-        data: {nombre_comple_pag: nombre_comple_pag, correo_pag: correo_pag, nusu_pag: nusu_pag, DBid_usu_en_sesion: DBid_usu_en_sesion},
-        success: function(response) {
-            if (response.status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Actualización exitosa!',
-                }).then((result) => {
-                    if(result.value){
-                        window.location.href = "../inicio/perfil.php";
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: response.message,
-                    icon: 'warning'
-                });
-            }
-        },
-        error: function() {
-            Swal.fire({
-                title: 'Error en la solicitud',
-                icon: 'error'
-            });
-        }
-    });
-});
+  
 
 
-//ACTUALIZAR INFORMACION
+//ACTUALIZAR INFORMACION DELPERFIL
+
 $("#formPerfil").submit(function(e){
     e.preventDefault();
-    var nombre_comple_pag = $.trim($("#nombre_comple_pag").val());
-    var correo_pag = $.trim($("#correo_pag").val());
-    var nusu_pag = $.trim($("#nusu_pag").val());
-    var DBid_usu_en_sesion = $.trim($("#DBid_usu_en_sesion").val());
-
+    var NomCompleto = $.trim($("#NomCompleto").val());
+    var correo = $.trim($("#correo").val());
+    var NomUsuario = $.trim($("#NomUsuario").val());
+    var DBid = $.trim($("#DBid").val());
 
     // Enviar los datos mediante AJAX
     $.ajax({
-        url: "../actualizaciones/actualizar_perfil.php",
+        url: "../actualizar/actualizar_perfil.php",
         type: "POST",
         dataType: "json",
-        data: {nombre_comple_pag: nombre_comple_pag, 
-            correo_pag: correo_pag, 
-            nusu_pag: nusu_pag, 
-            DBid_usu_en_sesion: DBid_usu_en_sesion}, // Asegúrate de que los nombres coincidan con los de tu PHP
+        data: {NomCompleto: NomCompleto, correo: correo, NomUsuario: NomUsuario, DBid: DBid}, // Asegúrate de que los nombres coincidan con los de tu PHP
         success: function(response) {
             if (response.status === 'success') {
                 Swal.fire({

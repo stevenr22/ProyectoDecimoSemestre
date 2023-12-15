@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de PDF</title>
+    <link rel="stylesheet" href="recursos/alertas/sweetalert2.css">
+
+
+  
+    <title>ACTUALIZAR PERFIL</title>
 </head>
+
 <body>
-    <form action="generar_pdf.php" method="post">
-        <button type="submit" name="generar_pdf">Generar PDF</button>
+    <form class="form-group" id="formPerfil" >
+        NOMNRE
+        <input type="text" class="form-control" id="NomCompleto" ><br>
+        CORREO
+        <input type="email" class="form-control" id="correo" ><br>
+        USUARIO
+        <input type="text" class="form-control" id="NomUsuario"><br>
+        <button type="submit" class="btn btn-primary">Actualizar</button>        
     </form>
+  
+
+    <script src="recursos/jquery/jquery3.7.1.min.js"></script>
+    <script src="recursos/alertas/sweetalert2.js"></script>
+    <script src="a.js"></script>
+
 </body>
+
 </html>

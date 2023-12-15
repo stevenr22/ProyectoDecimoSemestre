@@ -316,13 +316,13 @@
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">
-            <form class="form-group" id="formPerfil">
-                <input type="hidden" id="DBid_usu_en_sesion" value="<?php echo $_SESSION['DBid_usu'];?>">
+            <form  id="formPerfil">
+                <input type="hidden" id="DBid" value="<?php echo $_SESSION['DBid_usu'];?>">
 
 
 
                 <label >Nombre completo: </label>
-                <input type="text" class="form-control" name="nombre_comple_pag2" id="nombre_comple_pag" 
+                <input type="text" class="form-control" name="NomCompleto" id="NomCompleto" 
                     value="<?php echo $datos["DBnom_completoV2"];?>"><br>
 
 
@@ -330,23 +330,22 @@
 
 
                 <label >Correo electrónico: </label>
-                <input type="email" class="form-control" id="correo_pag" 
+                <input type="email" class="form-control" id="correo" name="correo"
                     value="<?php echo $datos["DBcorreoV2"];?>"><br>
 
 
                 <label for="Usuario">Nombre de usuario: </label>
-                <input type="text" class="form-control" id="nusu_pag" 
+                <input type="text" class="form-control" id="NomUsuario" name="NomUsuario"
                     value="<?php echo $datos["DBnom_usuV2"];?>"><br>
 
 
 
 
                 <label >Rol asignado: </label>
-                <input type="text" class="form-control readonly-field" id="rol_pag" readonly
+                <input type="text" class="form-control readonly-field" name="rol_pag" id="rol_pag" readonly
                     value="<?php echo $datos["DBcargoV2"];?>"><br>
 
-                  
-                <button type="submit" id="btnActualizar" class="btn btn-primary">Actualizar</button>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
                 <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
 
              
@@ -356,6 +355,7 @@
          
         </div>
 
+        
        
     </div>
 </div>

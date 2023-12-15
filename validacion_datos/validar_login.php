@@ -13,9 +13,9 @@ if (empty($usu) || empty($contra)) {
         'type' => 'warning'
     );
 } else {
-    $sentencia = "SELECT u.id_usu, r.id_rol, u.nombre_usu, u.nombre_completo, u.contraseña, r.cargo, u.correo 
+    $sentencia = "SELECT u.id_usu, r.id_rol, u.nombre_usu, u.nombre_completo, u.clave, r.cargo, u.correo 
     FROM usuario  as u , rol as r 
-    where (r.id_rol=u.id_rol)AND (u.nombre_usu='$usu' AND u.contraseña='$contra')";
+    where (r.id_rol=u.id_rol)AND (u.nombre_usu='$usu' AND u.clave='$contra')";
 
     $respuesta = $conn->query($sentencia);
 
