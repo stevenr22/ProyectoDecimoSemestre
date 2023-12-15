@@ -20,8 +20,9 @@ body{
   background-color: #F4F6F9;
 }
 
+
 #linkNombre a:hover {
-    color: #49BEFF; /* Cambia el color del texto del enlace al pasar el mouse sobre él */
+    color: #098f09; /* Cambia el color del texto del enlace al pasar el mouse sobre él */
 }
 
 body .page-wrapper .card {
@@ -31,7 +32,7 @@ body .page-wrapper .card {
 
 body .page-wrapper .card .card-header {
   background-color: #CFFFE2; /* 0.5 representa el 50% de transparencia */
-  border: solid #098f094f;
+  border: solid #098f0927;
 }
 
 
@@ -111,40 +112,44 @@ body .container-fluid .card-body .iz{
   font-size: 40px;
 }
 
-/*BOTONES TABLAS*/
 
 
+/* Estilos iniciales */
+td{
+  text-align: center;
+}
 td button#celeste {
-  padding: 8px;
-  margin-right: 5px;
   background-color: #17A2B8;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
 }
 
-/* Estilo para el botón rojo */
 td button#rojo {
-  padding: 8px;
-  
-  margin-right: 5px;
-  background-color: #dc3545;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+  background-color: #DC3545;
 }
 
-/* Estilo para el icono dentro del botón */
 td button i {
-  margin-right: 5px;
   color: white;
+  
 }
 
-/* Estilo hover para resaltar el botón al pasar el ratón sobre él */
-td button:hover {
-  background-color: #166470;
+td button {
+  display: inline-block;
+  font-weight: 400;
+  border-radius: 0.2rem;
+  border: none;
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+
 }
+
+/* Efecto hover */
+td button#celeste:hover {
+  background-color: #126a7f;
+}
+
+td button#rojo:hover {
+  background-color: #ac2b38;
+}
+

@@ -70,7 +70,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <label for="Rol">Rol asignado: </label>
                                     <input type="text" class="form-control readonly-field" id="rol_pag" readonly value="<?php echo $datos["DBcargoV2"];?>"><br>
                                        
-                                    <button type="button"  id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
+                                    <button type="button" id="btn_modal_perfil" class="btn btn-info"><i class="ti ti-pencil"></i>Editar</button>
   
                                    
                                 </form>
@@ -91,61 +91,25 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
   
     
     <script>
-        // Obtener elementos del DOM
-        var modal_peril = document.getElementById('modalPerfil');
-        var openModalBtnPerfil = document.getElementById('btn_modal_perfil');
+    // Obtener elementos del DOM
+        var modalPerfil = document.getElementById('modalPerfil');
+        var btn_modal_perfil = document.getElementById('btn_modal_perfil');
 
         // Evento para abrir el modal
-        openModalBtnPerfil.onclick = function() {
-            modal_peril.style.display = 'block';
+        btn_modal_perfil.onclick = function() {
+            modalPerfil.style.display = 'block';
         }
 
        
-
-  
-
-//----------------------------------------------------------------
         function cerrarGeneral() {
-            var modal_peril = document.getElementById("modalPerfil");
+            var modalPerfil = document.getElementById("modalPerfil");
            
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Quieres finalizar el proceso de registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, estoy seguro',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_peril) {
-                        modal_peril.style.display = 'none';
-                    }
+            if (modalPerfil) {
+                modalPerfil.style.display = 'none';
+            }
                   
-                } else {
-                    // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...", "", {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        backgroundColor: "#e74c3c",  // Corregido de "background-color" a "backgroundColor"
-                        border: "1px solid #c0392b",
-                        color: "#ffffff"
-                    });
-
-                    
-                }
-            });
+               
         }
 
     </script>

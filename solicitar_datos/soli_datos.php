@@ -11,6 +11,8 @@
         $dato = array();
         if ($result->num_rows > 0) {
             $fila = $result->fetch_assoc();
+            $dato["DBid_usuV2"] = $fila["id_usu"];
+
             $dato["DBnom_completoV2"] = $fila["nombre_completo"];
          
             $dato["DBnom_usuV2"] = $fila["nombre_usu"];

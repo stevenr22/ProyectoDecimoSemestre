@@ -44,7 +44,7 @@
                                 <div class="table-responsive">
                                     <table id="tabla_asig_rol" class="table table-bordered">
                                         <thead>
-                                            <th><b>N° cédula</b></th>
+                                            <th><b>Código</b></th>
                                             <th><b>Nombres y Apellidos</b></th>
                                             <th><b>Nombre de usuario</b></th>
                                             <th><b>rol</b></th>
@@ -71,9 +71,9 @@
                                                 <td><?php echo $arreglo['correo'] ?></td>
                                                     
                                                 <td>
-                                                    <button type="button" id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button" onclick="abrirModal('<?php echo $arreglo['id_usu'];?>','<?php echo $arreglo['nombre_completo'];?>','<?php echo $arreglo['nombre_usu'];?>','<?php echo $arreglo['cargo'];?>','<?php echo $arreglo['correo'];?>');" class="edit-button"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
 
-                                                    <button type="button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="delete-button"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>
@@ -89,11 +89,76 @@
                     </div>
 
                 </div>
+                <?php include("../recursos/modals/modales.php");?>
+
             </div>
             
 
         </div>
     </div>
+    <script>
+        //ASIGNAR ROL
+        function abrirModal(id_usuario, nombre_completo, nombre_usu, cargo, correo) {
+            var modalAsignarRol = document.getElementById('modalAsignarROl');
+            modalAsignarRol.style.display = 'block';
+
+            // Llenar el formulario con datos del usuario
+            document.getElementById('id_usuario').value = id_usuario;
+            document.getElementById('NomCompleto_rol').value = nombre_completo;
+            document.getElementById('correo_rol').value = correo;
+            document.getElementById('NomUsuario_rol').value = nombre_usu;
+            document.getElementById('cargo_rol').value = cargo;
+
+        }
+        function cerrarGeneral() {
+            var modalAsignarRol = document.getElementById("modalAsignarROl");
+
+            if (modalAsignarRol) {
+                modalAsignarRol.style.display = 'none';
+            }
+        }
+
+        function actualizarRol() {
+            // Obtener los valores del formulario
+            var idUsuario = document.getElementById('id_usuario').value;
+            var nuevoRol = document.getElementById('selectRol').value;
+
+            // Realizar una solicitud AJAX para actualizar el rol del usuario
+            fetch('../actualizar/actualizar_rol.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id_usuario=' + idUsuario + '&nuevo_rol=' + nuevoRol,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // La actualización fue exitosa
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'El rol ha sido actualizado correctamente.',
+                        willClose: () => {
+                            // Redirigir después de cerrar el modal
+                            window.location.href = '../modulos_admin/auten_autori.php'; // Cambia esto según tu necesidad
+                        }
+                    });
+
+                } else {
+                    // La actualización falló, muestra un mensaje de error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al actualizar el rol.',
+                    });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+
 
  
     

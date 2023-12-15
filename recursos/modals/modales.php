@@ -359,3 +359,59 @@
        
     </div>
 </div>
+
+
+<!--MODAL ASIGNAR ROL-->
+<div id="modalAsignarROl" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar rol</h2>
+            <button class="close" onclick="cerrarGeneral()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form  id="formAsignarRol">
+
+
+
+                <label >Código: </label>
+                <input type="text" class="form-control readonly-field" name="id_usuario" id="id_usuario"><br>
+
+
+
+
+
+                <label >Nombre completo: </label>
+                <input type="text" class="form-control readonly-field" id="NomCompleto_rol" name="NomCompleto_rol"><br>
+
+                <label >Correo: </label>
+                <input type="email" class="form-control readonly-field" id="correo_rol" name="correo_rol"><br>
+
+                <label >Nombre de usuario: </label>
+                <input type="text" class="form-control readonly-field" id="NomUsuario_rol" name="NomUsuario_rol"><br>
+
+                <label >Cargo: </label>
+                <input type="text" class="form-control readonly-field" id="cargo_rol" name="cargo_rol"><br>
+
+
+
+                <label >Rol asignado: </label>
+                <select name="selectRol" class="form-select" id="selectRol">
+                    <?php include '../solicitar_datos/cargar_roles.php'; ?>
+                </select>
+
+                <br>
+
+                <button type="button" class="btn btn-primary" onclick="actualizarRol()">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+
+             
+            </form>
+         
+           
+         
+        </div>
+
+        
+       
+    </div>
+</div>
