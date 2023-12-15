@@ -1,3 +1,8 @@
+*{
+  color: black;
+}
+
+
 #linkNombre a {
     cursor: pointer;
     text-decoration: none; /* Esto elimina el subrayado predeterminado del enlace */
@@ -25,8 +30,13 @@ body .page-wrapper .card {
 }
 
 body .page-wrapper .card .card-header {
-  background-color: rgba(255, 167, 38, 0.5); /* 0.5 representa el 50% de transparencia */
+  background-color: #CFFFE2; /* 0.5 representa el 50% de transparencia */
+  border: solid #098f094f;
 }
+
+
+
+ 
 
 
 body .page-wrapper .card .card-body {
@@ -99,4 +109,42 @@ body .container-fluid #verde{
 body .container-fluid .card-body .iz{
   font-weight: bold;
   font-size: 40px;
+}
+
+/*BOTONES TABLAS*/
+
+
+td button#celeste {
+  padding: 8px;
+  margin-right: 5px;
+  background-color: #17A2B8;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+}
+
+/* Estilo para el botón rojo */
+td button#rojo {
+  padding: 8px;
+  
+  margin-right: 5px;
+  background-color: #dc3545;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+}
+
+/* Estilo para el icono dentro del botón */
+td button i {
+  margin-right: 5px;
+  color: white;
+}
+
+/* Estilo hover para resaltar el botón al pasar el ratón sobre él */
+td button:hover {
+  background-color: #166470;
 }

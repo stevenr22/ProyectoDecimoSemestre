@@ -151,23 +151,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </script>
    
    <script src="../js/ajax.js"></script>
-
-  
- 
-
-
-    
-   
-
-    
-
-
- 
-
-
-   
-   
-
 </body>
 </html>
 

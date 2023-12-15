@@ -1,32 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
+<style>
+    /* Estilo base para los botones */
+    td button {
+        padding: 8px;
+        margin-right: 5px;
+        background-color: #3498db;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        border-radius: 3px;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="recursos/alertas/sweetalert2.css">
+    /* Estilo para el icono dentro del botón */
+    td button i {
+        margin-right: 5px;
+    }
 
+    /* Estilo hover para resaltar el botón al pasar el ratón sobre él */
+    td button:hover {
+        background-color: #2980b9;
+    }
 
-  
-    <title>ACTUALIZAR PERFIL</title>
-</head>
+    /* Media query para hacer los botones responsive */
+    @media screen and (max-width: 600px) {
+        td button {
+            width: 100%; /* Hace que los botones ocupen el 100% del ancho en dispositivos pequeños */
+            margin-bottom: 5px; /* Añade espacio entre los botones en dispositivos pequeños */
+        }
+    }
+</style>
 
-<body>
-    <form class="form-group" id="formPerfil" >
-        NOMNRE
-        <input type="text" class="form-control" id="NomCompleto" ><br>
-        CORREO
-        <input type="email" class="form-control" id="correo" ><br>
-        USUARIO
-        <input type="text" class="form-control" id="NomUsuario"><br>
-        <button type="submit" class="btn btn-primary">Actualizar</button>        
-    </form>
-  
-
-    <script src="recursos/jquery/jquery3.7.1.min.js"></script>
-    <script src="recursos/alertas/sweetalert2.js"></script>
-    <script src="a.js"></script>
-
-</body>
-
-</html>
+<!-- Tu código HTML con los botones -->
+<td>
+    <button type="button"><i class="fa-solid fa-pencil"></i> Editar</button>
+    <button type="button"><i class="fa-solid fa-trash-can"></i> Eliminar</button>
+</td>

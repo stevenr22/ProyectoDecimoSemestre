@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Roles .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+   
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -52,19 +54,30 @@
 
                                         </thead>
                                         <tbody>
+                                        <?php
+                                            include("../bd/conexion.php");
+
+                                            $senten = "SELECT u.id_usu, u.nombre_usu, u.nombre_completo, r.cargo, r.id_rol,
+                                            u.correo
+                                            FROM usuario as u , rol as r WHERE u.id_rol=r.id_rol and r.estado = 1 AND u.estado = 1";
+                                            $respuesta = $conn->query($senten);
+                                            while ($arreglo = $respuesta->fetch_array()) {
+                                            ?>
                                             <tr>
-                                                <td>094356983</td>
-                                                <td>Steven Rojas</td>
-                                                <td>Srojas</td>
-                                                <td>Administrador</td>
-                                                <td>rojas@gmail.com</td>
+                                                <td><?php echo $arreglo['id_usu'] ?></td>
+                                                <td><?php echo $arreglo['nombre_completo'] ?></td>
+                                                <td><?php echo $arreglo['nombre_usu'] ?></td>
+                                                <td><?php echo $arreglo['cargo'] ?></td>
+                                                <td><?php echo $arreglo['correo'] ?></td>
+                                                    
                                                 <td>
-                                                    <button class="btn btn-info" id="editarUsu"><i class="ti ti-pencil"></i></button>
-                                                    <button class="btn btn-danger" id="eliminarUsu"><i class="ti ti-trash-x"></i></button>
+                                                    <button type="button" id="celeste"><i class="fa-solid fa-pencil"></i></button>
+
+                                                    <button type="button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>
-
+                                        <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
