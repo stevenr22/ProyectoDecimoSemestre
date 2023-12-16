@@ -7,6 +7,8 @@
     <title>Proveedores .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 
 </head>
 <body>
@@ -37,10 +39,14 @@
                         <div class="card-title"><h2><b>Proveedores</b></h2></div>
                     </div>  
                 </div>
+
+            
+                
                 <div class="col-md-4">
-                    <button type="button" id="btn_prove" class="btn btn-info" > + Registrar nuevo proveedor</button>
+                    <button type="button" id="btn_r_proveedores" class="btn btn-info" > + Registrar nuevo proveedor</button>
 
                 </div><br>
+               
 
 
                 <div class="row justify-content-center">
@@ -50,40 +56,55 @@
                                 <div class="table-responsive">
                                     <table id="miTablaprovee" class="table table-bordered" style="width:100%">
                                         <thead>
-                                            <th>CÓDIGO</th>
-                                            <th>NOMBRE</th>
-                                            <th>CONTACTO</th>
-                                            <th>DIRECCIÓN</th>
+                                            <th>Código</th>
+                                            <th>Empresa</th>
+                                            <th>Nombre contacto</th>
+                                            <th>Dirección</th>
                                             <th>N° de teléfono</th>
                                             <th>Fecha de registro</th>
                                             <th>Estado</th>
-                                            <th>ACCIONES</th>
+                                            <th>Acciones</th>
 
 
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                include("../bd/conexion.php");
+                                                $senten = $conn->query("SELECT * FROM proveedor WHERE estado = 'Operando' or estado = 'Deshabilitado' ORDER BY nombre");
+                                                while ($arreglo = $senten->fetch_array()) {
+                                                    $estado = $arreglo['estado'];
+
+                                                    if ($estado == 'Operando') {
+                                                        $clase_estado = 'operando';
+                                                    } else {
+                                                        $clase_estado = 'Deshabilitado';
+                                                    }
+                                                    
+                                            ?>
                                             <tr>
-                                                <td>001</td>
-                                                <td>Ecua S.A</td>
-                                                <td>Ing. Steven Rojas</td>
-                                                <td>Guasmo sur</td>
-                                                <td>094345957</td>
-                                                <td>12-02-2023</td>
-                                                <td>Activo</td>
+                                                <td><?php echo $arreglo['id_prove'] ?></td>
+                                                <td><?php echo $arreglo['nombre_empre'] ?></td>
+                                                <td><?php echo $arreglo['nombre_traba'] ?></td>
+                                                <td><?php echo $arreglo['direccion'] ?></td>
+                                                <td><?php echo $arreglo['num_tele'] ?></td>
+                                                <td><?php echo $arreglo['fecha_regis'] ?></td>
+                                                <td><?php echo $arreglo['estado'] ?></td>
                                                 <td>
                                                    
-                                                    <button class="btn btn-danger" id="btnPDF" onclick="exportarPDF2();" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
-                                                        <i class="ti ti-file-description"></i>
-                                                    </button>
-                                                    <button class="btn btn-warning" id="btn_borrar" onclick="borrar();" data-toggle="tooltip" data-placement="top" title="Eliminar proveedor">
-                                                        <i class="ti ti-trash"></i>
-                                                    </button>
+                                                    <button type="button" onclick="modalActuProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>','<?php echo $arreglo['nombre_traba'] ?>','<?php echo $arreglo['direccion'] ?>','<?php echo $arreglo['num_tele'] ?>','<?php echo $arreglo['fecha_regis'] ?>','<?php echo $arreglo['estado'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button" onclick="desabilitarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="naranja"><i class="ti ti-mist-off"></i></button>
+                                                    <button type="button" onclick="eliminarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" id="rojo"><i class="fa-solid fa-download"></i></button>
 
-                                                  
                                                 </td>
                                               
                                             </tr>
+                                            
+
                                         </tbody>
+                                        <?php } ?>
+                                       
+
 
                                     </table>
 
@@ -99,19 +120,6 @@
                 </div>
                 <?php include("../recursos/modals/modales.php");?>
                                 
-               
-              
-
-           
-          
-             
-
-                
-                
-
-               
-
-
 
             </div>
 
@@ -120,23 +128,88 @@
     </div>
     <script>
         // Obtener elementos del DOM
-        var modal = document.getElementById('modalProveedor');
-        var openModalBtn = document.getElementById('btn_prove');
+        var modalRegisProveedores = document.getElementById('modalRegisProveedores');
+        var btn_r_proveedores = document.getElementById('btn_r_proveedores');
 
         // Evento para abrir el modal
-        openModalBtn.onclick = function() {
-            modal.style.display = 'block';
+        btn_r_proveedores.onclick = function() {
+            modalRegisProveedores.style.display = 'block';
         }
 
        
 
-      
+
+
         function cerrarGeneral() {
-            var modalProveedor = document.getElementById("modalProveedor");
-            if (modalProveedor) {
-                modalProveedor.style.display = 'none';
-            }   
+            var modalRegisProveedores = document.getElementById("modalRegisProveedores");
+         
+            
+            if (modalRegisProveedores ) {
+               
+                modalRegisProveedores.style.display = 'none';
+               
+                
+              
+            }  
         }
+       
+
+      
+       
+
+
+        //----------------------------------------------------------------
+        //Registrar parcela
+
+        /*$("#formRegisProveedor").submit(function(e){
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var nom_prove = $.trim($("#nom_prove").val());
+            var nomb_trab_prov = $.trim($("#nomb_trab_prov").val());
+            var direc = $.trim($("#direc").val());
+            var telefo = $.trim($("#telefo").val());
+            var fech_regis_prov = $.trim($("#fech_regis_prov").val());
+
+
+           
+
+            // Enviar los datos mediante AJAX
+            $.ajax({
+                url: "../validacion_datos/validar_regis_proveedor.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+                type: "POST",
+                dataType: "json",
+                data: {nom_prove: nom_prove, 
+                    nomb_trab_prov: nomb_trab_prov, 
+                    direc: direc, 
+                    telefo: telefo,
+                    fech_regis_prov: fech_regis_prov},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro exitoso!',
+                        }).then((result) => {
+                            if(result.value){
+                                // Puedes redirigir a otra página o hacer algo más después del registro exitoso
+                                window.location.href = "../modulos_admin/r_proveedor.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'warning'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error en la solicitud',
+                        icon: 'error'
+                    });
+                }
+            });
+        });*/
 
  
     </script>
