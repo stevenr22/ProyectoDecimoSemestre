@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 15-12-2023 a las 04:03:13
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 16-12-2023 a las 08:36:44
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -33,8 +33,19 @@ CREATE TABLE `parcela` (
   `ancho` decimal(10,0) NOT NULL,
   `alto` decimal(10,0) NOT NULL,
   `fecha_registro` date NOT NULL,
-  `estado` int(255) NOT NULL DEFAULT 1
+  `estado` varchar(255) NOT NULL DEFAULT 'Operando'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `parcela`
+--
+
+INSERT INTO `parcela` (`id_parcela`, `nombre`, `ancho`, `alto`, `fecha_registro`, `estado`) VALUES
+(1, 'Parcela A', 33, 43, '2023-12-15', 'Eliminado'),
+(2, 'Parcela B', 34, 45, '2023-12-15', 'Operando'),
+(3, 'Parcela C', 454, 655, '2023-12-19', 'Eliminado'),
+(4, 'Parcela D', 454, 56, '2023-12-10', 'Operando'),
+(5, 'Parcela A', 32, 43, '2023-12-08', 'Eliminado');
 
 -- --------------------------------------------------------
 
@@ -56,7 +67,9 @@ CREATE TABLE `rol` (
 INSERT INTO `rol` (`id_rol`, `cargo`, `descripcion`, `estado`) VALUES
 (1, 'Administrador', 'Control sistema', 1),
 (2, 'Gerente', 'Control total', 1),
-(3, 'Empleado', 'Registro de datos', 1);
+(3, 'Empleado', 'Registro de datos', 1),
+(4, 'Proveedor', 'Otorgar insumos', 1),
+(5, 'Servientrega', 'Entregar productos a todo', 0);
 
 -- --------------------------------------------------------
 
@@ -82,7 +95,7 @@ INSERT INTO `usuario` (`id_usu`, `nombre_completo`, `correo`, `nombre_usu`, `cla
 (1, 'Steven Galo Rojas', 'rojas185@gmail.com', 'admin', '123', 1, 1),
 (2, 'Armando Rojas', 'armanddo@gmail.com', 'Arojas', '123', 1, 2),
 (3, 'Carmen Ana Guerrero', 'carmen@gmail.com', 'Crojas', '123', 1, 3),
-(4, 'Galo Rojas', 'galo123@gmail.com', 'galo', '123', 1, 3);
+(4, 'Galo Rojas', 'galo123@gmail.com', 'galo', '123', 1, 4);
 
 --
 -- Índices para tablas volcadas
@@ -115,13 +128,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `parcela`
 --
 ALTER TABLE `parcela`
-  MODIFY `id_parcela` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_parcela` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
