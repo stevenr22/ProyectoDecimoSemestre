@@ -39,18 +39,29 @@
                         <div class="card-title"><h2><b>Registro de solicitudes</b></h2></div>
                     </div>  
                 </div>
-                <div class="col-md-4 btn-container" id="botones_regis">
-                    <button type="button" id="btn_soli_insumos" class="btn">Registrar nueva solicitud
-                        <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
-                    </button>
 
-                </div><br>
-                <div class="col-md-4 btn-container" id="botones_pdf">
 
-                    <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
-                        <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
-                    </button>
+                <div class="botones_container">
+                    <div class="celeste">
+                        <button type="button" id="btn_soli_insumos" class="btn">Registrar nueva solicitud
+                            <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                   
+             
+                    <div class="rojo">
+                        <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                    
                 </div><br>
+
+
+
+
 
 
 

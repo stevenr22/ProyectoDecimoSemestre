@@ -39,10 +39,29 @@
                         <div class="card-title"><h2><b>Roles registrados</b></h2></div>
                     </div>  
                 </div>
-                <div class="col-md-4">
-                    <button type="button" id="btn_modal_regis_rol" class="btn btn-info" > + Registrar nuevo rol</button>
 
+
+
+                <div class="botones_container">
+                    <div class="celeste">
+                        <button type="button" id="btn_modal_regis_rol" class="btn">Registrar nuevo rol
+                            <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                   
+             
+                    <div class="rojo">
+                        <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                    
                 </div><br>
+
+
+              
 
 
                 <div class="row justify-content-center">

@@ -225,7 +225,18 @@
         ?>
 
 
+
+
         <!------------------------------------------------------------------------------------------------------------->
+
+        <li class="sidebar-item">
+                <a class="sidebar-link" href="../modulos_proveedores/dashboard_proveedor.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-truck-delivery"></i>
+                </span>
+                <span class="hide-menu">PROVEEDOR DASHBOARD</span>
+                </a>
+            </li>
          
  
 

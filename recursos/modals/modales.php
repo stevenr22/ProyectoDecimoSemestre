@@ -435,6 +435,7 @@
                     placeholder="Ingrese insumo"><br>
 
                 <label for="Provee">Seleccione el proveedor: </label>
+                
                 <select name="select_prove_soli" id="select_prove_soli" class="form-select">
                     <option value="">A</option>
                     <option value="">B</option>

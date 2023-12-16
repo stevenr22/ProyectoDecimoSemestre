@@ -197,61 +197,49 @@ tbody td.Deshabilitado:hover {
 
 
 /*BOTONES REGISTRO Y PDF*/
-.btn#btn_regis_proveedor {
-  background-color: #17A2B8; /* Cambia este valor al color que desees */
-  color: white; /* Cambia este valor al color del texto que desees */
+ .container-fluid .botones_container .celeste button{
+  background-color: #17A2B8;
+  color: white;
   padding: 10px; /* Ajusta el espaciado interior según sea necesario */
   border: none; /* Elimina el borde si no es necesario */
   cursor: pointer; /* Añade un indicador de cursor para resaltar la interactividad */
 }
 
-.btn#btn_regis_proveedor:hover {
+.container-fluid .botones_container .celeste button:hover {
   background-color: #0f606d; /* Cambia este valor al color que desees para el estado hover */
 }
 
 
 
-.btn#btn_pdf_arriba {
-  background-color: #DC3545; /* Cambia este valor al color que desees */
-  color: white; /* Cambia este valor al color del texto que desees */
+.container-fluid .botones_container .rojo button{
+  background-color: #DC3545;
+  color: white;
   padding: 10px; /* Ajusta el espaciado interior según sea necesario */
   border: none; /* Elimina el borde si no es necesario */
   cursor: pointer; /* Añade un indicador de cursor para resaltar la interactividad */
 }
 
-.btn#btn_pdf_arriba:hover {
+.container-fluid .botones_container .rojo button:hover {
   background-color: #68171f; /* Cambia este valor al color que desees para el estado hover */
 }
-#botones_regis{
+
+.container-fluid .botones_container{
   display: flex;
   justify-content: space-between;
 }
-#botones_pdf{
-  display: flex;
-  justify-content: space-between;
-}
 
 
-#btn_regis_proveedor{
+
+.container-fluid .botones_container button{
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#btn_pdf_arriba{
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-#btn_regis_proveedor i {
-  color: white; /* Cambia este valor al color que desees para el icono */
-  font-size: 1.5em; /* Ajusta el tamaño del icono según sea necesario */
-  margin-left: 10px; /* Añade un espacio a la derecha del icono */
-}
-#btn_pdf_arriba i {
+
+.container-fluid .botones_container i {
   color: white; /* Cambia este valor al color que desees para el icono */
   font-size: 1.5em; /* Ajusta el tamaño del icono según sea necesario */
   margin-left: 10px; /* Añade un espacio a la derecha del icono */
@@ -260,32 +248,3 @@ tbody td.Deshabilitado:hover {
 
 
 
-
-.btn#btn_soli_insumos {
-  background-color: #17A2B8; /* Cambia este valor al color que desees */
-  color: white; /* Cambia este valor al color del texto que desees */
-  padding: 10px; /* Ajusta el espaciado interior según sea necesario */
-  border: none; /* Elimina el borde si no es necesario */
-  cursor: pointer; /* Añade un indicador de cursor para resaltar la interactividad */
-}
-
-.btn#btn_soli_insumos:hover {
-  background-color: #0f606d; /* Cambia este valor al color que desees para el estado hover */
-}
-#btn_soli_insumos{
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#btn_soli_insumos i {
-  color: white; /* Cambia este valor al color que desees para el icono */
-  font-size: 1.5em; /* Ajusta el tamaño del icono según sea necesario */
-  margin-left: 10px; /* Añade un espacio a la derecha del icono */
-}
-#btn_soli_insumos i {
-  color: white; /* Cambia este valor al color que desees para el icono */
-  font-size: 1.5em; /* Ajusta el tamaño del icono según sea necesario */
-  margin-left: 10px; /* Añade un espacio a la derecha del icono */
-}

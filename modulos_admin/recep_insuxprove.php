@@ -41,10 +41,26 @@
                         <div class="card-title"><h2><b>Historial de nuevos insumos</b></h2></div>
                     </div>  
                 </div>
-                <div class="col-md-4">
-                    <button type="button" id="openModalBtn" class="btn btn-info" > + Registrar nuevo insumo</button>
 
+                <div class="botones_container">
+                    <div class="celeste">
+                        <button type="button" id="openModalBtn" class="btn">Registrar nuevo insumo
+                            <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                   
+             
+                    <div class="rojo">
+                        <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                    
                 </div><br>
+
+
 
 
                 <div class="row justify-content-center">

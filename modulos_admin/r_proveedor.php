@@ -34,24 +34,36 @@
             <?php include("../partes/encabezado.php");?>
             <!--  Header End -->
             <div class="container-fluid">
+
+
+                
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title"><h2><b>Proveedores</b></h2></div>
                     </div>  
                 </div>
-                <div class="col-md-4 btn-container" id="botones_regis">
-                    <button type="button" id="btn_regis_proveedor" class="btn">Registrar nuevo proveedor
-                        <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
-                    </button>
 
+                <div class="botones_container">
+                    <div class="celeste">
+                        <button type="button" id="btn_regis_proveedor" class="btn">Registrar nuevo proveedor
+                            <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                   
+             
+                    <div class="rojo">
+                        <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                    
                 </div><br>
-                <div class="col-md-4 btn-container" id="botones_pdf">
 
-                    <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
-                        <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
-                    </button>
-                </div><br>
 
+                
+                
 
 
 
