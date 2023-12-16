@@ -1,4 +1,16 @@
-<?php include("../autorizacion/admin.php");?>
+<?php include("../autorizacion/admin.php");
+    $query = "SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'
+    ORDER BY nombre ";
+    $result = mysqli_query($conn, $query);
+
+    // Verificar si hay resultados
+    if ($result) {
+        $parcelas = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        die("Error al obtener las parcelas: " . mysqli_error($conn));
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,177 +46,57 @@
                </div>  
            </div>
 
+          
+
            <div class="row justify-content-center">
+                <?php
+                    // Utiliza un bucle para recorrer las parcelas y generar las tablas
+                    foreach ($parcelas as $parcela) {
+                        $id_parcela = $parcela['id_parcela'];
+                        $nombre_parcela = $parcela['nombre'];
+                        $alto = $parcela['alto'];
+                        $ancho = $parcela['ancho'];
+                        $fecha_registro = $parcela['fecha_registro'];
+                        $estado_parcela = $parcela['estado']; 
+                        ?>
                 <div class="col-lg-6">
                    <div class="card w-100">
-                    <?php 
-                        include("../bd/conexion.php");
-                        $senten = $conn->query("SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'");
-                        while ($arreglo = $senten->fetch_array()) {
-                            $id_parcela = $arreglo['id_parcela'];
-                            $nombre_parcela = $arreglo['nombre'];
-
-                           
-                    ?>
-                        <div class="card-header">
-                            <div class="card-title"><h2><b><?php $nombre_parcela?></b></h2></div>
+                    
+                        <div class="card-header <?php echo ($estado_parcela == 'Deshabilitado') ? 'bg-danger' : ''; ?>">
+                            <div class="card-title">
+                                <h2>
+                                    <b>
+                                        <?php echo $nombre_parcela; ?> - <?php echo $estado_parcela; ?>
+                                    </b>
+                                </h2>
+                            </div>
 
                         </div>
                        <div class="card-body table-responsive">
-                            <table  id="miTablaParcelas" class="table table-striped table-bordered" cellspacing="0">
+                            <table id="miTablaParcelas<?php echo $id_parcela;?>" class="table table-striped table-bordered" cellspacing="0">
                                 <thead>
                                     <th><b>Código</b></th>
-                                    <th><b>Tipo insumo</b></th>
-                                    <th><b>Nombre insumo</b></th>
-                                    <th><b>Fecha de uso</b></th>
-                                    <th><b>Responsable</b></th>
-                                    <th><b>Rol</b></th>
-                                    <th><b>Cantidad</b></th>
-                                    <th><b>Estado</b></th>
+                                    <th><b>nombre</b></th>
+                                    <th><b>alto</b></th>
+                                    <th><b>ancho</b></th>
+                                    <th><b>fecha registro</b></th>
+                                    
 
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>001</td>
-                                        <td>Fertilizante</td>
-                                        <td>Amoniaco</td>
-                                        <td>12-03-2023</td>
-                                        <td>Jhon Rojas</td>
-                                        <td>Jornalero</td>
-                                        <td>32</td>
-                                        <td>
-                                            Operando
-                                        </td>
-
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                       </div>
-                   </div>
-               </div>
-
-               <div class="col-lg-6">
-                   <div class="card w-100">
-                        <div class="card-header">
-                            <div class="card-title"><h2><b>Parcela B</b></h2></div>
-
-                        </div>
-                       <div class="card-body table-responsive">
-                            <table  id="miTablaParcelas2" class="table table-striped table-bordered" cellspacing="0">
-                                <thead>
-                                    <th><b>Código</b></th>
-                                    <th><b>Tipo insumo</b></th>
-                                    <th><b>Nombre insumo</b></th>
-                                    <th><b>Fecha de uso</b></th>
-                                    <th><b>Responsable</b></th>
-                                    <th><b>Rol</b></th>
-                                    <th><b>Cantidad</b></th>
-                                    <th><b>Estado</b></th>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Fertilizante</td>
-                                        <td>Amoniaco</td>
-                                        <td>12-03-2023</td>
-                                        <td>Jhon Rojas</td>
-                                        <td>Jornalero</td>
-                                        <td>32</td>
-                                        <td>
-                                            Operando
-                                        </td>
-
+                                        <td><?php echo $id_parcela?></td>
+                                        <td><?php echo $nombre_parcela?></td>
+                                        <td><?php echo $alto?></td>
+                                        <td><?php echo $ancho?></td>
+                                        <td><?php echo $fecha_registro?></td>  
                                     </tr>
                                 </tbody>
                             </table>
                        </div>
                    </div>
                </div>
-
-
-               <div class="col-lg-6">
-                   <div class="card w-100">
-                        <div class="card-header">
-                            <div class="card-title"><h2><b>Parcela C</b></h2></div>
-
-                        </div>
-                       <div class="card-body table-responsive">
-                            <table  id="miTablaParcelas3" class="table table-striped table-bordered" cellspacing="0">
-                                <thead>
-                                    <th><b>Código</b></th>
-                                    <th><b>Tipo insumo</b></th>
-                                    <th><b>Nombre insumo</b></th>
-                                    <th><b>Fecha de uso</b></th>
-                                    <th><b>Responsable</b></th>
-                                    <th><b>Rol</b></th>
-                                    <th><b>Cantidad</b></th>
-                                    <th><b>Estado</b></th>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Fertilizante</td>
-                                        <td>Amoniaco</td>
-                                        <td>12-03-2023</td>
-                                        <td>Jhon Rojas</td>
-                                        <td>Jornalero</td>
-                                        <td>32</td>
-                                        <td>
-                                            Operando
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                       </div>
-                   </div>
-               </div>
-
-
-               <div class="col-lg-6">
-                   <div class="card w-100">
-                        <div class="card-header">
-                            <div class="card-title"><h2><b>Parcela D</b></h2></div>
-
-                        </div>
-                       <div class="card-body table-responsive">
-                            <table  id="miTablaParcelas4" class="table table-striped table-bordered" cellspacing="0">
-                                <thead>
-                                    <th><b>Código</b></th>
-                                    <th><b>Tipo insumo</b></th>
-                                    <th><b>Nombre insumo</b></th>
-                                    <th><b>Fecha de uso</b></th>
-                                    <th><b>Responsable</b></th>
-                                    <th><b>Rol</b></th>
-                                    <th><b>Cantidad</b></th>
-                                    <th><b>Estado</b></th>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Fertilizante</td>
-                                        <td>Amoniaco</td>
-                                        <td>12-03-2023</td>
-                                        <td>Jhon Rojas</td>
-                                        <td>Jornalero</td>
-                                        <td>32</td>
-                                        <td>
-                                            Operando
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                       </div>
-                   </div>
-               </div>
-               
-
+               <?php } ?>
            </div>
        </div>
        

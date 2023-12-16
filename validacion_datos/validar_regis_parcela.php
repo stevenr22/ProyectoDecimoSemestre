@@ -15,7 +15,7 @@ if (empty($nom_parce) || empty($ancho_parce) || empty($alto_parce)|| empty($fech
     $response['status'] = 'warning';
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
-    $query = "SELECT * FROM parcela WHERE nombre = '$nom_parce'";
+    $query = "SELECT * FROM parcela WHERE nombre = '$nom_parce' AND (estado IS NULL OR estado <> 'Eliminado');";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {

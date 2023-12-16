@@ -66,7 +66,7 @@
                                         <tbody>
                                             <?php
                                                 include("../bd/conexion.php");
-                                                $senten = $conn->query("SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'");
+                                                $senten = $conn->query("SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado' ORDER BY nombre");
                                                 while ($arreglo = $senten->fetch_array()) {
                                                     $estado = $arreglo['estado'];
 
@@ -281,7 +281,7 @@
                             data:{id_parcela: id_parcela},
                             success: function(response){
                                 Swal.fire({
-                                    title:'Eiminado',
+                                    title:'Deshabilitado',
                                     icon:'success',
                                     text:'La parcela' + nombre + 'se ha deshabilitado con exito!',
                                     confirmButtonText:'ok',
