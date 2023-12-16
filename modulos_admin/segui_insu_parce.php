@@ -37,8 +37,17 @@
            <div class="row justify-content-center">
                 <div class="col-lg-6">
                    <div class="card w-100">
+                    <?php 
+                        include("../bd/conexion.php");
+                        $senten = $conn->query("SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'");
+                        while ($arreglo = $senten->fetch_array()) {
+                            $id_parcela = $arreglo['id_parcela'];
+                            $nombre_parcela = $arreglo['nombre'];
+
+                           
+                    ?>
                         <div class="card-header">
-                            <div class="card-title"><h2><b>Parcela A</b></h2></div>
+                            <div class="card-title"><h2><b><?php $nombre_parcela?></b></h2></div>
 
                         </div>
                        <div class="card-body table-responsive">
@@ -68,6 +77,7 @@
                                         </td>
 
                                     </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                        </div>

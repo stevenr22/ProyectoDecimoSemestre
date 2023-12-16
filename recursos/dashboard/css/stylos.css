@@ -117,9 +117,13 @@ body .container-fluid .card-body .iz{
 /* Estilos iniciales */
 td{
   text-align: center;
+
 }
 td button#celeste {
   background-color: #17A2B8;
+}
+td button#naranja {
+  background-color: #d0a517;
 }
 
 td button#rojo {
@@ -138,8 +142,8 @@ td button {
   border: none;
   transition: background-color 0.3s;
   text-align: center;
-  padding: .25rem .5rem;
-  font-size: .875rem;
+  padding: .5rem .8rem;
+  font-size: 1rem;
   line-height: 1.5;
 
 }
@@ -152,4 +156,41 @@ td button#celeste:hover {
 td button#rojo:hover {
   background-color: #ac2b38;
 }
+
+td button#naranja:hover {
+  background-color: #897227;
+}
+
+
+/*ESTADOS*/
+tbody td.operando {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  
+  border-radius: 8px; /* Añade bordes redondeados */
+  display: inline-table;
+}
+
+tbody td.operando:hover {
+  background-color: darkgreen;
+}
+
+
+
+tbody td.Deshabilitado {
+  background-color: rgb(193, 29, 29);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  padding: 8px; /* Añade espacio interno a la celda */
+  border-radius: 8px; /* Añade bordes redondeados */
+}
+
+tbody td.Deshabilitado:hover {
+  background-color: rgb(134, 24, 24);
+}
+
 

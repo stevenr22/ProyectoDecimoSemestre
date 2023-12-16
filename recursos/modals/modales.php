@@ -86,7 +86,7 @@
 </div>
 
 <!--FIN MODAL-->
-<!-- CUARTO MODAL PARCELAS -->
+<!-- MODAL Registrar PARCELAS -->
 <div id="modalParcela" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -94,29 +94,81 @@
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="" class="form-group" id="formParce">
+            <form class="form-group" id="formRegisParce">
 
-                <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce">
 
-                <label for="Ancho">Ancho: </label>
+                <label >Nombre: </label>
+                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce"><br>
+
+                <label >Ancho: </label>
                 <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho"
-                    class="form-control">
+                    class="form-control"><br>
 
 
-                <label for="Alto">Alto: </label>
-                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el alto"
+                <label >Alto: </label>
+                <input type="number" name="ancho_parce" id="alto_parce" placeholder="Ingrese el alto"
+                    class="form-control"><br>
+
+                <label >Fecha de registro: </label>
+                <input type="date" name="fecha_regis_parce" id="fecha_regis_parce" 
                     class="form-control">
+
+                <br>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
             </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
+        
+            
+      
     </div>
 </div>
-
 <!--FIN MODAL-->
+<!-- MODAL ACTUALIZAR PARCELAS -->
+<div id="modalActuParce" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Parcelas</h2>
+            <button class="close" onclick="cerrarGeneral()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" id="formActuaParce">
+
+                <label>Código: </label>
+                <input type="text" readonly class="form-control readonly-field" id="id_parce_actu"><br>
+
+
+                <label >Nombre: </label>
+                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce_actu">
+
+                <label >Ancho: </label>
+                <input type="number" name="ancho_parce_actu" id="ancho_parce_actu" placeholder="Ingrese el ancho"
+                    class="form-control"><br>
+
+
+                <label >Alto: </label>
+                <input type="number" name="alto_parce_actu" id="alto_parce_actu" placeholder="Ingrese el alto"
+                    class="form-control"><br>
+
+                <label >Fecha de registro: </label>
+                <input type="date" name="fecha_regis_parce_actu" id="fecha_regis_parce_actu" 
+                    class="form-control">
+
+                <br>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" onclick="eliminarParcela();" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+            </form>
+        </div>
+        
+            
+      
+    </div>
+</div>
+<!--FIN MODAL-->
+
+
+
+
 <!-- QUINTO MODAL HERRAMIENTAS -->
 <div id="quintoModal" class="modal">
     <div class="modal-content">

@@ -7,6 +7,8 @@
     <title> Parcelas .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 
 </head>
 <body>
@@ -38,7 +40,7 @@
                     </div>  
                 </div>
                 <div class="col-md-4">
-                    <button type="button" id="btn_modal_parce" class="btn btn-info" > + Registrar nueva parcela</button>
+                    <button type="button" id="btn_regis_parcela" class="btn btn-info" > + Registrar nueva parcela</button>
 
                 </div><br>
 
@@ -51,33 +53,51 @@
 
                                     <table id="miParcela" class="table table-bordered" style="width:100%">
                                         <thead>
-                                            <th>CÓDIGO</th>
-                                            <th>NOMBRE</th>
-                                            <th>ANCHO</th>
-                                            <th>ALTO</th>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Ancho</th>
+                                            <th>Alto</th>
                                             <th>Fecha de registro</th>
-                                            <th>ESTADO</th>
-                                            <th>ACCIONES</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
 
 
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                include("../bd/conexion.php");
+                                                $senten = $conn->query("SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'");
+                                                while ($arreglo = $senten->fetch_array()) {
+                                                    $estado = $arreglo['estado'];
+
+                                                    if ($estado == 'Operando') {
+                                                        $clase_estado = 'operando';
+                                                    } else {
+                                                        $clase_estado = 'Deshabilitado';
+                                                    }
+                                            ?>
                                             <tr>
-                                                <td>001</td>
-                                                <td>Parcela A</td>
-                                                <td>34</td>
-                                                <td>43</td>
-                                                <td>12-02-2023</td>
-                                                <td>Operando</td>
+                                                <td><?php echo $arreglo['id_parcela'] ?></td>
+                                                <td><?php echo $arreglo['nombre'] ?></td>
+                                                <td><?php echo $arreglo['ancho'] ?></td>
+                                                <td><?php echo $arreglo['alto'] ?></td>
+                                                <td><?php echo $arreglo['fecha_registro'] ?></td>
+                                                
+                                               
+                                                <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                
+
                                                 <td>
                                                    
-                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar solicitud" id="editarparce"><i class="ti ti-pencil"></i></button>
-                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar solicitud" id="eliminarparce"><i class="ti ti-trash-x"></i></button>
+                                                    <button type="button" onclick="modalActuParce('<?php echo $arreglo['id_parcela'] ?>','<?php echo $arreglo['nombre'] ?>','<?php echo $arreglo['ancho'] ?>','<?php echo $arreglo['alto'] ?>','<?php echo $arreglo['fecha_registro'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button" onclick="desabilitarParcela('<?php echo $arreglo['id_parcela'] ?>','<?php echo $arreglo['nombre'] ?>');"  id="naranja"><i class="ti ti-mist-off"></i></button>
+                                                    <button type="button" onclick="eliminarParcela('<?php echo $arreglo['id_parcela'] ?>','<?php echo $arreglo['nombre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                   
                                                 </td>
                                               
                                             </tr>
                                         </tbody>
+                                        <?php } ?>
 
                                     </table>
 
@@ -98,10 +118,10 @@
     <script>
         // Obtener elementos del DOM
         var modal_parce = document.getElementById('modalParcela');
-        var openModalBtnParce = document.getElementById('btn_modal_parce');
+        var btn_regis_parcela = document.getElementById('btn_regis_parcela');
 
         // Evento para abrir el modal
-        openModalBtnParce.onclick = function() {
+        btn_regis_parcela.onclick = function() {
             modal_parce.style.display = 'block';
         }
 
@@ -111,12 +131,212 @@
 
 
 //----------------------------------------------------------------
+      
+
         function cerrarGeneral() {
             var modal_parce = document.getElementById("modalParcela");
-            if (modal_parce) {
-                modal_parce.style.display = 'none';
-            }   
+            var modalActuaParce = document.getElementById("modalActuParce");
+            
+            if (modal_parce || modalActuaParce) {
+                if (modal_parce) {
+                    modal_parce.style.display = 'none';
+                }
+                
+                if (modalActuaParce) {
+                    modalActuaParce.style.display = 'none';
+                }
+            }  
         }
+
+
+        //----------------------------------------------------------------
+        //Registrar parcela
+
+        $("#formRegisParce").submit(function(e){
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var nom_parce = $.trim($("#nom_parce").val());
+            var ancho_parce = $.trim($("#ancho_parce").val());
+            var alto_parce = $.trim($("#alto_parce").val());
+            var fecha_regis_parce = $.trim($("#fecha_regis_parce").val());
+
+
+           
+
+            // Enviar los datos mediante AJAX
+            $.ajax({
+                url: "../validacion_datos/validar_regis_parcela.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+                type: "POST",
+                dataType: "json",
+                data: {nom_parce: nom_parce, ancho_parce: ancho_parce, alto_parce: alto_parce, fecha_regis_parce: fecha_regis_parce},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro exitoso!',
+                        }).then((result) => {
+                            if(result.value){
+                                // Puedes redirigir a otra página o hacer algo más después del registro exitoso
+                                window.location.href = "../modulos_admin/r_parcelas.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'warning'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error en la solicitud',
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+
+
+         //----------------------------------------------------------------
+        //Editar actualizar
+        function modalActuParce(id_parce, nombre, alto, ancho, fecha) {
+                var modalActuParce = document.getElementById('modalActuParce');
+                modalActuParce.style.display = 'block';
+
+                // Llenar el formulario con datos del usuario
+                document.getElementById('id_parce_actu').value = id_parce;
+                document.getElementById('nom_parce_actu').value = nombre;
+                document.getElementById('alto_parce_actu').value = alto;
+                document.getElementById('ancho_parce_actu').value = ancho;
+                document.getElementById('fecha_regis_parce_actu').value = fecha;
+               
+
+            }
+           
+             $(document).ready(function() {
+                $("#modalActuParce").submit(function(e){
+                    e.preventDefault();
+                    var id_parce_actu = $.trim($("#id_parce_actu").val());
+                    var nom_parce_actu = $.trim($("#nom_parce_actu").val());
+                    var alto_parce_actu = $.trim($("#alto_parce_actu").val()); 
+                    var ancho_parce_actu = $.trim($("#ancho_parce_actu").val());
+                    var fecha_regis_parce_actu = $.trim($("#fecha_regis_parce_actu").val()); 
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/actualizar_datos_parcela.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_parce_actu: id_parce_actu, 
+                            nom_parce_actu: nom_parce_actu, 
+                            alto_parce_actu: alto_parce_actu,
+                            ancho_parce_actu: ancho_parce_actu,
+                            fecha_regis_parce_actu: fecha_regis_parce_actu},
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                                    if(result.value){
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+            });
+
+
+         //----------------------------------------------------------------
+        //deshabilitar parcela
+        function desabilitarParcela(id_parcela, nombre){
+                swal.fire({
+                    title:'Está seguro?',
+                    icon:'warning',
+                    text:'Desea deshabilitar la parcela:' + nombre ,
+                    confirmButtonText:'Sí, Eliminar',
+                    showDenyButton: true,
+                    denyButtonText: `Cancelar`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'../eliminar/deshabilitar_parcela.php',
+                            type: 'POST',
+                            data:{id_parcela: id_parcela},
+                            success: function(response){
+                                Swal.fire({
+                                    title:'Eiminado',
+                                    icon:'success',
+                                    text:'La parcela' + nombre + 'se ha deshabilitado con exito!',
+                                    confirmButtonText:'ok',
+                                }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                    
+                                    location.reload(); // Recarga la página actual
+                                    
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha deshabilitado la parcela', '', 'info')
+                    }
+                })
+            }
+            
+         //----------------------------------------------------------------
+        //Eliminar parcela
+        function eliminarParcela(id_parcela, nombre){
+                swal.fire({
+                    title:'Está seguro?',
+                    icon:'warning',
+                    text:'Desea eliminar la parcela:' + nombre ,
+                    confirmButtonText:'Sí, Eliminar',
+                    showDenyButton: true,
+                    denyButtonText: `Cancelar`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'../eliminar/eliminar_parcela.php',
+                            type: 'POST',
+                            data:{id_parcela: id_parcela},
+                            success: function(response){
+                                Swal.fire({
+                                    title:'Eiminado',
+                                    icon:'success',
+                                    text:'La parcela' + nombre + 'se ha eliminado con exito!',
+                                    confirmButtonText:'ok',
+                                }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                    
+                                    location.reload(); // Recarga la página actual
+                                    
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha eliminado la parcela', '', 'info')
+                    }
+                })
+            }
+
+
      
     </script>
 

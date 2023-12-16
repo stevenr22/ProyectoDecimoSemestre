@@ -7,6 +7,8 @@
     <title>Recepción insumos .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
     
 
 
@@ -69,8 +71,9 @@
                                                 <td>Ecua S.A.</td>
                                                 <td>12-02-2023</td>
                                                 <td>
+                                                    
                                                    
-                                                    <button class="btn btn-danger" onclick="exportarPDF();" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
+                                                    <button id="rojo" onclick="exportarPDF();" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
                                                         <i class="ti ti-file-description"></i>
                                                     </button>
                                                   

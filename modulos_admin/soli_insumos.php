@@ -7,6 +7,8 @@
     <title> Solicitud .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 
 </head>
 <body>
@@ -68,8 +70,8 @@
                                                 <td>Ecua S.A.</td>
                                                 <td>Enviado..</td>
                                                 <td>
-                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar solicitud" id="editarsoli"><i class="ti ti-pencil"></i></button>
-                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar solicitud" id="eliminarsoli"><i class="ti ti-trash-x"></i></button>
+                                                    <button type="button" class="edit-button" id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button" class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>
