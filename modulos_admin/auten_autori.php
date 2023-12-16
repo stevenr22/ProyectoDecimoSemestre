@@ -97,6 +97,7 @@
         </div>
     </div>
     <script>
+        
         //ASIGNAR ROL
         function abrirModal(id_usuario, nombre_completo, nombre_usu, cargo, correo) {
             var modalAsignarRol = document.getElementById('modalAsignarROl');

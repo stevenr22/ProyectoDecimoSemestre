@@ -335,7 +335,7 @@
             <form class="form-group" id="formRegisRol">
 
                 <label>Código: </label>
-                <input type="text" readonly class="form-control readonly-field" id="id_rol_act"><br>
+                <input type="text"  class="form-control" id="id_rol_act"><br>
 
                 <label >Nombre rol: </label>
                 <input type="text" class="form-control" id="nom_rol_actu" placeholder="Ingrese el nombre del rol"><br>
