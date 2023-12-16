@@ -17,7 +17,7 @@ if (empty($nom_prove) || empty($nomb_trab_prov) || empty($direc) || empty($telef
     $response['status'] = 'warning';
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
-    $query = "SELECT * FROM proveedor WHERE nom_prove = '$nom_prove' AND (estado IS NULL OR estado <> 'Eliminado');";
+    $query = "SELECT * FROM proveedor WHERE nombre_empre = '$nom_prove' AND (estado IS NULL OR estado <> 'Eliminado');";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {

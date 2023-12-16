@@ -39,10 +39,19 @@
                         <div class="card-title"><h2><b>Registro de solicitudes</b></h2></div>
                     </div>  
                 </div>
-                <div class="col-md-4">
-                    <button type="button" id="btn_modal_soli" class="btn btn-info" > + Registrar nueva solicitud</button>
+                <div class="col-md-4 btn-container" id="botones_regis">
+                    <button type="button" id="btn_soli_insumos" class="btn">Registrar nueva solicitud
+                        <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                    </button>
 
                 </div><br>
+                <div class="col-md-4 btn-container" id="botones_pdf">
+
+                    <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                        <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                    </button>
+                </div><br>
+
 
 
                 <div class="row justify-content-center">
@@ -96,7 +105,7 @@
     <script>
         // Obtener elementos del DOM
         var modal_soli = document.getElementById('modalSolici');
-        var openModalBtnSoli = document.getElementById('btn_modal_soli');
+        var openModalBtnSoli = document.getElementById('btn_soli_insumos');
 
         // Evento para abrir el modal
         openModalBtnSoli.onclick = function() {

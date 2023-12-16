@@ -39,14 +39,22 @@
                         <div class="card-title"><h2><b>Proveedores</b></h2></div>
                     </div>  
                 </div>
-
-            
-                
-                <div class="col-md-4">
-                    <button type="button" id="btn_r_proveedores" class="btn btn-info" > + Registrar nuevo proveedor</button>
+                <div class="col-md-4 btn-container" id="botones_regis">
+                    <button type="button" id="btn_regis_proveedor" class="btn">Registrar nuevo proveedor
+                        <i class="fa-solid fa-circle-plus" style="vertical-align: middle;"></i>
+                    </button>
 
                 </div><br>
-               
+                <div class="col-md-4 btn-container" id="botones_pdf">
+
+                    <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                        <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                    </button>
+                </div><br>
+
+
+
+
 
 
                 <div class="row justify-content-center">
@@ -70,7 +78,7 @@
                                         <tbody>
                                             <?php
                                                 include("../bd/conexion.php");
-                                                $senten = $conn->query("SELECT * FROM proveedor WHERE estado = 'Operando' or estado = 'Deshabilitado' ORDER BY nombre");
+                                                $senten = $conn->query("SELECT * FROM proveedor WHERE estado = 'Operando' or estado = 'Deshabilitado' ORDER BY nombre_empre");
                                                 while ($arreglo = $senten->fetch_array()) {
                                                     $estado = $arreglo['estado'];
 
@@ -88,13 +96,12 @@
                                                 <td><?php echo $arreglo['direccion'] ?></td>
                                                 <td><?php echo $arreglo['num_tele'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
-                                                <td><?php echo $arreglo['estado'] ?></td>
+                                                <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                                 <td>
                                                    
                                                     <button type="button" onclick="modalActuProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>','<?php echo $arreglo['nombre_traba'] ?>','<?php echo $arreglo['direccion'] ?>','<?php echo $arreglo['num_tele'] ?>','<?php echo $arreglo['fecha_regis'] ?>','<?php echo $arreglo['estado'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
                                                     <button type="button" onclick="desabilitarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="naranja"><i class="ti ti-mist-off"></i></button>
-                                                    <button type="button" onclick="eliminarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
-                                                    <button type="button" id="rojo"><i class="fa-solid fa-download"></i></button>
+                                                    <button type="button" onclick="eliminarProveedor('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
 
                                                 </td>
                                               
@@ -120,6 +127,19 @@
                 </div>
                 <?php include("../recursos/modals/modales.php");?>
                                 
+               
+              
+
+           
+          
+             
+
+                
+                
+
+               
+
+
 
             </div>
 
@@ -129,10 +149,10 @@
     <script>
         // Obtener elementos del DOM
         var modalRegisProveedores = document.getElementById('modalRegisProveedores');
-        var btn_r_proveedores = document.getElementById('btn_r_proveedores');
+        var btn_regis_proveedor = document.getElementById('btn_regis_proveedor');
 
         // Evento para abrir el modal
-        btn_r_proveedores.onclick = function() {
+        btn_regis_proveedor.onclick = function() {
             modalRegisProveedores.style.display = 'block';
         }
 
@@ -140,28 +160,31 @@
 
 
 
-        function cerrarGeneral() {
-            var modalRegisProveedores = document.getElementById("modalRegisProveedores");
-         
-            
-            if (modalRegisProveedores ) {
-               
-                modalRegisProveedores.style.display = 'none';
-               
-                
-              
-            }  
-        }
-       
+
 
       
-       
+        function cerrarGeneral() {
+            var modalRegisProveedores = document.getElementById("modalRegisProveedores");
+            var modalActuaProvee = document.getElementById("modalActuaProveedores");
+            
+            if (modalRegisProveedores || modalActuaProvee) {
+                if (modalRegisProveedores) {
+                    modalRegisProveedores.style.display = 'none';
+                }
+                
+                if (modalActuaProvee) {
+                    modalActuaProvee.style.display = 'none';
+                }
+            }  
+        }
 
 
-        //----------------------------------------------------------------
+
+
+          //----------------------------------------------------------------
         //Registrar parcela
 
-        /*$("#formRegisProveedor").submit(function(e){
+        $("#formRegisProveedor").submit(function(e){
             e.preventDefault();
 
             // Obtener los valores del formulario
@@ -209,8 +232,153 @@
                     });
                 }
             });
-        });*/
+        });
 
+
+        //Editar actualizar
+        function modalActuProvee(id_proveedor, nombre_empre, nombre_contac, direccion, telefo, fecha_regis) {
+            var modalActuParce = document.getElementById('modalActuaProveedores');
+            modalActuParce.style.display = 'block';
+
+            // Llenar el formulario con datos del usuario
+            document.getElementById('id_prove_actua').value = id_proveedor;
+            document.getElementById('nom_prove_actua').value = nombre_empre;
+            document.getElementById('nomb_trab_prov_actua').value = nombre_contac;
+            document.getElementById('direc_actua').value = direccion;
+            document.getElementById('telefo_actua').value = telefo;
+            document.getElementById('fech_regis_prov_actua').value = fecha_regis;
+
+               
+
+        }
+           
+             $(document).ready(function() {
+                $("#modalActuaProveedores").submit(function(e){
+                    e.preventDefault();
+                    var id_prove_actua = $.trim($("#id_prove_actua").val());
+                    var nom_prove_actua = $.trim($("#nom_prove_actua").val());
+                    var nomb_trab_prov_actua = $.trim($("#nomb_trab_prov_actua").val()); 
+                    var direc_actua = $.trim($("#direc_actua").val());
+                    var telefo_actua = $.trim($("#telefo_actua").val()); 
+                    var fech_regis_prov_actua = $.trim($("#fech_regis_prov_actua").val()); 
+
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/actualizar_datos_proveedor.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_prove_actua: id_prove_actua, 
+                            nom_prove_actua: nom_prove_actua, 
+                            nomb_trab_prov_actua: nomb_trab_prov_actua,
+                            direc_actua: direc_actua,
+                            telefo_actua: telefo_actua,
+                            fech_regis_prov_actua: fech_regis_prov_actua},
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                                    if(result.value){
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+            });
+
+
+
+         //----------------------------------------------------------------
+        //deshabilitar parcela
+        function desabilitarProvee(id_prove, nombre_empre){
+                swal.fire({
+                    title:'Está seguro?',
+                    icon:'warning',
+                    text:'Desea deshabilitar el proveedor:' + nombre_empre ,
+                    confirmButtonText:'Sí, Eliminar',
+                    showDenyButton: true,
+                    denyButtonText: `Cancelar`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'../eliminar/deshabilitar_proveedor.php',
+                            type: 'POST',
+                            data:{id_prove: id_prove},
+                            success: function(response){
+                                Swal.fire({
+                                    title:'Deshabilitado',
+                                    icon:'success',
+                                    text:'El proveedor' + nombre_empre + 'se ha deshabilitado con exito!',
+                                    confirmButtonText:'ok',
+                                }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                    
+                                    location.reload(); // Recarga la página actual
+                                    
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha deshabilitado la parcela', '', 'info')
+                    }
+                })
+            }
+
+
+
+        //----------------------------------------------------------------
+        //Eliminar parcela
+        function eliminarProveedor(id_prove, nombre_empre){
+                swal.fire({
+                    title:'Está seguro?',
+                    icon:'warning',
+                    text:'Desea eliminar el proveedor:' + nombre_empre ,
+                    confirmButtonText:'Sí, Eliminar',
+                    showDenyButton: true,
+                    denyButtonText: `Cancelar`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'../eliminar/eliminar_proveedor.php',
+                            type: 'POST',
+                            data:{id_prove: id_prove},
+                            success: function(response){
+                                Swal.fire({
+                                    title:'Eiminado',
+                                    icon:'success',
+                                    text:'El proveedor' + nombre_empre + 'se ha eliminado con exito!',
+                                    confirmButtonText:'ok',
+                                }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                    
+                                    location.reload(); // Recarga la página actual
+                                    
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha eliminado el proveedor', '', 'info')
+                    }
+                })
+            }
  
     </script>
  

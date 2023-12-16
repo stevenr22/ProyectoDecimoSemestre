@@ -278,6 +278,79 @@
        
     </div>
 </div>
+<!-- MODAL ACTUALIZAR PROVEEDOR -->
+<div id="modalActuaProveedores" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Actualizar datos del proveedor</h2>
+            <button class="close" onclick="cerrarGeneral()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" id="formRegisProveedor">
+
+
+                <label >Código: </label>
+                <input type="text" class="form-control" id="id_prove_actua" placeholder="Ingrese el nombre de la empresa">
+
+                <label >Nombre empresa: </label>
+                <input type="text" class="form-control" id="nom_prove_actua" placeholder="Ingrese el nombre de la empresa">
+                 
+                <label >Nombre del contacto: </label>
+                <input type="text" name="nomb_trab_prov" id="nomb_trab_prov_actua" class="form-control" placeholder="Ingrese nombre del trabajador"><br>
+
+                  
+                <label >Dirección: </label>
+                <input type="text" class="form-control" id="direc_actua" placeholder="Ingrese la dirección">
+                 
+                <label >N° de teléfono: </label>
+                <input type="tel" name="telefo" id="telefo_actua" class="form-control" placeholder="Ingrese el número de teléfono"><br>
+
+                <label >Fecha de registro: </label>
+                <input type="date" class="form-control" id="fech_regis_prov_actua"><br>
+
+
+                <button type="Submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+
+
+
+
+            </form>
+        </div>
+       
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
