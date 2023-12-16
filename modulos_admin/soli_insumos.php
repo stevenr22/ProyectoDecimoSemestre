@@ -101,53 +101,11 @@
             modal_soli.style.display = 'block';
         }
 
-       
-
-   
-
-
-//----------------------------------------------------------------
         function cerrarGeneral() {
             var modal_soli = document.getElementById("modalSolici");
-           
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Quieres finalizar el proceso de registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, estoy seguro',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_soli) {
-                        modal_soli.style.display = 'none';
-                    }
-                  
-                } else {
-                    // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...", "", {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        backgroundColor: "#e74c3c",  // Corregido de "background-color" a "backgroundColor"
-                        border: "1px solid #c0392b",
-                        color: "#ffffff"
-                    });
-
-                    
-                }
-            });
+            if (modal_soli) {
+                modal_soli.style.display = 'none';
+            }  
         }
      
     </script>

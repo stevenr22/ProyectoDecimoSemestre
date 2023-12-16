@@ -244,14 +244,14 @@
 
 
 <!-- MODAL REGISTRO DE ROL -->
-<div id="modalRol" class="modal">
+<div id="modalNueRol" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Registrar nuevo rol</h2>
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="" class="form-group" id="formRol">
+            <form class="form-group" id="formRegisRol">
 
                 <label for="Nombrerol">Nombre rol: </label>
                 <input type="text" class="form-control" id="nom_rol" placeholder="Ingrese el nombre del rol"><br>
@@ -260,13 +260,47 @@
                 <label for="Descripcion">Funciones: </label>
                 <input type="text" name="decrip_rol" id="decrip_rol" class="form-control"
                     placeholder="Ingrese las funciones"><br>
+                
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
 
             </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+        
+            
+        
+    </div>
+</div>
+
+<!-- MODAL ACTUALIZAR DE ROL -->
+<div id="modalActuaRol" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar rol</h2>
+            <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
+        <div class="modal-body">
+            <form class="form-group" id="formRegisRol">
+
+                <label>Código: </label>
+                <input type="text" readonly class="form-control readonly-field" id="id_rol_act"><br>
+
+                <label >Nombre rol: </label>
+                <input type="text" class="form-control" id="nom_rol_actu" placeholder="Ingrese el nombre del rol"><br>
+
+
+                <label >Funciones: </label>
+                <input type="text" name="decrip_rol" id="decrip_rol_actu" class="form-control"
+                    placeholder="Ingrese las funciones"><br>
+                
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+
+            </form>
+        </div>
+        
+            
+        
     </div>
 </div>
 

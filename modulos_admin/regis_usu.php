@@ -7,6 +7,8 @@
     <title> Crear rol .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 
 </head>
 <body>
@@ -38,7 +40,7 @@
                     </div>  
                 </div>
                 <div class="col-md-4">
-                    <button type="button" id="openModalRol" class="btn btn-info" > + Registrar nuevo rol</button>
+                    <button type="button" id="btn_modal_regis_rol" class="btn btn-info" > + Registrar nuevo rol</button>
 
                 </div><br>
 
@@ -59,16 +61,25 @@
 
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                include("../bd/conexion.php");
+
+                                                $senten = $conn->query("SELECT * FROM rol WHERE estado = 1");
+                                                while ($arreglo = $senten->fetch_array()) {
+                                            ?>
                                             <tr>
-                                                <td>001</td>
-                                                <td>Administrador</td>
-                                                <td>Control del sistema</td>
+                                                <td><?php echo $arreglo['id_rol'] ?></td>
+
+                                                <td><?php echo $arreglo['cargo'] ?></td>
+                                                <td><?php echo $arreglo['descripcion'] ?></td>
                                                 <td>
-                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar rol" id="editarRol"><i class="ti ti-pencil"></i></button>
-                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar rol" id="eliminarRol"><i class="ti ti-trash-x"></i></button>
+                                                    <button type="button" class="edit-button" onclick="modalActuRol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>','<?php echo $arreglo['descripcion'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+
+                                                    <button type="button" class="delete-button" onclick="eliminar_rol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>');" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>
+                                            <?php } ?>
 
                                         </tbody>
                                     </table>
@@ -89,68 +100,173 @@
     </div>
     <script>
         // Obtener elementos del DOM
-        var modal_rol = document.getElementById('modalRol');
-        var openModalBtnRol = document.getElementById('openModalRol');
+        var modalNueRol = document.getElementById('modalNueRol');
+        var btn_modal_regis_rol = document.getElementById('btn_modal_regis_rol');
 
         // Evento para abrir el modal
-        openModalBtnRol.onclick = function() {
-            modal_rol.style.display = 'block';
+        btn_modal_regis_rol.onclick = function() {
+            modalNueRol.style.display = 'block';
         }
 
-       
 
-   
-
-        function cerrarModal() {
-            var modal_rol = document.getElementById('modalRol');
-            modal_rol.style.display = 'none';
-           
-            
-        }
-
-//----------------------------------------------------------------
         function cerrarGeneral() {
-            var modal_rol = document.getElementById("modalRol");
-           
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Quieres finalizar el proceso de registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, estoy seguro',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_rol) {
-                        modal_rol.style.display = 'none';
-                    }
-                  
-                } else {
-                    // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...", "", {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        backgroundColor: "#e74c3c",  // Corregido de "background-color" a "backgroundColor"
-                        border: "1px solid #c0392b",
-                        color: "#ffffff"
-                    });
-
-                    
+            var modalNueRol = document.getElementById("modalNueRol");
+            var modalActuaRol = document.getElementById("modalActuaRol");
+            
+            if (modalNueRol || modalActuaRol) {
+                if (modalNueRol) {
+                    modalNueRol.style.display = 'none';
                 }
-            });
+                
+                if (modalActuaRol) {
+                    modalActuaRol.style.display = 'none';
+                }
+            }  
         }
+
+
+
+        // REGISTRAR DATOS
+     
+
+            $("#formRegisRol").submit(function(e){
+                e.preventDefault();
+                var nom_rol = $.trim($("#nom_rol").val());
+                var decrip_rol = $.trim($("#decrip_rol").val());
+            
+               
+
+                // Enviar los datos mediante AJAX
+                $.ajax({
+                    url: "../validacion_datos/validar_regis_rol.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {nom_rol: nom_rol, decrip_rol: decrip_rol}, // Asegúrate de que los nombres coincidan con los de tu PHP
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registro exitoso!',
+                            }).then((result) => {
+                                if(result.value){
+                                    window.location.href = "../modulos_admin/regis_usu.php";
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: response.message,
+                                icon: 'warning'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            title: 'Error en la solicitud',
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
+
+//----------------------------------------------------------------------------------------
+             //ACTUALIZAR DATOS DEL ROL
+
+             function modalActuRol(id_rol, cargo, descri) {
+                var modalActuaRol = document.getElementById('modalActuaRol');
+                modalActuaRol.style.display = 'block';
+
+                // Llenar el formulario con datos del usuario
+                document.getElementById('id_rol_act').value = id_rol;
+                document.getElementById('nom_rol_actu').value = cargo;
+                document.getElementById('decrip_rol_actu').value = descri;
+               
+
+            }
+           
+             $(document).ready(function() {
+                $("#modalActuaRol").submit(function(e){
+                    e.preventDefault();
+                    var id_rol_act = $.trim($("#id_rol_act").val());
+                    var nom_rol_actu = $.trim($("#nom_rol_actu").val());
+                    var decrip_rol_actu = $.trim($("#decrip_rol_actu").val()); // Obtener el ID
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/actualizar_datos_rol.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_rol_act: id_rol_act, nom_rol_actu: nom_rol_actu, decrip_rol_actu: decrip_rol_actu}, // Enviar el ID
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                                    if(result.value){
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+            });
+//----------------------------------------------------------------------------------------
+
+             /*ELIMINAR ROL*/
+             function eliminar_rol(id_rol, cargo){
+                swal.fire({
+                    title:'Está seguro?',
+                    icon:'warning',
+                    text:'Desea eliminar el rol:' +cargo,
+                    confirmButtonText:'Sí, Eliminar',
+                    showDenyButton: true,
+                    denyButtonText: `Cancelar`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'../eliminar/eliminar_rol.php',
+                            type: 'POST',
+                            data:{id_rol: id_rol},
+                            success: function(response){
+                                Swal.fire({
+                                    title:'Eiminado',
+                                    icon:'success',
+                                    text:'El cargo' +cargo+ 'se ha eliminado con exito!',
+                                    confirmButtonText:'ok',
+                                }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                    
+                                    location.reload(); // Recarga la página actual
+                                    
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha eliminado el rol', '', 'info')
+                    }
+                })
+            }
+
+
+
+
+
+
+
        
     </script>
 
