@@ -9,16 +9,18 @@ $fechSoli = (isset($_POST['fechSoli'])) ? $_POST['fechSoli'] : '';
 $selecttipoIns = (isset($_POST['selecttipoIns'])) ? $_POST['selecttipoIns'] : '';
 $nom_insu = (isset($_POST['nom_insu'])) ? $_POST['nom_insu'] : '';
 $Canti = (isset($_POST['Canti'])) ? $_POST['Canti'] : '';
+$id_usuario_empleado = (isset($_POST['id_usuario_empleado'])) ? $_POST['id_usuario_empleado'] : '';
 
 
-if (empty($fechSoli) || empty($selecttipoIns) || empty($nom_insu)|| empty($Canti)) {
+
+if (empty($fechSoli) || empty($selecttipoIns) || empty($nom_insu) || empty($Canti)){
     $response['status'] = 'warning';
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
       
        
-        $sql = "INSERT INTO solicitudes (fecha_solicitud, tipo_insumo, nombre_insu, cantidad) 
-        VALUES ('$fechSoli','$selecttipoIns','$nom_insu','$Canti')";
+        $sql = "INSERT INTO solicitudes (fecha_solicitud, tipo_insumo, nombre_insu, cantidad, id_usu) 
+        VALUES ('$fechSoli','$selecttipoIns','$nom_insu','$Canti','$id_usuario_empleado')";
         $resultado =  mysqli_query($conn,$sql);
 
         if($resultado) {

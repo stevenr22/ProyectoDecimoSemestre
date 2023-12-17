@@ -74,6 +74,9 @@
                                             <th><b>Tipo insumo solicitado</b></th>
                                             <th><b>Nombre insumo solicitado</b></th>
                                             <th><b>Cantidad</b></th>
+                                            <th><b>Nombre remitente</b></th>
+                                            <th><b>Cargo</b></th>
+
                                             <th><b>Estado</b></th>
                                             <th style="width: 20%;"><b>Acciones</b></th>
 
@@ -82,7 +85,12 @@
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT * FROM solicitudes WHERE estado = 'Enviado' or estado = 'Denegado' or estado = 'Verificado' ORDER BY id_solicitud");
+                                            $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
+                                            u.nombre_completo, r.cargo, s.estado
+                                            FROM usuario as u, rol as r, solicitudes as s
+                                            WHERE u.id_rol = r.id_rol and s.id_usu = s.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
+                                            ORDER BY s.id_solicitud");
+
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
@@ -102,6 +110,10 @@
                                                 <td><?php echo $arreglo['tipo_insumo'] ?></td>
                                                 <td><?php echo $arreglo['nombre_insu'] ?></td>
                                                 <td><?php echo $arreglo['cantidad'] ?></td>
+
+                                                <td><?php echo $arreglo['nombre_completo'] ?></td>
+                                                <td><?php echo $arreglo['cargo'] ?></td>
+
                                                 <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                                 <td>
                                                     <button type="button" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',

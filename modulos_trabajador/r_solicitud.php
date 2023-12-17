@@ -47,6 +47,9 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card w-100">
                             <div class="card-body">
                                 <form id="formRegisSoliInsuFalto" class="form-group">
+                                
+                                    <input type="hidden" id="id_usuario_empleado" value="<?php echo $datos["DBid_usuV2"]?>" class="form-control"><br>
+
                                     
                                     <label for="Fecha">Fecha de registro: </label>
                                     <input type="date" id="fechSoli" class="form-control"><br>
@@ -187,6 +190,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             var selecttipoIns = $.trim($("#selecttipoIns").val());
             var nom_insu = $.trim($("#nom_insu").val());
             var Canti = $.trim($("#Canti").val());
+            var id_usuario_empleado = $.trim($("#id_usuario_empleado").val());
+
 
 
 
@@ -201,7 +206,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 data: {fechSoli: fechSoli, 
                     selecttipoIns: selecttipoIns, 
                     nom_insu: nom_insu, 
-                    Canti: Canti},
+                    Canti: Canti, id_usuario_empleado: id_usuario_empleado},
                 success: function(response) {
                     if (response.status === 'success') {
                         Swal.fire({
