@@ -10,6 +10,9 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitud .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/noti/toastr.css">
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -43,7 +46,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
-                                <form id="formRegisSoliInsu" class="form-group">
+                                <form id="formRegisSoliInsuFalto" class="form-group">
                                     
                                     <label for="Fecha">Fecha de registro: </label>
                                     <input type="date" id="fechSoli" class="form-control"><br>
@@ -52,10 +55,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                       
                                     <label for="selecttipoIns">Seleccione el tipo de insumo</label>
                                     <select name="selecttipoIns" class="form-select" id="selecttipoIns">
-                                        <option value="">A</option>
-                                        <option value="">B</option>
-                                        <option value="">C</option>
-                                        <option value="">D</option>
+                                        <option value="Insecticida">Insecticida</option>
+                                        <option value="Herramienta">Herramienta</option>
+                                        <option value="Mango">Mango</option>
+                                        <option value="Maquinaria">Maquinaria</option>
                                     </select><br>
 
                                     <label for="Nombre_insu">Nombre del insumo: </label>
@@ -63,16 +66,16 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                        
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
-                                       
+                                    <br>
+                                    <button type="submit" id="btn_regis" class="btn btn-info">Registrar</button>
+                                    <br>
                                
                                        
                               
                                       
                                 </form>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" onclick="registrar();" id="btn_regis" class="btn btn-info">Registrar</button>
-                            </div>
+                            
 
                         </div>
                     </div>
@@ -90,39 +93,65 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
-                            <div class="table-responsive">
+                                <div class="table-responsive">
 
-                                <table id="tabla_estado_soli_empleado" class="table table-bordered" style="width:100%">
-                                    <thead>
-                                        <th><b>Código</b></th>
-                                        <th><b>Fecha solicitud</b></th>
-                                        <th><b>Insumos solicitados</b></th>
-                                        <th><b>Estado</b></th>
-                                        <th><b>Acciones</b></th>
+                                    <table id="tabla_estado_soli_empleado" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <th><b>Código</b></th>
+                                            <th><b>Fecha solicitud</b></th>
+                                            <th><b>Tipo insumo solicitado</b></th>
+                                            <th><b>Nombre insumo solicitado</b></th>
+                                            <th><b>Cantidad</b></th>
 
-
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>12-12-2023</td>
-                                            <td>Maquinaria</td>
-                                           
-                                            <td>Enviado..</td>
-                                            <td>
-                                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar solicitud" id="editarsoli"><i class="ti ti-pencil"></i></button>
-                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar solicitud" id="eliminarsoli"><i class="ti ti-trash-x"></i></button>
-                                            </td>
-                                        
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                                            <th><b>Estado</b></th>
+                                            <th><b>Acciones</b></th>
 
 
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT * FROM solicitudes WHERE estado = 'Enviado' or estado = 'Denegado' or estado = 'Verificado' ORDER BY id_solicitud");
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
 
-</div>
-                                
+                                                if ($estado == 'Enviado') {
+                                                    $clase_estado = 'Enviado';
+                                                } if($estado == 'Verificado'){
+                                                    $clase_estado = 'Verificado';
+                                                }
+                                                else {
+                                                    $clase_estado = 'Denegado';
+                                                }
+                                                        
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $arreglo['id_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['fecha_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['tipo_insumo'] ?></td>
+                                                <td><?php echo $arreglo['nombre_insu'] ?></td>
+                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                <td><?php echo $arreglo['estado'] ?></td>
+
+                                                <td>
+                                                    <button type="button" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
+                                                    '<?php echo $arreglo['fecha_solicitud'] ?>',
+                                                    '<?php echo $arreglo['tipo_insumo'] ?>',
+                                                    '<?php echo $arreglo['nombre_insu'] ?>',
+                                                    '<?php echo $arreglo['cantidad'] ?>');" id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                </td>
+                                            
+                                            </tr>
+
+                                        </tbody>
+                                        <?php } ?>
+
+                                    </table>
+
+
+
+                                </div>
+                                    
                             </div>
                             
 
@@ -130,6 +159,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     </div>
 
                 </div>
+                <?php include("../recursos/modals/modales.php");?>
+
             </div>
             
 
@@ -137,17 +168,134 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </div>
 
     <script>
-        function registrar(){
-            var btn_registrar = document.getElementById("btn_regis");
-            if (btn_registrar){
-                Swal.fire({
-                title: "Registro exitoso!",
-                text: "La solicitud fue enviada para su verificación!",
-                icon: "success"
-                });
 
-            }
+      
+           //----------------------------------------------------------------
+        //Registrar soli trabajador
+
+        $("#formRegisSoliInsuFalto").submit(function(e){
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var fechSoli = $.trim($("#fechSoli").val());
+            var selecttipoIns = $.trim($("#selecttipoIns").val());
+            var nom_insu = $.trim($("#nom_insu").val());
+            var Canti = $.trim($("#Canti").val());
+
+
+
+
+           
+
+            // Enviar los datos mediante AJAX
+            $.ajax({
+                url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+                type: "POST",
+                dataType: "json",
+                data: {fechSoli: fechSoli, 
+                    selecttipoIns: selecttipoIns, 
+                    nom_insu: nom_insu, 
+                    Canti: Canti},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro exitoso!',
+                        }).then((result) => {
+                            if(result.value){
+                                // Puedes redirigir a otra página o hacer algo más después del registro exitoso
+                                window.location.href = "../modulos_trabajador/r_solicitud.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'warning'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error en la solicitud',
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+
+
+
+
+         //Editar actualizar
+         function modalActuSoliTraba(id_soli, fecha, tipo_insu, nombre_insu, cantidad) {
+            var modalSoliciTrabajadorActua = document.getElementById('modalSoliciTrabajadorActua');
+
+            modalSoliciTrabajadorActua.style.display = 'block';
+
+            // Llenar el formulario con datos del usuario
+            document.getElementById('id_soli_actua').value = id_soli;
+            document.getElementById('fecha_soli_actua').value = fecha;
+            document.getElementById('ti_insu_actua').value = tipo_insu;
+            document.getElementById('nom_insu_actua').value = nombre_insu;
+            document.getElementById('canti_insu_actua').value = cantidad;
+           
+
+               
+
         }
+           
+             $(document).ready(function() {
+                $("#formActuaSoliTra").submit(function(e){
+                    e.preventDefault();
+                    var id_soli_actua = $.trim($("#id_soli_actua").val());
+                    var fecha_soli_actua = $.trim($("#fecha_soli_actua").val());
+                    var ti_insu_actua = $.trim($("#ti_insu_actua").val()); 
+                    var nom_insu_actua = $.trim($("#nom_insu_actua").val());
+                    var canti_insu_actua = $.trim($("#canti_insu_actua").val()); 
+
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/actualizar_datos_soli_traba.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_soli_actua: id_soli_actua, 
+                            fecha_soli_actua: fecha_soli_actua, 
+                            ti_insu_actua: ti_insu_actua,
+                            nom_insu_actua: nom_insu_actua,
+                            canti_insu_actua: canti_insu_actua},
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                                    if(result.value){
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+            });
+
+
+
+
+
         
     </script>
     

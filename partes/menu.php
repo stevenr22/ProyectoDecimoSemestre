@@ -47,23 +47,9 @@
                 <span class="hide-menu">Recepción de insumos</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="../modulos_admin/stock_disponible.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-stack"></i>
-                </span>
-                <span class="hide-menu">Stock disponible</span>
-                </a>
-            </li>
+            
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="../modulos_admin/control_inven.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-stack"></i>
-                </span>
-                <span class="hide-menu">Control de inventario</span>
-                </a>
-            </li>
+           
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Estadísticas</span>

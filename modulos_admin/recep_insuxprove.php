@@ -38,7 +38,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Historial de nuevos insumos</b></h2></div>
+                        <div class="card-title"><h2><b>Recepción nuevos insumos - Stock disponible</b></h2></div>
                     </div>  
                 </div>
 
@@ -70,33 +70,43 @@
                                 <div class="table-responsive">
                                     <table id="miTabla" class="table table-bordered" style="width:100%">
                                         <thead>
-                                            <th>CÓDIGO</th>
-                                            <th>CATEGORÍA</th>
-                                            <th>NOMBRE</th>
-                                            <th>PROVEEDOR</th>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Categoría</th>
+                                            
                                             <th>Fecha de registro</th>
-                                            <th>ACCIONES</th>
+                                            <th>cantidad</th>
+                                            <th>Estado</th>
+                                           
 
 
                                         </thead>
                                         <tbody>
+                                        <?php
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT * FROM insumos WHERE estado = 'Disponible' ORDER BY nombre");
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
+
+                                                if ($estado == 'Disponible') {
+                                                    $clase_estado = 'operando';
+                                                } 
+                                            ?>
                                             <tr>
-                                                <td>001</td>
-                                                <td>Insecticida</td>
-                                                <td>Sulfato de amonio</td>
-                                                <td>Ecua S.A.</td>
-                                                <td>12-02-2023</td>
-                                                <td>
-                                                    
-                                                   
-                                                    <button id="rojo" onclick="exportarPDF();" id="btnPDF" type="button" data-toggle="tooltip" data-placement="top" title="Exportar reporte">
-                                                        <i class="ti ti-file-description"></i>
-                                                    </button>
-                                                  
-                                                </td>
+                                                <td><?php echo $arreglo['id_insumo'] ?></td>
+                                                <td><?php echo $arreglo['nombre'] ?></td>
+                                                <td><?php echo $arreglo['tipo'] ?></td>
+                                                <td><?php echo $arreglo['fecha_regis'] ?></td>
+                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                <td><?php echo $arreglo['estado'] ?></td>
+
+
+                                                
                                               
                                             </tr>
                                         </tbody>
+                                        <?php } ?>
+
 
                                     </table>
 
@@ -135,7 +145,7 @@
 
     <script>
         // Obtener elementos del DOM
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('modalRegisInsumosComprados');
         var openModalBtn = document.getElementById('openModalBtn');
 
         // Evento para abrir el modal
@@ -143,139 +153,67 @@
             modal.style.display = 'block';
         }
 
-       
-
-        function validarYCerrarModal() {
-            var selectedValue = document.getElementById('cate').value;
-            if (selectedValue === "") {
-                // Si no se ha seleccionado ninguna opción, mostrar una notificación
-                mostrarError("Por favor, selecciona una categoría antes de continuar.");
-            } 
-           
-            else {
-                // Si se ha seleccionado una opción, realizar la limpieza y cerrar el modal
-              
-               
-                cerrarModal();
-                if(selectedValue =="Insecticidas"){
-                    mostrarSegundoModal();
-                }else if(selectedValue=="Mangos"){
-                    mostrartercerModal();
-                
-                }else if(selectedValue =="Herramientas"){
-                    mostrarquintooModal();
-                }else if(selectedValue =="Maquinarias"){
-                    mostrarsextoModal();
-                }
-            }
-        }
 
         function cerrarModal() {
-            var modal = document.getElementById('myModal');
+            var modal = document.getElementById('modalRegisInsumosComprados');
             modal.style.display = 'none';
-            limpiarSeleccion();
-            ocultarError();
+           
             
         }
 
-//----------------------------------------------------------------
-        function cerrarGeneral() {
-            var modal_insec = document.getElementById("segundoModal");
-            var modal_mango = document.getElementById("tercerModal");
-            var modal_maqui = document.getElementById("quintoModal");
-            var modal_herra = document.getElementById("sextoModal");
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Quieres finalizar el proceso de registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, estoy seguro',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Usuario hizo clic en "Sí, estoy seguro"
-                    if (modal_insec) {
-                        modal_insec.style.display = 'none';
+        //----------------------------------------------------------------
+        //Registrar parcela
+
+        $("#formRegisInsuCompra").submit(function(e){
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var nombre_insu = $.trim($("#nombre_insu").val());
+            var tip_insu = $.trim($("#tip_insu").val());
+            var canti_insu = $.trim($("#canti_insu").val());
+            var f_regis = $.trim($("#f_regis").val());
+
+
+           
+
+            // Enviar los datos mediante AJAX
+            $.ajax({
+                url: "../validacion_datos/validar_regis_nue_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+                type: "POST",
+                dataType: "json",
+                data: {nombre_insu: nombre_insu, 
+                    tip_insu: tip_insu, 
+                    canti_insu: canti_insu, 
+                    f_regis: f_regis},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro exitoso!',
+                        }).then((result) => {
+                            if(result.value){
+                                // Puedes redirigir a otra página o hacer algo más después del registro exitoso
+                                window.location.href = "../modulos_admin/recep_insuxprove.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'warning'
+                        });
                     }
-                    if (modal_mango) {
-                        modal_mango.style.display = 'none';
-                    }
-                    
-                    if (modal_maqui) {
-                        modal_maqui.style.display = 'none';
-                    }
-                    if (modal_herra) {
-                        modal_herra.style.display = 'none';
-                    }
-                } else {
-                    // Usuario hizo clic en "Cancelar"
-                    toastr.info("Continuando...", "", {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        backgroundColor: "#e74c3c",  // Corregido de "background-color" a "backgroundColor"
-                        border: "1px solid #c0392b",
-                        color: "#ffffff"
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error en la solicitud',
+                        icon: 'error'
                     });
-
-                    
                 }
             });
-        }
-
-
-       
+        });
 
       
-
-        
-
-//----------------------------------------------------------------
-        function limpiarSeleccion() {
-            // Limpiar o restablecer los valores de los elementos seleccionados
-            document.getElementById('cate').value = "";
-        }
-        
-        function mostrarError(mensaje) {
-            var mensajeError = document.getElementById('mensajeError');
-            mensajeError.textContent = mensaje;
-            mensajeError.style.display = 'block';
-        }
-        function ocultarError() {
-            var mensajeError = document.getElementById('mensajeError');
-            mensajeError.textContent = "";
-            mensajeError.style.display = 'none';
-        }
-
-
- //MODALES---------------------------------------------------------------------------------------------
-        function mostrarSegundoModal() {
-            var segundoModal = document.getElementById('segundoModal');
-            segundoModal.style.display = 'block';
-        }
-        function mostrartercerModal() {
-            var segundoModal = document.getElementById('tercerModal');
-            segundoModal.style.display = 'block';
-        }
-      
-        function mostrarquintooModal() {
-            var segundoModal = document.getElementById('quintoModal');
-            segundoModal.style.display = 'block';
-        }
-        function mostrarsextoModal() {
-            var segundoModal = document.getElementById('sextoModal');
-            segundoModal.style.display = 'block';
-        }
 
        
     

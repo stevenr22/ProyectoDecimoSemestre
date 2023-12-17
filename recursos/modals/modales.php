@@ -29,61 +29,6 @@
 
 <!--FIN MODAL-->
 
-<!-- SEGUNDO MODAL INSECTICIDA -->
-<div id="segundoModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Insecticida</h2>
-            <button class="close" onclick="cerrarGeneral()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form action="" class="form-group" id="formInsec">
-
-                <label for="Nombrei">Nombre insecticida: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_insec">
-
-                <label for="Gramo">Gramo: </label>
-                <input type="number" name="number_insec" id="num_insec" class="form-control">
-
-
-
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
-    </div>
-</div>
-
-<!--FIN MODAL-->
-<!-- TERCER MODAL MANGOS -->
-<div id="tercerModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Mangos</h2>
-            <button class="close" onclick="cerrarGeneral()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form action="" class="form-group" id="formMango">
-
-                <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese nombre del mango" id="nom_mango">
-
-                <label for="Tipo">Tipo: </label>
-                <input type="text" name="t_mango" id="t_mango" placeholder="Ingrese el tipo de mang"
-                    class="form-control">
-
-
-
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
-    </div>
-</div>
 
 <!--FIN MODAL-->
 <!-- MODAL Registrar PARCELAS -->
@@ -167,72 +112,45 @@
 <!--FIN MODAL-->
 
 
-
-
-<!-- QUINTO MODAL HERRAMIENTAS -->
-<div id="quintoModal" class="modal">
+<!-- REGISTRO DE INSUMOS -->
+<div id="modalRegisInsumosComprados" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Herramientas</h2>
-            <button class="close" onclick="cerrarGeneral()">&times;</button>
+            <h2>Registre los insumos comprados</h2>
+            <button class="close" onclick="cerrarModal()">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="" class="form-group" id="formMango">
+            <form  class="form-group" id="formRegisInsuCompra">
 
                 <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre de la herramienta"
-                    id="nom_mango">
-
+                <input type="text" class="form-control" placeholder="Ingrese el nombre del insumo" id="nombre_insu">
+                <br>
                 <label for="Tipo">Tipo: </label>
-                <input type="text" name="t_mango" id="t_mango" placeholder="Ingrese el tipo" class="form-control">
+                <input type="text" name="tip_insu" id="tip_insu" placeholder="Ingrese el tipo de insumo" class="form-control"><br>
+                <br>
+                <label for="Cantida">Cantidad: </label>
+                <input type="int" name="canti_insu" id="canti_insu" placeholder="Ingrese la cantidad" class="form-control"><br>
+                <br>
+                <label for="fecha">Fecha registro: </label>
+                <input type="date" name="f_regis" id="f_regis" class="form-control"><br>
+                <br>
+              
+
+
+             
+
+                <br>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarModal()">Cerrar</button>
+                <br>
 
 
 
             </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
-    </div>
-</div>
-
-<!--FIN MODAL-->
-<!-- SEXTO MODAL MAQUINARIA -->
-<div id="sextoModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Maquinarias</h2>
-            <button class="close" onclick="cerrarGeneral()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form action="" class="form-group" id="formMaqui">
-
-                <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre de la maquinaria" id="nom_maqui">
-
-                <label for="Tipo">Tipo: </label>
-                <input type="text" name="t_maqui" id="t_maqui" placeholder="Ingrese el tipo" class="form-control"><br>
-
-
-
-                <select name="t_parcela" id="t_parcela" class="form-select">
-                    <option value="" selected disabled></option>
-
-                    <option value="Parcela A">Parcela A</option>
-                    <option value="Parcela B">Parcela B</option>
-                    <option value="Parcela C">Parcela C</option>
-                    <option value="Parcela D">Parcela D</option>
-                </select>
-
-
-
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
+        
+           
+        
     </div>
 </div>
 
@@ -452,6 +370,61 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<!-- MODAL REGISTRO DE SOLICITUD TRABAJA-->
+<div id="modalSoliciTrabajadorActua" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar solicitud</h2>
+            <button class="close" onclick="cerrarGeneral()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" id="formActuaSoliTra">
+
+                <input type="hidden" name="id_soli_actua" id="id_soli_actua">
+
+                <label for="Fecha">Fecha: </label>
+                <input type="date" class="form-control" id="fecha_soli_actua"><br>
+
+
+                <label for="tipi">Tipo insumo: </label>
+                <input type="text" name="ti_insu_actua" id="ti_insu_actua" class="form-control"
+                    placeholder="Ingrese el tipo de insumo"><br>
+
+                <label for="NombreInsu">Nombre insumo: </label>
+                <input type="text" name="nom_insu_actua" id="nom_insu_actua" class="form-control"
+                    placeholder="Ingrese el nombre del insumo"><br>
+                
+                    <label for="Cantidad">Cantidad: </label>
+                <input type="text" name="canti_insu_actua" id="canti_insu_actua" class="form-control"
+                    placeholder="Ingrese la cantidad"><br>
+
+                <br>
+                    <button type="submit" class="btn btn-primary" id="btn_regis_soli">Registrar</button>
+                    <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                <br>
+
+                
+
+
+            </form>
+        </div>
+        
+           
+       
+    </div>
+</div>
+
+
+
+
+
+
 
 
 <!-- MODAL EDITAR PERFIL -->
