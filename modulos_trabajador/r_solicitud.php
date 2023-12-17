@@ -67,7 +67,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
                                     <br>
-                                    <button type="submit" id="btn_regis" class="btn btn-info">Registrar</button>
+                                    <button type="submit" id="btn_regis" class="btn btn-info">Enviar</button>
                                     <br>
                                
                                        
@@ -102,7 +102,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             <th><b>Tipo insumo solicitado</b></th>
                                             <th><b>Nombre insumo solicitado</b></th>
                                             <th><b>Cantidad</b></th>
-
                                             <th><b>Estado</b></th>
                                             <th><b>Acciones</b></th>
 
@@ -168,6 +167,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </div>
 
     <script>
+         function cerrarGeneral() {
+            var modalAsignarRol = document.getElementById("modalSoliciTrabajadorActua");
+
+            if (modalAsignarRol) {
+                modalAsignarRol.style.display = 'none';
+            }
+        }
 
       
            //----------------------------------------------------------------
@@ -205,6 +211,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                             if(result.value){
                                 // Puedes redirigir a otra página o hacer algo más después del registro exitoso
                                 window.location.href = "../modulos_trabajador/r_solicitud.php";
+                              
                             }
                         });
                     } else {
@@ -223,6 +230,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             });
         });
 
+       
 
 
 

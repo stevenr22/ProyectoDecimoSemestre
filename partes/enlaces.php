@@ -34,6 +34,8 @@
 <script src="../recursos/noti/toastr.min.js"></script>
 <script src="../js/tablas.js"></script>
 
+<script src="../js/notificaciones.js"></script>
+
 
 
 

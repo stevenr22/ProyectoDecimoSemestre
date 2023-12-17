@@ -334,40 +334,68 @@
 </div>
 
 
-<!-- MODAL REGISTRO DE SOLICITUD -->
-<div id="modalSolici" class="modal">
+<!-- MODAL EDITAR PARA ENVIAR LA SOLICITUD -->
+<div id="modalEditEnviSoli" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Registrar nueva solicitud</h2>
+            <h2>Edite la respectiva solicitud recibida para su verificación</h2>
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="" class="form-group" id="formSoli">
+            <form action="" class="form-group" id="formEditSoli">
+
+                <input type="hidden" id="id_soli_reci">
 
                 <label for="Fecha">Fecha: </label>
                 <input type="date" class="form-control" id="fecha_soli"><br>
 
 
-                <label for="Insu">Insumos: </label>
+                <label for="Insu">Nombre insumo: </label>
                 <input type="text" name="insu_soli" id="insu_soli" class="form-control"
+                    placeholder="Ingrese nombre insumo"><br>
+                
+                <label for="TInsu">Tipo insumo: </label>
+                <input type="text" name="t_insu_soli" id="t_insu_soli" class="form-control"
+                    placeholder="Ingrese insumo"><br>
+
+                <label for="canti">Cantidad: </label>
+                <input type="text" name="canti_soli" id="canti_soli" class="form-control"
                     placeholder="Ingrese insumo"><br>
 
                 <label for="Provee">Seleccione el proveedor: </label>
+                <?php 
+                    include("../bd/conexion.php");
+                    // Consulta para obtener los proveedores
+                    $sql = "SELECT id_prove, nombre_empre FROM proveedor";
+                    $result = $conn->query($sql);
+
+                    // Cerrar la conexión a la base de datos
+                    $conn->close();
+
+                ?>
                 
                 <select name="select_prove_soli" id="select_prove_soli" class="form-select">
-                    <option value="">A</option>
-                    <option value="">B</option>
-                    <option value="">C</option>
-                </select>
+                <?php
+                    // Mostrar opciones basadas en los resultados de la consulta
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row["nombre_empre"] . "'>" . $row["nombre_empre"] . "</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No hay proveedores disponibles</option>";
+                    }
+                ?>
+                </select><br>
 
 
-
+                <button type="submit" class="btn btn-primary" id="btn_regis_soli">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                <br>
             </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="btn_regis_soli">Registrar</button>
-            <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
-        </div>
+       
+          
+       
     </div>
 </div>
 

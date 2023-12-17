@@ -7,16 +7,9 @@
         <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
           <i class="ti ti-menu-2"></i>
         </a>
-      </li>
 
-      <!---CAMPANITA-->
-      <li class="nav-item">
-        <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-          <i class="ti ti-bell-ringing"></i>
-          <div class="notification bg-primary rounded-circle"></div>
-        </a>
       </li>
-           
+    
             
 
     </ul>

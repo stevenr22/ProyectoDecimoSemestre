@@ -248,3 +248,19 @@ tbody td.Deshabilitado:hover {
 
 
 
+
+
+.btn_enviar{
+  display: none; 
+  background-color: green;
+  padding: 10px; 
+  border: none;
+  cursor: pointer;
+}
+
+.btn_enviar:hover{
+ 
+  background-color: rgb(1, 72, 1);
+  
+}
+
