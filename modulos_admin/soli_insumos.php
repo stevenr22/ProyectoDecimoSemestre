@@ -88,7 +88,7 @@
 
                                                 if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                } if($estado == 'Verificado'){
+                                                }else if($estado == 'Verificado'){
                                                     $clase_estado = 'Verificado';
                                                 }
                                                 else {
@@ -102,7 +102,7 @@
                                                 <td><?php echo $arreglo['tipo_insumo'] ?></td>
                                                 <td><?php echo $arreglo['nombre_insu'] ?></td>
                                                 <td><?php echo $arreglo['cantidad'] ?></td>
-                                                <td><?php echo $arreglo['estado'] ?></td>
+                                                <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                                 <td>
                                                     <button type="button" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',

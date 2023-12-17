@@ -264,3 +264,53 @@ tbody td.Deshabilitado:hover {
   
 }
 
+/*ESTADOS SOLICITUDES*/
+
+/*ESTADOS*/
+
+tbody td.Enviado {
+  background-color: rgb(7, 96, 174);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  padding: 8px; /* Añade espacio interno a la celda */
+  border-radius: 8px; /* Añade bordes redondeados */
+}
+
+tbody td.Enviado:hover {
+  background-color: rgb(2, 47, 86);
+}
+
+
+
+tbody td.Denegado {
+  background-color: rgb(193, 29, 29);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  padding: 8px; /* Añade espacio interno a la celda */
+  border-radius: 8px; /* Añade bordes redondeados */
+}
+
+tbody td.Denegado:hover {
+  background-color: rgb(134, 24, 24);
+}
+
+
+
+
+tbody td.Verificado {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  padding: 8px; /* Añade espacio interno a la celda */
+  border-radius: 8px; /* Añade bordes redondeados */
+}
+
+tbody td.Verificado:hover {
+  background-color: rgb(3, 84, 3);
+}

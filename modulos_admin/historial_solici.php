@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial solicitudes .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -33,6 +35,17 @@
                         <div class="card-title"><h2><b>Historial</b></h2></div>
                     </div>  
                 </div>
+                <div class="botones_container">
+                  
+             
+                  <div class="rojo">
+                      <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                          <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                      </button>
+
+                  </div>
+                  
+              </div><br>
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -44,28 +57,48 @@
                                         <thead>
                                             <th><b>Código</b></th>
                                             <th><b>Fecha solicitud</b></th>
-                                            <th><b>Insumos solicitados</b></th>
-                                            <th><b>Proveedor</b></th>
+                                            <th><b>Tipo insumo solicitado</b></th>
+                                            <th><b>Nombre insumo solicitado</b></th>
+                                            <th><b>Proveeddor</b></th>
+
+                                            <th><b>Cantidad</b></th>
                                             <th><b>Estado</b></th>
-                                            <th><b>Acciones</b></th>
 
 
                                         </thead>
                                         <tbody>
+                                        <?php
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT * FROM solicitudes estado = 'Enviado' or estado = 'Denegado' or estado = 'Verificado' ORDER BY id_solicitud");
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
+
+                                                if ($estado == 'Enviado') {
+                                                    $clase_estado = 'Enviado';
+                                                } if($estado == 'Verificado'){
+                                                    $clase_estado = 'Verificado';
+                                                }
+                                                else {
+                                                    $clase_estado = 'Denegado';
+                                                }
+                                                        
+                                                ?>
                                             <tr>
-                                                <td>001</td>
-                                                <td>12-12-2023</td>
-                                                <td>Maquinaria</td>
-                                                <td>Ecua S.A.</td>
-                                                <td>Enviado..</td>
-                                                <td>
-                                                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Exportar reporte" id="reporte_pdf"><i class="ti ti-file-description"></i></button>
-                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar solicitud" id="eliminarsoli"><i class="ti ti-trash-x"></i></button>
-                                                </td>
+                                                <td><?php echo $arreglo['id_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['fecha_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['tipo_insumo'] ?></td>
+                                                <td><?php echo $arreglo['nombre_insu'] ?></td>
+                                                <td><?php echo $arreglo['proveedor'] ?></td>
+
+                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                
                                             
                                             </tr>
 
                                         </tbody>
+                                        <?php } ?>
+
                                     </table>
 
 
