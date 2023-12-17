@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-12-2023 a las 20:42:09
+-- Tiempo de generación: 17-12-2023 a las 02:23:28
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -24,27 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria`
+-- Estructura de tabla para la tabla `insumos`
 --
 
-CREATE TABLE `categoria` (
-  `id_cate` int(11) NOT NULL,
+CREATE TABLE `insumos` (
+  `id_insumo` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `id_proc` int(11) DEFAULT NULL,
-  `id_parcela` int(11) DEFAULT NULL
+  `tipo` varchar(255) NOT NULL,
+  `fecha_regis` date NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `estado` varchar(255) NOT NULL DEFAULT 'Disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `comprobante`
+-- Volcado de datos para la tabla `insumos`
 --
 
-CREATE TABLE `comprobante` (
-  `id_compro` int(11) NOT NULL,
-  `nombre_empre` varchar(255) NOT NULL DEFAULT 'GESTION MANGO',
-  `id_solicitud` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+INSERT INTO `insumos` (`id_insumo`, `nombre`, `tipo`, `fecha_regis`, `cantidad`, `estado`) VALUES
+(1, 'Sulfato de amonio', 'Insecticida', '2023-03-08', 23, 'Disponible');
 
 -- --------------------------------------------------------
 
@@ -53,10 +50,10 @@ CREATE TABLE `comprobante` (
 --
 
 CREATE TABLE `parcela` (
-  `id_parcela` int(255) NOT NULL,
+  `id_parcela` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `ancho` decimal(10,0) NOT NULL,
-  `alto` decimal(10,0) NOT NULL,
+  `ancho` int(11) NOT NULL,
+  `alto` int(11) NOT NULL,
   `fecha_registro` date NOT NULL,
   `estado` varchar(255) NOT NULL DEFAULT 'Operando'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -66,41 +63,9 @@ CREATE TABLE `parcela` (
 --
 
 INSERT INTO `parcela` (`id_parcela`, `nombre`, `ancho`, `alto`, `fecha_registro`, `estado`) VALUES
-(1, 'Parcela A', 33, 43, '2023-12-15', 'Eliminado'),
-(2, 'Parcela B', 34, 45, '2023-12-15', 'Operando'),
-(3, 'Parcela C', 454, 655, '2023-12-19', 'Eliminado'),
-(4, 'Parcela D', 454, 56, '2023-12-10', 'Operando'),
-(5, 'Parcela A', 32, 43, '2023-12-08', 'Eliminado');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `produccion`
---
-
-CREATE TABLE `produccion` (
-  `id_produccion` int(11) NOT NULL,
-  `id_usu_emple` int(11) NOT NULL,
-  `id_proc` int(11) NOT NULL,
-  `id_parcela` int(11) NOT NULL,
-  `id_cate` int(11) NOT NULL,
-  `estado` varchar(255) NOT NULL DEFAULT 'Operando'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `producto`
---
-
-CREATE TABLE `producto` (
-  `id_proc` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `fecha_registro` date NOT NULL,
-  `id_cate` int(11) NOT NULL,
-  `id_parcela` int(11) NOT NULL,
-  `estado` varchar(255) NOT NULL DEFAULT 'Operando'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+(1, 'Parcela A', 23, 23, '2023-12-06', 'Operando'),
+(2, 'Parcela B', 756, 5675, '2023-11-29', 'Operando'),
+(3, 'Parcela C', 576, 678, '2023-11-29', 'Operando');
 
 -- --------------------------------------------------------
 
@@ -113,7 +78,7 @@ CREATE TABLE `proveedor` (
   `nombre_empre` varchar(255) NOT NULL,
   `nombre_traba` varchar(255) NOT NULL,
   `direccion` varchar(255) NOT NULL,
-  `num_tele` varchar(255) NOT NULL,
+  `num_tele` int(11) NOT NULL,
   `fecha_regis` date NOT NULL,
   `estado` varchar(255) NOT NULL DEFAULT 'Operando'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -123,9 +88,9 @@ CREATE TABLE `proveedor` (
 --
 
 INSERT INTO `proveedor` (`id_prove`, `nombre_empre`, `nombre_traba`, `direccion`, `num_tele`, `fecha_regis`, `estado`) VALUES
-(1, 'Ecua S.A.', 'Ing. Steven Rojas Guerrero', 'Guasmo sur', '09695849', '2023-11-28', 'Operando'),
-(2, 'Industrias S.A.', 'Ing. Marcos Ponguillo', 'Central 23', '09695849', '2023-12-06', 'Operando'),
-(3, 'Ali S.A.', 'Ing. Alejandro Joel', 'Norte 234', '09695849', '2023-12-01', 'Eliminado');
+(1, 'Ecua S.A.', 'Ing. Steven Rojas', 'Guasmo sur', 9695849, '2023-12-06', 'Operando'),
+(2, 'Industrias S.A.', 'Ing. Marcos Ponguillo', 'Central 23', 9695849, '2023-12-05', 'Operando'),
+(3, 'Ali S.A.', 'Ing. Alejandro Joel', 'Central 23', 9695849, '2023-12-13', 'Operando');
 
 -- --------------------------------------------------------
 
@@ -138,7 +103,7 @@ CREATE TABLE `rol` (
   `cargo` varchar(255) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -147,9 +112,7 @@ CREATE TABLE `rol` (
 INSERT INTO `rol` (`id_rol`, `cargo`, `descripcion`, `estado`) VALUES
 (1, 'Administrador', 'Control sistema', 1),
 (2, 'Gerente', 'Control total', 1),
-(3, 'Empleado', 'Registro de datos', 1),
-(4, 'Proveedor', 'Otorgar insumos', 1),
-(5, 'Servientrega', 'Entregar productos a todo', 0);
+(3, 'Empleado', 'Registrar uso de insumos y actividades', 1);
 
 -- --------------------------------------------------------
 
@@ -158,35 +121,21 @@ INSERT INTO `rol` (`id_rol`, `cargo`, `descripcion`, `estado`) VALUES
 --
 
 CREATE TABLE `solicitudes` (
-  `id_soli` int(11) NOT NULL,
+  `id_solicitud` int(11) NOT NULL,
+  `fecha_solicitud` date NOT NULL,
+  `tipo_insumo` varchar(255) NOT NULL,
   `nombre_insu` varchar(255) NOT NULL,
-  `cantidad` varchar(255) NOT NULL,
-  `fecha_regis_soli` date NOT NULL,
-  `id_usu` int(11) NOT NULL,
-  `id_cate` int(11) NOT NULL,
-  `id_prove` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
   `estado` varchar(255) NOT NULL DEFAULT 'Enviado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `uso_producto`
+-- Volcado de datos para la tabla `solicitudes`
 --
 
-CREATE TABLE `uso_producto` (
-  `id_regis_uso` int(11) NOT NULL,
-  `cantidad` varchar(255) NOT NULL,
-  `actividad` varchar(255) NOT NULL,
-  `fecha_inic` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `fecha_uso` date NOT NULL,
-  `id_proc` int(11) NOT NULL,
-  `id_usu_emple` int(11) NOT NULL,
-  `id_parcela` int(11) NOT NULL,
-  `id_provee` int(11) NOT NULL,
-  `estado` varchar(255) NOT NULL DEFAULT 'Operando'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `nombre_insu`, `cantidad`, `estado`) VALUES
+(1, '2023-12-20', 'Herramienta', 'Sulfato de potasio 123', 234, 'Enviado'),
+(2, '2023-12-08', 'Mango', 'Mango kent', 3, 'Enviado');
 
 -- --------------------------------------------------------
 
@@ -195,67 +144,39 @@ CREATE TABLE `uso_producto` (
 --
 
 CREATE TABLE `usuario` (
-  `id_usu` int(255) NOT NULL,
-  `nombre_completo` text NOT NULL,
+  `id_usu` int(11) NOT NULL,
+  `nombre_completo` varchar(255) NOT NULL,
   `correo` varchar(255) NOT NULL,
   `nombre_usu` varchar(255) NOT NULL,
   `clave` varchar(255) NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 1,
   `id_rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id_usu`, `nombre_completo`, `correo`, `nombre_usu`, `clave`, `estado`, `id_rol`) VALUES
-(1, 'Steven Galo Rojas', 'rojas185@gmail.com', 'admin', '123', 1, 1),
-(2, 'Armando Rojas', 'armanddo@gmail.com', 'Arojas', '123', 1, 2),
-(3, 'Carmen Ana Guerrero', 'carmen@gmail.com', 'Crojas', '123', 1, 3),
-(4, 'Galo Rojas', 'galo123@gmail.com', 'galo', '123', 1, 4);
+(1, 'Steven Rojas Guerrero', 'rojas185@gmail.com', 'admin', '123', 1, 1),
+(2, 'Armando Rojas', 'armando@gmail.com', 'Arojas', '123', 1, 2),
+(3, 'Carmen Guerrero', 'carmen@gmail.com', 'Crojas', '123', 1, 3);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `categoria`
+-- Indices de la tabla `insumos`
 --
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id_cate`),
-  ADD KEY `id_proc` (`id_proc`),
-  ADD KEY `id_parcela` (`id_parcela`);
-
---
--- Indices de la tabla `comprobante`
---
-ALTER TABLE `comprobante`
-  ADD PRIMARY KEY (`id_compro`),
-  ADD KEY `id_solicitud` (`id_solicitud`);
+ALTER TABLE `insumos`
+  ADD PRIMARY KEY (`id_insumo`);
 
 --
 -- Indices de la tabla `parcela`
 --
 ALTER TABLE `parcela`
   ADD PRIMARY KEY (`id_parcela`);
-
---
--- Indices de la tabla `produccion`
---
-ALTER TABLE `produccion`
-  ADD PRIMARY KEY (`id_produccion`),
-  ADD KEY `id_usu_emple` (`id_usu_emple`),
-  ADD KEY `id_proc` (`id_proc`),
-  ADD KEY `id_parcela` (`id_parcela`),
-  ADD KEY `id_cate` (`id_cate`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id_proc`),
-  ADD KEY `id_cate` (`id_cate`),
-  ADD KEY `id_parcela` (`id_parcela`);
 
 --
 -- Indices de la tabla `proveedor`
@@ -273,20 +194,7 @@ ALTER TABLE `rol`
 -- Indices de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  ADD PRIMARY KEY (`id_soli`),
-  ADD KEY `id_usu` (`id_usu`),
-  ADD KEY `id_cate` (`id_cate`),
-  ADD KEY `id_prove` (`id_prove`);
-
---
--- Indices de la tabla `uso_producto`
---
-ALTER TABLE `uso_producto`
-  ADD PRIMARY KEY (`id_regis_uso`),
-  ADD KEY `id_proc` (`id_proc`),
-  ADD KEY `id_usu_emple` (`id_usu_emple`),
-  ADD KEY `id_parcela` (`id_parcela`),
-  ADD KEY `id_provee` (`id_provee`);
+  ADD PRIMARY KEY (`id_solicitud`);
 
 --
 -- Indices de la tabla `usuario`
@@ -300,34 +208,16 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `categoria`
+-- AUTO_INCREMENT de la tabla `insumos`
 --
-ALTER TABLE `categoria`
-  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `comprobante`
---
-ALTER TABLE `comprobante`
-  MODIFY `id_compro` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `insumos`
+  MODIFY `id_insumo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `parcela`
 --
 ALTER TABLE `parcela`
-  MODIFY `id_parcela` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de la tabla `produccion`
---
-ALTER TABLE `produccion`
-  MODIFY `id_produccion` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-  MODIFY `id_proc` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_parcela` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -339,75 +229,23 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `id_soli` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `uso_producto`
---
-ALTER TABLE `uso_producto`
-  MODIFY `id_regis_uso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`id_proc`) REFERENCES `producto` (`id_proc`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `categoria_ibfk_2` FOREIGN KEY (`id_parcela`) REFERENCES `parcela` (`id_parcela`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `comprobante`
---
-ALTER TABLE `comprobante`
-  ADD CONSTRAINT `comprobante_ibfk_1` FOREIGN KEY (`id_solicitud`) REFERENCES `solicitudes` (`id_soli`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `produccion`
---
-ALTER TABLE `produccion`
-  ADD CONSTRAINT `produccion_ibfk_1` FOREIGN KEY (`id_proc`) REFERENCES `producto` (`id_proc`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `produccion_ibfk_2` FOREIGN KEY (`id_usu_emple`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `produccion_ibfk_3` FOREIGN KEY (`id_parcela`) REFERENCES `parcela` (`id_parcela`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `produccion_ibfk_4` FOREIGN KEY (`id_cate`) REFERENCES `categoria` (`id_cate`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_cate`) REFERENCES `categoria` (`id_cate`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`id_parcela`) REFERENCES `parcela` (`id_parcela`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `solicitudes`
---
-ALTER TABLE `solicitudes`
-  ADD CONSTRAINT `solicitudes_ibfk_1` FOREIGN KEY (`id_usu`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `solicitudes_ibfk_2` FOREIGN KEY (`id_cate`) REFERENCES `categoria` (`id_cate`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `solicitudes_ibfk_3` FOREIGN KEY (`id_prove`) REFERENCES `proveedor` (`id_prove`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `uso_producto`
---
-ALTER TABLE `uso_producto`
-  ADD CONSTRAINT `uso_producto_ibfk_1` FOREIGN KEY (`id_usu_emple`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `uso_producto_ibfk_2` FOREIGN KEY (`id_parcela`) REFERENCES `parcela` (`id_parcela`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `uso_producto_ibfk_3` FOREIGN KEY (`id_proc`) REFERENCES `producto` (`id_proc`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `uso_producto_ibfk_4` FOREIGN KEY (`id_provee`) REFERENCES `proveedor` (`id_prove`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
