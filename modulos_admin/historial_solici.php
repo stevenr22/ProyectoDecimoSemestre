@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Historial</b></h2></div>
+                        <div class="card-title"><h2><b>Historial de solicitudes generales</b></h2></div>
                     </div>  
                 </div>
                 <div class="botones_container">
@@ -73,7 +73,7 @@
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
                                             u.nombre_completo, r.cargo, s.estado
                                             FROM usuario as u, rol as r, solicitudes as s
-                                            WHERE u.id_rol = r.id_rol and s.id_usu = s.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
+                                            WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
                                             ORDER BY s.id_solicitud");
                                              while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];

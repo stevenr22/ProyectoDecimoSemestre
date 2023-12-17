@@ -88,7 +88,7 @@
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
                                             u.nombre_completo, r.cargo, s.estado
                                             FROM usuario as u, rol as r, solicitudes as s
-                                            WHERE u.id_rol = r.id_rol and s.id_usu = s.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
+                                            WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
                                             ORDER BY s.id_solicitud");
 
                                             while ($arreglo = $senten->fetch_array()) {
@@ -124,7 +124,19 @@
                                                     
                                                     <button type="button"  class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                     
-                                                    <button type="button" class="btn_enviar" id="nuevoBoton_<?php echo $arreglo['id_solicitud'] ?>">
+                                                    <button type="button" class="btn_enviar" id="nuevoBoton_<?php echo $arreglo['id_solicitud']?>"
+                                                        data-id-solicitud="<?php echo $arreglo['id_solicitud']?>"
+                                                        data-fecha-solicitud="<?php echo $arreglo['fecha_solicitud']?>"
+                                                        data-tipo-insumo="<?php echo $arreglo['tipo_insumo']?>"
+                                                        data-nombre-insu="<?php echo $arreglo['nombre_insu']?>"
+                                                        data-cantidad="<?php echo $arreglo['cantidad']?>"
+                                                        data-nombre-completo="<?php echo $arreglo['nombre_completo']?>"
+                                                        data-cargo="<?php echo $arreglo['cargo']?>"
+                                                        data-estado="<?php echo $estado; ?>">
+                                                    
+                                                    
+                                                    
+                                                  
                                                         <i class="fa-solid fa-paper-plane"></i>
                                                     </button>
 
@@ -253,6 +265,10 @@
                     }
                 }
             });
+
+
+
+            
 
 
 
