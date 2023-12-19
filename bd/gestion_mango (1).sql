@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 17-12-2023 a las 02:23:28
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-12-2023 a las 00:18:14
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -24,6 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `comprobante`
+--
+
+CREATE TABLE `comprobante` (
+  `id_comprobante` int(11) NOT NULL,
+  `id_usu_gerente` int(11) NOT NULL,
+  `contenido_pdf` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `comprobante`
+--
+
+INSERT INTO `comprobante` (`id_comprobante`, `id_usu_gerente`, `contenido_pdf`) VALUES
+(6, 2, 0x636f6d70726f62616e74655f325f313730323935383737362e706466);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `insumos`
 --
 
@@ -33,15 +52,9 @@ CREATE TABLE `insumos` (
   `tipo` varchar(255) NOT NULL,
   `fecha_regis` date NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `estado` varchar(255) NOT NULL DEFAULT 'Disponible'
+  `estado` varchar(255) NOT NULL DEFAULT 'Disponible',
+  `id_usu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `insumos`
---
-
-INSERT INTO `insumos` (`id_insumo`, `nombre`, `tipo`, `fecha_regis`, `cantidad`, `estado`) VALUES
-(1, 'Sulfato de amonio', 'Insecticida', '2023-03-08', 23, 'Disponible');
 
 -- --------------------------------------------------------
 
@@ -126,6 +139,8 @@ CREATE TABLE `solicitudes` (
   `tipo_insumo` varchar(255) NOT NULL,
   `nombre_insu` varchar(255) NOT NULL,
   `cantidad` int(11) NOT NULL,
+  `proveedor` varchar(255) NOT NULL,
+  `id_usu` int(11) DEFAULT NULL,
   `estado` varchar(255) NOT NULL DEFAULT 'Enviado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -133,9 +148,41 @@ CREATE TABLE `solicitudes` (
 -- Volcado de datos para la tabla `solicitudes`
 --
 
-INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `nombre_insu`, `cantidad`, `estado`) VALUES
-(1, '2023-12-20', 'Herramienta', 'Sulfato de potasio 123', 234, 'Enviado'),
-(2, '2023-12-08', 'Mango', 'Mango kent', 3, 'Enviado');
+INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `nombre_insu`, `cantidad`, `proveedor`, `id_usu`, `estado`) VALUES
+(8, '2023-12-06', 'Insecticida', 'Amoniaco 23 kg', 32, 'Industrias S.A.', 3, 'Aprobado'),
+(9, '2023-12-12', 'Herramienta', 'Pala', 5, 'Ecua S.A.', 3, 'Denegado'),
+(10, '2023-12-22', 'Mango', 'Mango kent', 100, 'Ali S.A.', 3, 'Aprobado'),
+(11, '2023-12-24', 'Maquinaria', 'Tractor', 10, 'Industrias S.A.', 3, 'Denegado'),
+(14, '2023-12-16', 'Mango', 'Mango rojo', 45, 'Industrias S.A.', 3, 'Denegado'),
+(15, '2023-12-14', 'Insecticida', 'GGGG', 4, 'Ecua S.A.', 3, 'Aprobado'),
+(17, '2023-12-02', 'Herramienta', 'Mastillo', 3, 'Industrias S.A.', 3, 'Aprobado'),
+(18, '2023-12-22', 'Herramienta', 'werwrew', 3, 'Ecua S.A.', 3, 'Aprobado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `soli_recibidas`
+--
+
+CREATE TABLE `soli_recibidas` (
+  `id_soli_reci` int(11) NOT NULL,
+  `estado` varchar(255) NOT NULL DEFAULT 'Recibido',
+  `id_solicitudes` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `soli_recibidas`
+--
+
+INSERT INTO `soli_recibidas` (`id_soli_reci`, `estado`, `id_solicitudes`) VALUES
+(5, 'Aprobado', 8),
+(6, 'Denegado', 9),
+(7, 'Aprobado', 10),
+(8, 'Denegado', 11),
+(11, 'Denegado', 14),
+(12, 'Aprobado', 15),
+(14, 'Aprobado', 17),
+(15, 'Aprobado', 18);
 
 -- --------------------------------------------------------
 
@@ -160,17 +207,26 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usu`, `nombre_completo`, `correo`, `nombre_usu`, `clave`, `estado`, `id_rol`) VALUES
 (1, 'Steven Rojas Guerrero', 'rojas185@gmail.com', 'admin', '123', 1, 1),
 (2, 'Armando Rojas', 'armando@gmail.com', 'Arojas', '123', 1, 2),
-(3, 'Carmen Guerrero', 'carmen@gmail.com', 'Crojas', '123', 1, 3);
+(3, 'Carmen Guerrero', 'carmen@gmail.com', 'Crojas', '123', 1, 3),
+(4, 'Jose Rojas', 'jose@gmail.com', 'Jrojas', '123', 1, 3);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
+-- Indices de la tabla `comprobante`
+--
+ALTER TABLE `comprobante`
+  ADD PRIMARY KEY (`id_comprobante`),
+  ADD KEY `id_usu_gerente` (`id_usu_gerente`);
+
+--
 -- Indices de la tabla `insumos`
 --
 ALTER TABLE `insumos`
-  ADD PRIMARY KEY (`id_insumo`);
+  ADD PRIMARY KEY (`id_insumo`),
+  ADD KEY `id_usuario` (`id_usu`);
 
 --
 -- Indices de la tabla `parcela`
@@ -194,7 +250,15 @@ ALTER TABLE `rol`
 -- Indices de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  ADD PRIMARY KEY (`id_solicitud`);
+  ADD PRIMARY KEY (`id_solicitud`),
+  ADD KEY `id_usu` (`id_usu`);
+
+--
+-- Indices de la tabla `soli_recibidas`
+--
+ALTER TABLE `soli_recibidas`
+  ADD PRIMARY KEY (`id_soli_reci`),
+  ADD KEY `id_solicitudes` (`id_solicitudes`);
 
 --
 -- Indices de la tabla `usuario`
@@ -206,6 +270,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `comprobante`
+--
+ALTER TABLE `comprobante`
+  MODIFY `id_comprobante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
@@ -235,17 +305,47 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `soli_recibidas`
+--
+ALTER TABLE `soli_recibidas`
+  MODIFY `id_soli_reci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `comprobante`
+--
+ALTER TABLE `comprobante`
+  ADD CONSTRAINT `comprobante_ibfk_1` FOREIGN KEY (`id_usu_gerente`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `insumos`
+--
+ALTER TABLE `insumos`
+  ADD CONSTRAINT `insumos_ibfk_1` FOREIGN KEY (`id_usu`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `solicitudes`
+--
+ALTER TABLE `solicitudes`
+  ADD CONSTRAINT `solicitudes_ibfk_1` FOREIGN KEY (`id_usu`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `soli_recibidas`
+--
+ALTER TABLE `soli_recibidas`
+  ADD CONSTRAINT `soli_recibidas_ibfk_1` FOREIGN KEY (`id_solicitudes`) REFERENCES `solicitudes` (`id_solicitud`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
