@@ -157,7 +157,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Enviar reporte al proveedor</b></h2></div>
+                        <div class="card-title"><h2><b>Enviar comprobante al proveedor</b></h2></div>
                     </div>  
                 </div>
                 <div class="row justify-content-center">

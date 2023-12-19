@@ -1,7 +1,8 @@
 <?php
 require('../fpdf/fpdf.php');
 date_default_timezone_set('America/El_Salvador');
-
+// Include database connection
+include("../bd/conexion.php");
 class PDF extends FPDF
 {
     function Header()
@@ -46,8 +47,8 @@ class PDF extends FPDF
         $this->Cell(0, 5, utf8_decode("Gestión mango © Todos los derechos reservados."), 0, 0, "C");
     }
 }
-
-$pdf = new PDF();
+// Create PDF instance with horizontal orientation
+$pdf = new PDF('L', 'mm', 'A4');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetAutoPageBreak(true, 20);
@@ -55,41 +56,64 @@ $pdf->SetTopMargin(15);
 $pdf->SetLeftMargin(10);
 $pdf->SetRightMargin(10);
 
+// Set initial position for the table
 $pdf->setY(60);
-$pdf->setX(135);
-$pdf->Ln();
+$pdf->setX(10);
 
 // Table headers
 $pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(20, 7, utf8_decode('Cod'), 1, 0, 'C');
-$pdf->Cell(95, 7, utf8_decode('Descripción'), 1, 0, 'C');
-$pdf->Cell(20, 7, utf8_decode('Cant'), 1, 0, 'C');
-$pdf->Cell(50, 7, utf8_decode('Encargado'), 1, 1, 'C');
+$pdf->Cell(20, 7, utf8_decode('ID'), 1, 0, 'C');
+$pdf->Cell(20, 7, utf8_decode('Solicitud ID'), 1, 0, 'C');
+$pdf->Cell(25, 7, utf8_decode('Fecha'), 1, 0, 'C');
+$pdf->Cell(25, 7, utf8_decode('Tipo Insumo'), 1, 0, 'C');
+$pdf->Cell(30, 7, utf8_decode('Nombre Insumo'), 1, 0, 'C');
+$pdf->Cell(20, 7, utf8_decode('Cantidad'), 1, 0, 'C');
+$pdf->Cell(30, 7, utf8_decode('Proveedor'), 1, 0, 'C');
+$pdf->Cell(30, 7, utf8_decode('Usuario'), 1, 0, 'C');
+$pdf->Cell(20, 7, utf8_decode('Cargo'), 1, 0, 'C');
+$pdf->Cell(20, 7, utf8_decode('Estado'), 1, 1, 'C');
 
-// Table data (replace this loop with dynamic data)
-for ($i = 0; $i < 5; $i++) {
-    $pdf->Cell(20, 7, $i + 1, 1, 0, 'C');
-    $pdf->Cell(95, 7, utf8_decode('Descripción del producto'), 1, 0, 'L');
-    $pdf->Cell(20, 7, utf8_decode('20'), 1, 0, 'C');
-    $pdf->Cell(50, 7, utf8_decode('Ing Steven Rojas'), 1, 1, 'L');
+// Fetch data from the database
+$sql = "SELECT 
+            sr.id_soli_reci,
+            s.id_solicitud,
+            s.fecha_solicitud,
+            s.tipo_insumo,
+            s.nombre_insu,
+            s.cantidad,
+            s.proveedor,
+            u.nombre_completo,
+            r.cargo,
+            sr.estado
+        FROM soli_recibidas sr
+        JOIN solicitudes s ON sr.id_solicitudes = s.id_solicitud
+        JOIN usuario u ON s.id_usu = u.id_usu
+        JOIN rol r ON u.id_rol = r.id_rol";
+
+$result = $conn->query($sql);
+
+// Check if there are results
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Table data
+        $pdf->Cell(20, 7, $row['id_soli_reci'], 1, 0, 'C');
+        $pdf->Cell(20, 7, $row['id_solicitud'], 1, 0, 'C');
+        $pdf->Cell(25, 7, $row['fecha_solicitud'], 1, 0, 'C');
+        $pdf->Cell(25, 7, $row['tipo_insumo'], 1, 0, 'C');
+        $pdf->Cell(30, 7, $row['nombre_insu'], 1, 0, 'C');
+        $pdf->Cell(20, 7, $row['cantidad'], 1, 0, 'C');
+        $pdf->Cell(30, 7, $row['proveedor'], 1, 0, 'C');
+        $pdf->Cell(30, 7, $row['nombre_completo'], 1, 0, 'C');
+        $pdf->Cell(20, 7, $row['cargo'], 1, 0, 'C');
+        $pdf->Cell(20, 7, $row['estado'], 1, 1, 'C');
+    }
+} else {
+    $pdf->Cell(200, 7, utf8_decode('No hay datos para mostrar'), 1, 1, 'C');
 }
 
-// Uncomment the following section for dynamic data like subtotals and totals
-/*
-$pdf->Ln(10);
-$pdf->setX(95);
-$pdf->Cell(40, 6, 'Subtotal', 1, 0);
-$pdf->Cell(60, 6, '4000', '1', 1, 'R');
-$pdf->setX(95);
-$pdf->Cell(40, 6, 'Descuento', 1, 0);
-$pdf->Cell(60, 6, '4000', '1', 1, 'R');
-$pdf->setX(95);
-$pdf->Cell(40, 6, 'Impuesto', 1, 0);
-$pdf->Cell(60, 6, '4000', '1', 1, 'R');
-$pdf->setX(95);
-$pdf->Cell(40, 6, 'Total', 1, 0);
-$pdf->Cell(60, 6, '4000', '1', 1, 'R');
-*/
+// Close the database connection
+$conn->close();
 
+// Output the PDF
 $pdf->Output();
 ?>
