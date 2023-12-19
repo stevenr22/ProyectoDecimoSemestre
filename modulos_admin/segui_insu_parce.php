@@ -27,7 +27,7 @@
        <!-- Sidebar scroll-->
        <div>
            <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="../modulos_admin/dashboard.php" class="text-nowrap logo-img">
+                <a href="../inicio/dashboard.php" class="text-nowrap logo-img">
                    <img src="../recursos/img/GESTIÓN MANGO.png" width="100%" height="100%" alt="" />
                </a>
                <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">

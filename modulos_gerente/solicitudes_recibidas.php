@@ -10,6 +10,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/noti/toastr.css">
+
     <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
 
 </head>
@@ -21,7 +23,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="../modulos_admin/dashboard.php" class="text-nowrap logo-img">
+                    <a href="../inicio/dashboard.php" class="text-nowrap logo-img">
                         <img src="../recursos/img/GESTIÓN MANGO.png" width="100%" height="100%" alt="" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -43,7 +45,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                   
              
                   <div class="rojo">
-                      <button type="button" id="btn_pdf_arriba" class="btn" >Generar comprobante de compra   
+                      <button type="button" onclick="exportarPDF();" id="btn_pdf_comprobante" class="btn" >Generar comprobante de compra   
                           <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
                       </button>
 
@@ -152,6 +154,28 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         </div>
                     </div>
 
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><h2><b>Enviar reporte al proveedor</b></h2></div>
+                    </div>  
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <form id="formRegistroComprobante" class="form-group" enctype="multipart/form-data">
+                                    <input type="hidden" name="id_usu_gerente" id="id_usu_gerente" value="<?php echo $_SESSION['DBid_usu'];?>">
+
+                                    <label>Cargue el comprobante de compra</label><br><br>
+                                    <input class="form-control" type="file" name="comprobante" id="comprobante">
+                                    <br>
+                                    <button id="btn_enviar_comprobante" class="btn btn-success" type="button">Enviar</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!--MORAL-->
@@ -267,6 +291,82 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 });
                   
             });
+
+
+            //------GENERAR PDF--------------------
+            function exportarPDF(){
+                var btn_pdf_comprobante = document.getElementById("btn_pdf_comprobante");
+            
+                toastr.success("Descargando...", "", {
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 3000,
+                        extendedTimeOut: 1000,
+                        showDuration: 300,
+                        hideDuration: 1000,
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut"
+                    });
+                    window.location.href = '../reportes/report_soli_recibi.php';
+            }
+
+ 
+
+
+        //ENVIAR PDF--------------------------------------------------------------------
+        $("#btn_enviar_comprobante").click(function() {
+            var id_usu_gerente = $.trim($("#id_usu_gerente").val());
+            var comprobante = $("#comprobante")[0].files[0];
+
+            if (!comprobante) {
+                Swal.fire({
+                    title: 'Seleccione un comprobante',
+                    icon: 'warning'
+                });
+                return;
+            }
+
+            // Crear objeto FormData y agregar datos
+            var formData = new FormData();
+            formData.append('id_usu_gerente', id_usu_gerente);
+            formData.append('comprobante', comprobante);
+
+            $.ajax({
+                url: "../validacion_datos/validar_regis_comprobante.php", // Reemplaza con la ruta correcta
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.status === 'success') {
+                       
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Actualización exitosa!',
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'warning'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error en la solicitud',
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+           
     </script>
 
  

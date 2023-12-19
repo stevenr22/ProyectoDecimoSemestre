@@ -162,37 +162,6 @@ td button#naranja:hover {
 }
 
 
-/*ESTADOS*/
-tbody td.operando {
-  background-color: green;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  
-  border-radius: 8px; /* Añade bordes redondeados */
-  display: inline-table;
-}
-
-tbody td.operando:hover {
-  background-color: darkgreen;
-}
-
-
-
-tbody td.Deshabilitado {
-  background-color: rgb(193, 29, 29);
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  display: inline-block;
-  padding: 8px; /* Añade espacio interno a la celda */
-  border-radius: 8px; /* Añade bordes redondeados */
-}
-
-tbody td.Deshabilitado:hover {
-  background-color: rgb(134, 24, 24);
-}
-
 
 
 
@@ -268,64 +237,90 @@ tbody td.Deshabilitado:hover {
 
 /*ESTADOS*/
 
+
+
 tbody td.Enviado {
-  background-color: rgb(7, 96, 174);
-  color: white;
-  cursor: pointer;
+  font-size: 20px;
   font-weight: bold;
-  display: inline-block;
-  padding: 8px; /* Añade espacio interno a la celda */
-  border-radius: 8px; /* Añade bordes redondeados */
+  color: #1e00ff; /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
 }
 
 tbody td.Enviado:hover {
-  background-color: rgb(2, 47, 86);
+  color: #543efc; /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
 }
+
 
 
 tbody td.Recibido {
-  background-color: rgb(212, 118, 11);
-  color: white;
-  cursor: pointer;
+  font-size: 20px;
   font-weight: bold;
-  display: inline-block;
-  padding: 8px; /* Añade espacio interno a la celda */
-  border-radius: 8px; /* Añade bordes redondeados */
+  color: rgb(212, 118, 11); /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
 }
 
 tbody td.Recibido:hover {
-  background-color: rgb(129, 73, 8);
+  color: rgb(255, 169, 70); /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
+}
+
+
+
+tbody td.Aprobado {
+  font-size: 20px;
+  font-weight: bold;
+  color: green; /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
+}
+
+tbody td.Aprobado:hover {
+  color: rgb(8, 218, 8); /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
 }
 
 
 
 tbody td.Denegado {
-  background-color: rgb(193, 29, 29);
-  color: white;
-  cursor: pointer;
+  font-size: 20px;
   font-weight: bold;
-  display: inline-block;
-  padding: 8px; /* Añade espacio interno a la celda */
-  border-radius: 8px; /* Añade bordes redondeados */
+  color: rgb(193, 29, 29); /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
 }
 
 tbody td.Denegado:hover {
-  background-color: rgb(134, 24, 24);
+  color: rgb(255, 38, 38); /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
 }
 
 
 
 
-tbody td.Aprobado {
-  background-color: green;
-  color: white;
-  cursor: pointer;
+tbody td.operando {
+  font-size: 20px;
   font-weight: bold;
-  display: inline-block;
-  padding: 8px; /* Añade espacio interno a la celda */
-  border-radius: 8px; /* Añade bordes redondeados */
+  color: green; /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
 }
 
-tbody td.Aprobado:hover {
-  background-color: rgb(3, 84, 3);
+tbody td.operando:hover {
+  color: rgb(8, 218, 8); /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
 }
+
+
+tbody td.Deshabilitado {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(193, 29, 29); /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
+}
+
+tbody td.Deshabilitado:hover {
+  color: rgb(255, 38, 38); /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
+}
+
+
+
+

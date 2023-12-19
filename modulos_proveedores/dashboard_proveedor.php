@@ -27,7 +27,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="../modulos_admin/dashboard.php">EMPRESA</a>
+                <a class="nav-link" href="../inicio/dashboard.php">EMPRESA</a>
             </li>
         
             
@@ -57,26 +57,30 @@
             <table id="tablaSolicitudes" class="table table-borderes table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Cantidad</th>
-                        <!-- Agrega más encabezados según sea necesario -->
+                        <th>ID Comprobante</th>
+                        <th>ID Usuario Gerente</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Producto 1</td>
-                        <td>10</td>
-                        <!-- Agrega más celdas según sea necesario -->
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Producto 2</td>
-                        <td>5</td>
-                        <!-- Agrega más celdas según sea necesario -->
-                    </tr>
-                    <!-- Agrega más filas según sea necesario -->
+                    <?php
+                    include("../bd/conexion.php");
+                    // Realiza una consulta SQL para obtener las solicitudes de insumos
+                    $sql = "SELECT id_comprobante, id_usu_gerente FROM comprobante";
+                    $resultado = $conn->query($sql);
+
+                    if ($resultado->num_rows > 0) {
+                        while ($fila = $resultado->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . $fila['id_comprobante'] . '</td>';
+                            echo '<td>' . $fila['id_usu_gerente'] . '</td>';
+                            echo '<td><a href="../reportes/report_soli_recibi.php?id=' . $fila['id_comprobante'] . '" class="btn btn-primary" download>Descargar</a></td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="3">No hay comprobantes disponibles</td></tr>';
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
