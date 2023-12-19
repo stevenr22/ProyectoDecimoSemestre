@@ -113,14 +113,14 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <tbody>
                                         <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT * FROM solicitudes WHERE estado = 'Enviado' or estado = 'Denegado' or estado = 'Verificado' ORDER BY id_solicitud");
+                                            $senten = $conn->query("SELECT * FROM solicitudes WHERE estado = 'Enviado' or estado = 'Denegado' or estado = 'Aprobado' ORDER BY id_solicitud");
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
                                                 if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                } if($estado == 'Verificado'){
-                                                    $clase_estado = 'Verificado';
+                                                } if($estado == 'Aprobado'){
+                                                    $clase_estado = 'Aprobado';
                                                 }
                                                 else {
                                                     $clase_estado = 'Denegado';

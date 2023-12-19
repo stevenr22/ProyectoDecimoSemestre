@@ -85,23 +85,49 @@
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
-                                            u.nombre_completo, r.cargo, s.estado
-                                            FROM usuario as u, rol as r, solicitudes as s
-                                            WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
-                                            ORDER BY s.id_solicitud");
+                                            $estadoActualizado = $_SESSION['estadoActualizado'] ?? false;
+
+                                            if (!$estadoActualizado) {
+                                                // Actualizar automáticamente el estado de las solicitudes de "Enviado" a "Recibido"
+                                                $sqlActualizar = "UPDATE solicitudes SET estado = 'Recibido' WHERE estado = 'Enviado'";
+                                                $conn->query($sqlActualizar);
+                                            
+                                                // Marcar la actualización como realizada
+                                                $_SESSION['estadoActualizado'] = true;
+                                            }
+                                            $senten = $conn->query("SELECT 
+                                            s.id_solicitud, 
+                                            s.fecha_solicitud, 
+                                            s.tipo_insumo, 
+                                            s.nombre_insu, 
+                                            s.cantidad,
+                                            u.nombre_completo, 
+                                            r.cargo, 
+                                            s.estado
+                                        FROM 
+                                            usuario as u, 
+                                            rol as r, 
+                                            solicitudes as s
+                                        WHERE 
+                                            u.id_rol = r.id_rol 
+                                            AND s.id_usu = u.id_usu 
+                                            AND r.cargo = 'Empleado' 
+                                            AND (s.estado = 'Recibido' OR s.estado = 'Enviado' OR s.estado = 'Denegado' OR s.estado = 'Aprobado')
+                                        ORDER BY 
+                                            s.id_solicitud;
+                                        ");
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
-                                                if ($estado == 'Enviado') {
+                                               /* if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                }else if($estado == 'Verificado'){
-                                                    $clase_estado = 'Verificado';
+                                                }else if($estado == 'Aprobado'){
+                                                    $clase_estado = 'Aprobado';
                                                 }
                                                 else {
                                                     $clase_estado = 'Denegado';
-                                                }
+                                                }*/
                                                         
                                                 ?>
                                             <tr>
@@ -124,19 +150,8 @@
                                                     
                                                     <button type="button"  class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                     
-                                                    <button type="button" class="btn_enviar" id="nuevoBoton_<?php echo $arreglo['id_solicitud']?>"
-                                                        data-id-solicitud="<?php echo $arreglo['id_solicitud']?>"
-                                                        data-fecha-solicitud="<?php echo $arreglo['fecha_solicitud']?>"
-                                                        data-tipo-insumo="<?php echo $arreglo['tipo_insumo']?>"
-                                                        data-nombre-insu="<?php echo $arreglo['nombre_insu']?>"
-                                                        data-cantidad="<?php echo $arreglo['cantidad']?>"
-                                                        data-nombre-completo="<?php echo $arreglo['nombre_completo']?>"
-                                                        data-cargo="<?php echo $arreglo['cargo']?>"
-                                                        data-estado="<?php echo $estado; ?>">
-                                                    
-                                                    
-                                                    
-                                                  
+                                                    <button type="button" class="btn_enviar" onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>')"
+                                                    id="nuevoBoton_<?php echo $arreglo['id_solicitud']?>">
                                                         <i class="fa-solid fa-paper-plane"></i>
                                                     </button>
 
@@ -144,9 +159,10 @@
                                                 </td>
                                             
                                             </tr>
+                                            <?php } ?>
+
 
                                         </tbody>
-                                        <?php } ?>
                                     </table>
 
 
@@ -253,6 +269,8 @@
                 });
                   
             });
+
+            //SCRIPT PARA QUE SE MANTENGA EL BOTON ENVIAR 
             $(window).on('load', function() {
                 // Iterar sobre todas las claves del almacenamiento local
                 for (var i = 0; i < localStorage.length; i++) {
@@ -267,23 +285,55 @@
             });
 
 
+            //SCRIPT PARA ENVIAR LA SOLICITUD AL MODULO GERENTE PARA SU VERIFICACION
+            function enviarDatosSolicitud(id_solicitud) {
+                // Mostrar mensaje de confirmación
+                Swal.fire({
+                    title: '¿Estás seguro de enviar esta información?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, enviar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.value) {
+                        // Enviar los datos mediante AJAX
+                        $.ajax({
+                            url: "../validacion_datos/enviar_datos_soli.php",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                id_solicitud: id_solicitud
+                            },
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Envío exitoso!',
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            location.reload();
 
-            
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: response.message,
+                                        icon: 'warning'
+                                    });
+                                }
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    title: 'Error en la solicitud',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
 
-
-
-
-       
-     
- 
     </script>
-   
-
- 
-
-
-   
-   
 
 </body>
 </html>

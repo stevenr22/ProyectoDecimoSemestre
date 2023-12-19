@@ -10,6 +10,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
+    <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -37,11 +39,112 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card-title"><h2><b>Solicitudes por verificar</b></h2></div>
                     </div>  
                 </div>
+                <div class="botones_container">
+                  
+             
+                  <div class="rojo">
+                      <button type="button" id="btn_pdf_arriba" class="btn" >Generar comprobante de compra   
+                          <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
+                      </button>
+
+                  </div>
+                  
+              </div><br>
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <table  class="table table-bordered">
+                                        <thead>
+                                            <th><b>Código de solicitud recibida</b></th>
+                                            <th><b>Código de solicitud remitente</b></th>
+
+                                            <th><b>Fecha solicitud</b></th>
+                                            <th><b>Tipo insumo solicitado</b></th>
+                                            <th><b>Nombre insumo solicitado</b></th>
+                                            <th><b>Cantidad</b></th>
+                                            <th><b>Proveedor</b></th>
+                                            <th><b>Nombre remitente</b></th>
+                                            <th><b>Cargo</b></th>
+
+                                            <th><b>Estado</b></th>
+                                            <th><b>Acciones</b></th>
+
+
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT 
+                                                sr.id_soli_reci,
+                                                s.id_solicitud,
+                                                s.fecha_solicitud,
+                                                s.tipo_insumo,
+                                                s.nombre_insu,
+                                                s.cantidad,
+                                                s.proveedor,
+                                                u.nombre_completo,
+                                                r.cargo,
+                                                sr.estado
+                                            FROM soli_recibidas sr
+                                            JOIN solicitudes s ON sr.id_solicitudes = s.id_solicitud
+                                            JOIN usuario u ON s.id_usu = u.id_usu
+                                            JOIN rol r ON u.id_rol = r.id_rol");
+
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
+
+                                                if ($estado == 'Recibido') {
+                                                    $clase_estado = 'Recibido';
+                                                }else if($estado == 'Aprobado'){
+                                                    $clase_estado = 'Aprobado';
+                                                }else{
+                                                    $clase_estado = 'Denegado';
+                                                }
+                                               
+                                                        
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $arreglo['id_soli_reci'] ?></td>
+                                                <td><?php echo $arreglo['id_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['fecha_solicitud'] ?></td>
+                                                <td><?php echo $arreglo['tipo_insumo'] ?></td>
+                                                <td><?php echo $arreglo['nombre_insu'] ?></td>
+                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                <td><?php echo $arreglo['proveedor'] ?></td>
+                                                <td><?php echo $arreglo['nombre_completo'] ?></td>
+                                                <td><?php echo $arreglo['cargo'] ?></td>
+
+                                                <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                <td>
+                                                    
+                                                    <button type="button" onclick="modalVerificarSoli('<?php echo $arreglo['id_soli_reci'] ?>',
+                                                    '<?php echo $arreglo['id_solicitud'] ?>',
+                                                    '<?php echo $arreglo['fecha_solicitud'] ?>',
+                                                    '<?php echo $arreglo['tipo_insumo'] ?>',
+                                                    '<?php echo $arreglo['nombre_insu'] ?>',
+                                                    '<?php echo $arreglo['cantidad'] ?>',
+                                                    '<?php echo $arreglo['proveedor'] ?>',
+                                                    '<?php echo $arreglo['nombre_completo'] ?>',
+                                                    '<?php echo $arreglo['cargo'] ?>',
+                                                    '<?php echo $estado ?>');" 
+                                                    id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button"  class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                </td>
+                                            
+                                            </tr>
+                                            <?php } ?>
+
+
+                                        </tbody>
+                                    </table>
+
+
+
+                                </div>
                                 
                             </div>
                             
@@ -50,11 +153,121 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     </div>
 
                 </div>
+
+                <!--MORAL-->
+                <?php include("../recursos/modals/modales.php");?>
+
             </div>
             
 
         </div>
     </div>
+    <script>
+        
+        function cerrarGeneral() {
+            var modalVerificarSoli = document.getElementById("modalVerificarSoli");
+            if (modalVerificarSoli) {
+                modalVerificarSoli.style.display = 'none';
+            }  
+        }
+       
+          //Editar actualizar
+          function modalVerificarSoli(id_soli, id_solicitud_remitente, fecha, tipo_insu, nombre_insu, cantidad, proveedor, nombre_empleado, cargo, estado) {
+            var modalVerificarSoli = document.getElementById('modalVerificarSoli');
+                                                   
+
+            modalVerificarSoli.style.display = 'block';
+
+            // Llenar el formulario con datos de la soli
+            document.getElementById('id_soli_veri').value = id_soli;
+            document.getElementById('id_soli_remi').value = id_solicitud_remitente;
+            document.getElementById('fecha_soli_reci').value = fecha;
+            document.getElementById('ti_insu_reci').value = tipo_insu;
+            document.getElementById('nom_insu_reci').value = nombre_insu;
+            document.getElementById('canti_insu_reci').value = cantidad;
+            document.getElementById('prov_reci').value = proveedor;
+            document.getElementById('nom_remi_reci').value = nombre_empleado;
+            document.getElementById('carg_remi').value = cargo;
+            document.getElementById('estado_soli_remi').value = estado;
+           
+
+
+        }
+             $(document).ready(function() {
+               
+               
+                
+                
+                $("#formVeriSoli").submit(function(e){
+                    e.preventDefault();
+                    
+
+                    var id_soli_veri = $.trim($("#id_soli_veri").val());
+                    var id_soli_remi = $.trim($("#id_soli_remi").val());
+                 
+
+                    var aprobado_soli_reci = $("#aprobado_soli_reci").is(":checked") ? "Aprobado" : "";
+                    var denegado_soli_reci = $("#denegado_soli_reci").is(":checked") ? "Denegado" : "";
+
+                    // Verificar cuál tiene valor y almacenar en una variable
+                    var estadoSeleccionado = "";
+                    if (aprobado_soli_reci !== "") {
+                        estadoSeleccionado = aprobado_soli_reci;
+                    } else if (denegado_soli_reci !== "") {
+                        estadoSeleccionado = denegado_soli_reci;
+                    }
+
+                    console.log(id_soli_veri);
+                    console.log(estadoSeleccionado);
+                  
+
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/aprobar_soli_recibi.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_soli_veri: id_soli_veri, 
+                            id_soli_remi: id_soli_remi,
+                            estadoSeleccionado: estadoSeleccionado},
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                $("#verde").show();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                
+                                    if(result.value){
+                                        location.reload();
+                                       
+                                       
+                                      
+                                     
+                                      
+                                      
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+                  
+            });
+    </script>
 
  
     

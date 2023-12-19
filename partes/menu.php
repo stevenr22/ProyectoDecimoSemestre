@@ -15,6 +15,7 @@
        <!--VISTASS ADMINISTRADOR------------------------------------------------------------------------------>
         <?php
           if($_SESSION['DBcargo'] == 'Administrador'){?>
+          
             <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Parcelas</span>
@@ -27,6 +28,7 @@
                 <span class="hide-menu">Registrar parcelas</span>
                 </a>
             </li>
+          
             <li class="sidebar-item">
                 <a class="sidebar-link" href="../modulos_admin/segui_insu_parce.php" aria-expanded="false">
                 <span>
@@ -201,7 +203,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="../modulos_gerente/solicitudes_recibidas.php" aria-expanded="false">
                 <span>
-                  <i class="ti ti-truck-delivery"></i>
+                  <i class="ti ti-send"></i>
                 </span>
                 <span class="hide-menu">Solicitudes recibidas</span>
                 </a>
