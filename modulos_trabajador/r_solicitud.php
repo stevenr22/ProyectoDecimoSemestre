@@ -119,7 +119,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                                 if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                } if($estado == 'Aprobado'){
+                                                }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
                                                 }
                                                 else {
@@ -133,7 +133,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 <td><?php echo $arreglo['tipo_insumo'] ?></td>
                                                 <td><?php echo $arreglo['nombre_insu'] ?></td>
                                                 <td><?php echo $arreglo['cantidad'] ?></td>
-                                                <td><?php echo $arreglo['estado'] ?></td>
+                                                <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
 
                                                 <td>
                                                     <button type="button" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',

@@ -72,16 +72,19 @@
                                             include("../bd/conexion.php");
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
                                             u.nombre_completo, r.cargo, s.estado
-                                            FROM usuario as u, rol as r, solicitudes as s
-                                            WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu and r.cargo = 'Empleado' and  s.estado = 'Enviado' or s.estado = 'Denegado' or s.estado = 'Verificado'
-                                            ORDER BY s.id_solicitud");
+                                            FROM usuario as u
+                                            JOIN rol as r ON u.id_rol = r.id_rol
+                                            JOIN solicitudes as s ON s.id_usu = u.id_usu
+                                            WHERE r.cargo = 'Empleado' AND (s.estado = 'Enviado' OR s.estado = 'Denegado' OR s.estado = 'Aprobado')
+                                            ORDER BY s.id_solicitud;
+                                            ");
                                              while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
                                                 if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                }else if($estado == 'Verificado'){
-                                                    $clase_estado = 'Verificado';
+                                                }else if($estado == 'Aprobado'){
+                                                    $clase_estado = 'Aprobado';
                                                 }
                                                 else {
                                                     $clase_estado = 'Denegado';

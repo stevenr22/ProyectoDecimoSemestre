@@ -85,16 +85,7 @@
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $estadoActualizado = $_SESSION['estadoActualizado'] ?? false;
-
-                                            if (!$estadoActualizado) {
-                                                // Actualizar automáticamente el estado de las solicitudes de "Enviado" a "Recibido"
-                                                $sqlActualizar = "UPDATE solicitudes SET estado = 'Recibido' WHERE estado = 'Enviado'";
-                                                $conn->query($sqlActualizar);
-                                            
-                                                // Marcar la actualización como realizada
-                                                $_SESSION['estadoActualizado'] = true;
-                                            }
+                                           
                                             $senten = $conn->query("SELECT 
                                             s.id_solicitud, 
                                             s.fecha_solicitud, 
@@ -120,14 +111,15 @@
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
-                                               /* if ($estado == 'Enviado') {
-                                                    $clase_estado = 'Enviado';
+                                                if ($estado == 'Recibido') {
+                                                    $clase_estado = 'Recibido';
                                                 }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
-                                                }
-                                                else {
+                                                } else if($estado == 'Enviado'){
+                                                    $clase_estado = 'Enviado';
+                                                }else {
                                                     $clase_estado = 'Denegado';
-                                                }*/
+                                                }
                                                         
                                                 ?>
                                             <tr>

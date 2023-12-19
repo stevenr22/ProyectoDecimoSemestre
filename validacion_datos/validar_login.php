@@ -15,7 +15,7 @@ if (empty($usu) || empty($contra)) {
 } else {
     $sentencia = "SELECT u.id_usu, r.id_rol, u.nombre_usu, u.nombre_completo, u.clave, r.cargo, u.correo 
     FROM usuario  as u , rol as r 
-    where (r.id_rol=u.id_rol)AND (u.nombre_usu='$usu' AND u.clave='$contra')";
+    WHERE (r.id_rol=u.id_rol) AND (u.nombre_usu='$usu' AND u.clave='$contra')";
 
     $respuesta = $conn->query($sentencia);
 
@@ -24,22 +24,26 @@ if (empty($usu) || empty($contra)) {
             $_SESSION['DBid_usu'] = $fila['id_usu'];
             $_SESSION['DBnombre_usu'] = $fila['nombre_usu'];
             $_SESSION['DBnombre_completo'] = $fila['nombre_completo'];
-       
-      
             $_SESSION['DBcorreo'] = $fila['correo'];
-        
-
             $_SESSION['DBcargo'] = $fila['cargo'];
             $_SESSION['DBid_rol'] = $fila['id_rol'];
 
-   
+            // Verificar si el usuario tiene el rol de administrador
+            if ($_SESSION['DBcargo'] === 'Administrador') {
+                // Actualizar el estado de las solicitudes a 'Recibido'
+                $sqlActualizarEstado = "UPDATE solicitudes SET estado = 'Recibido' WHERE estado = 'Enviado'";
+                $conn->query($sqlActualizarEstado);
 
-            
-
-            $response = array(
-                'message' => 'Sesión iniciada correctamente',
-                'type' => 'success'
-            );
+                $response = array(
+                    'message' => 'Sesión iniciada correctamente. El estado de las solicitudes ha sido actualizado.',
+                    'type' => 'success'
+                );
+            } else {
+                $response = array(
+                    'message' => 'Sesión iniciada correctamente.',
+                    'type' => 'success'
+                );
+            }
         }
     } else {
         $response = array(

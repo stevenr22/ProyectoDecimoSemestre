@@ -283,6 +283,21 @@ tbody td.Enviado:hover {
 }
 
 
+tbody td.Recibido {
+  background-color: rgb(212, 118, 11);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  padding: 8px; /* Añade espacio interno a la celda */
+  border-radius: 8px; /* Añade bordes redondeados */
+}
+
+tbody td.Recibido:hover {
+  background-color: rgb(129, 73, 8);
+}
+
+
 
 tbody td.Denegado {
   background-color: rgb(193, 29, 29);
@@ -301,7 +316,7 @@ tbody td.Denegado:hover {
 
 
 
-tbody td.Verificado {
+tbody td.Aprobado {
   background-color: green;
   color: white;
   cursor: pointer;
@@ -311,6 +326,6 @@ tbody td.Verificado {
   border-radius: 8px; /* Añade bordes redondeados */
 }
 
-tbody td.Verificado:hover {
+tbody td.Aprobado:hover {
   background-color: rgb(3, 84, 3);
 }
