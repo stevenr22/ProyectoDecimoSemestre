@@ -88,7 +88,8 @@ $sql = "SELECT
         FROM soli_recibidas sr
         JOIN solicitudes s ON sr.id_solicitudes = s.id_solicitud
         JOIN usuario u ON s.id_usu = u.id_usu
-        JOIN rol r ON u.id_rol = r.id_rol";
+        JOIN rol r ON u.id_rol = r.id_rol
+        WHERE sr.estado='Aprobado'";
 
 $result = $conn->query($sql);
 
@@ -114,6 +115,12 @@ if ($result->num_rows > 0) {
 // Close the database connection
 $conn->close();
 
-// Output the PDF
-$pdf->Output();
+$pdf->Output('comprobante_compra_insumos.pdf', 'D');
+
+
+exit;
+
+
+
+
 ?>

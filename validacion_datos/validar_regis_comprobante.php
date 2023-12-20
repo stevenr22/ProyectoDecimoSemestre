@@ -1,64 +1,44 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
-include("../bd/conexion.php");
+include('../bd/conexion.php');  // Asegúrate de incluir el archivo correcto donde está tu conexión a la base de datos.
 
-// Recibir datos del formulario
-$id_usu_gerente = isset($_POST['id_usu_gerente']) ? $_POST['id_usu_gerente'] : '';
-$comprobante = isset($_FILES['comprobante']) ? $_FILES['comprobante'] : '';
+header('Content-Type: application/json');  // Establecer el tipo de contenido JSON
 
-$response = array();
+$response = ['success' => false];
 
-if (empty($id_usu_gerente) || empty($comprobante)) {
-    $response = array(
-        'status' => 'error',
-        'message' => 'Todos los campos son obligatorios.'
-    );
-} else {
-    // Generar un nombre único para el archivo
-    $timestamp = time();  // Puedes usar el timestamp actual
-    $nombre_archivo = 'comprobante_' . $id_usu_gerente . '_' . $timestamp . '.pdf';  // Ejemplo de nombre único
-
-    // Ruta completa donde se guardará el archivo
-    $uploadDir = '../reportes';
-    $uploadPath = $uploadDir . '/' . $nombre_archivo;
-
-    if (move_uploaded_file($comprobante['tmp_name'], $uploadPath)) {
-        // Comprobante cargado con éxito, ahora insertar en la base de datos
-        $sql = "INSERT INTO comprobante (id_usu_gerente, contenido_pdf) VALUES ('$id_usu_gerente', '$nombre_archivo')";
-
-        if ($conn->query($sql) === TRUE) {
-            $response = array(
-                'status' => 'success',
-                'message' => 'Comprobante cargado y registrado correctamente.'
-            );
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $id_usu_gerente = intval($_POST['id_usu_gerente']);
+    
+    $file_name = $_FILES['comprobante']['name'];
+    $file_tmp_name = $_FILES['comprobante']['tmp_name'];
+    
+    if ($file_name != '') {
+        $uploadsDirectory = '../reportes';
+        $newFileName = $uploadsDirectory . uniqid() . '_' . $file_name;
+        
+        if (move_uploaded_file($file_tmp_name, $newFileName)) {
+            $stmt = $conn->prepare("INSERT INTO comprobante(id_usu_gerente, ruta_pdf) VALUES (?, ?)");
+            $stmt->bind_param("is", $id_usu_gerente, $newFileName);
+            
+            if ($stmt->execute()) {
+                $response['success'] = true;
+            } else {
+                $response['error'] = $stmt->error;
+            }
+            
+            $stmt->close();
         } else {
-            $response = array(
-                'status' => 'error',
-                'message' => 'Error al registrar en la base de datos: ' . $conn->error
-            );
+            $response['error'] = 'Error al mover el archivo al directorio.';
         }
     } else {
-        $response = array(
-            'status' => 'error',
-            'message' => 'Error al cargar el comprobante.'
-        );
+        $response['error'] = 'No se recibió ningún archivo.';
     }
 }
 
-// Cerrar conexión
-$conn->close();
-
-// Devolver la respuesta al cliente en formato JSON
-header('Content-Type: application/json');
 echo json_encode($response);
+$conn->close();
 ?>
-
-
-
-
-
-
-
-
-
-

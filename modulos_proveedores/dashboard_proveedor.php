@@ -57,8 +57,9 @@
             <table id="tablaSolicitudes" class="table table-borderes table-striped">
                 <thead>
                     <tr>
-                        <th>ID Comprobante</th>
-                        <th>ID Usuario Gerente</th>
+                        <th>#</th>
+                        <th>Nombre cliente</th>
+                        <th>Cargo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -66,14 +67,18 @@
                     <?php
                     include("../bd/conexion.php");
                     // Realiza una consulta SQL para obtener las solicitudes de insumos
-                    $sql = "SELECT id_comprobante, id_usu_gerente FROM comprobante";
+                    $sql = "SELECT c.id_comprobante, u.nombre_completo, r.cargo, c.contenido_pdf
+                    FROM usuario as u, rol as r, comprobante as c
+                    WHERE u.id_usu = c.id_usu_gerente and u.id_rol = r.id_rol";
                     $resultado = $conn->query($sql);
 
                     if ($resultado->num_rows > 0) {
                         while ($fila = $resultado->fetch_assoc()) {
                             echo '<tr>';
                             echo '<td>' . $fila['id_comprobante'] . '</td>';
-                            echo '<td>' . $fila['id_usu_gerente'] . '</td>';
+                            echo '<td>' . $fila['nombre_completo'] . '</td>';
+                            echo '<td>' . $fila['cargo'] . '</td>';
+
                             echo '<td><a href="../reportes/report_soli_recibi.php?id=' . $fila['id_comprobante'] . '" class="btn btn-primary" download>Descargar</a></td>';
                             echo '</tr>';
                         }

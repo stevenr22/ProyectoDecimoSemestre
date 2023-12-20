@@ -316,56 +316,36 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
         //ENVIAR PDF--------------------------------------------------------------------
-        $("#btn_enviar_comprobante").click(function() {
-            var id_usu_gerente = $.trim($("#id_usu_gerente").val());
-            var comprobante = $("#comprobante")[0].files[0];
-
-            if (!comprobante) {
-                Swal.fire({
-                    title: 'Seleccione un comprobante',
-                    icon: 'warning'
-                });
-                return;
-            }
-
-            // Crear objeto FormData y agregar datos
-            var formData = new FormData();
-            formData.append('id_usu_gerente', id_usu_gerente);
-            formData.append('comprobante', comprobante);
-
-            $.ajax({
-                url: "../validacion_datos/validar_regis_comprobante.php", // Reemplaza con la ruta correcta
-                type: "POST",
-                dataType: "json",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.status === 'success') {
-                       
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Actualización exitosa!',
-                        }).then((result) => {
-                            if (result.value) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'warning'
-                        });
+        $(document).ready(function() {
+            $('#btn_enviar_comprobante').click(function() {
+                var formData = new FormData($('#formRegistroComprobante')[0]);
+                
+               
+                $.ajax({
+                    url: '../validacion_datos/validar_regis_comprobante.php',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Archivo y datos guardados correctamente.');
+                        } else {
+                            alert('Error al guardar el archivo y datos. Detalles: ' + response.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("Status: " + textStatus);
+                        console.log("Error: " + errorThrown);
+                        console.log("Response Text: " + jqXHR.responseText);  // Esto mostrará el mensaje de error del servidor.
+                        alert('Error en la solicitud AJAX.');
                     }
-                },
-                error: function() {
-                    Swal.fire({
-                        title: 'Error en la solicitud',
-                        icon: 'error'
-                    });
-                }
+                });
             });
         });
+
+
            
     </script>
 
