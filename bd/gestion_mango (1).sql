@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-12-2023 a las 00:18:14
+-- Servidor: localhost
+-- Tiempo de generación: 20-12-2023 a las 03:15:49
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -38,7 +38,7 @@ CREATE TABLE `comprobante` (
 --
 
 INSERT INTO `comprobante` (`id_comprobante`, `id_usu_gerente`, `contenido_pdf`) VALUES
-(6, 2, 0x636f6d70726f62616e74655f325f313730323935383737362e706466);
+(11, 2, '');
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comprobante`
 --
 ALTER TABLE `comprobante`
-  MODIFY `id_comprobante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_comprobante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
