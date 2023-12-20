@@ -330,16 +330,36 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            alert('Archivo y datos guardados correctamente.');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Comprobante enviado con exito!',
+                            }).then((result) => {
+                                // Si el usuario hace clic en "Aceptar" o si se cierra la notificación
+                                if (result.isConfirmed || result.isDismissed) {
+                                    // Redireccionar a otra página
+                                    window.location.href = '../modulos_gerente/solicitudes_recibidas.php';
+                                }
+                            });
+                               
+                           
                         } else {
-                            alert('Error al guardar el archivo y datos. Detalles: ' + response.error);
+                            Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Error al guardar el archivo y datos. Detalles: ' + response.error,
+                                });
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log("Status: " + textStatus);
                         console.log("Error: " + errorThrown);
                         console.log("Response Text: " + jqXHR.responseText);  // Esto mostrará el mensaje de error del servidor.
-                        alert('Error en la solicitud AJAX.');
+                        
+                        Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error en la solicitud AJAX.',
+                                });
+                        
+                  
                     }
                 });
             });

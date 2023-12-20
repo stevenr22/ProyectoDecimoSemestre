@@ -17,12 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $file_tmp_name = $_FILES['comprobante']['tmp_name'];
     
     if ($file_name != '') {
-        $uploadsDirectory = '../reportes';
-        $newFileName = $uploadsDirectory . uniqid() . '_' . $file_name;
+        $uploadsDirectory = '../reportes/';
+        $newFileName = $uploadsDirectory . $file_name;  // Usar el nombre original del archivo
         
+        // Mover el archivo a la carpeta 'reportes'
         if (move_uploaded_file($file_tmp_name, $newFileName)) {
-            $stmt = $conn->prepare("INSERT INTO comprobante(id_usu_gerente, ruta_pdf) VALUES (?, ?)");
-            $stmt->bind_param("is", $id_usu_gerente, $newFileName);
+            
+            // Solo guardar el nombre del archivo en la base de datos
+            $stmt = $conn->prepare("INSERT INTO comprobante(id_usu_gerente, contenido_pdf) VALUES (?, ?)");
+            $stmt->bind_param("is", $id_usu_gerente, $file_name);  // Solo pasamos el nombre del archivo, no la ruta completa
             
             if ($stmt->execute()) {
                 $response['success'] = true;
