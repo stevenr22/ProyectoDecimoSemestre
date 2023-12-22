@@ -1,3 +1,11 @@
 label{
     font-weight: bold;
+    
+}
+.dollar-icon {
+    transition: transform 0.3s ease;  /* Aplicará una transición suave al transform */
+}
+
+.dollar-icon:hover {
+    transform: scale(1.1);  /* Hace que el icono se agrande al 110% de su tamaño original */
 }
