@@ -208,6 +208,14 @@
                 <span class="hide-menu">Solicitudes recibidas</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="../modulos_gerente/facturas_recibidas.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file"></i>
+                </span>
+                <span class="hide-menu">Facturas recibidas</span>
+                </a>
+            </li>
         <?php
           }
         ?>

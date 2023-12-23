@@ -176,12 +176,15 @@
                                 <div class="col-md-2">
                                     <label>Cantidad: </label>
                                     <?php
-                                    // Utiliza la variable $result que ya tiene los resultados de la consulta
-                                    mysqli_data_seek($result, 0);  // Esto reinicia el puntero del resultado para volver a leerlo desde el principio
-                                    while ($arreglo = $result->fetch_array()) {
-                                    ?>
-                                        <input type="text" class="form-control readonly-field" readonly value="<?php echo $arreglo['cantidad']; ?>"><br>
-                                    <?php } ?>
+                                        mysqli_data_seek($result, 0);
+                                        $contador = 1;  // Inicializa el contador para IDs únicos
+                                        while ($arreglo = $result->fetch_array()) {
+                                        ?>
+                                            <input type="text" id="cantidad_insumo_<?php echo $contador; ?>" class="form-control readonly-field" readonly value="<?php echo $arreglo['cantidad']; ?>"><br>
+                                        <?php 
+                                            $contador++;  // Incrementa el contador
+                                        } 
+                                        ?>
                                 </div>
                                 
                                 <div class="col">
@@ -196,6 +199,7 @@
 
                                     </div>
                                 </div>
+                                
                             </div>
                             <br>
                             <button type="submit" style="color: white; font-weight: bold;" class="btn btn-primary">Enviar factura</button>
@@ -305,23 +309,36 @@
                     // Actualiza el valor del input con la validación realizada
                     $(this).val(valorActual);
 
-                    actualizarTotal();
+                    calcularSubtotalYTotal();
                 });
             }
 
             // Función para actualizar el total
-            function actualizarTotal() {
+            function calcularSubtotalYTotal() {
                 let total = 0;
 
-                // Recorre cada input y suma su valor al total
-                for (let i = 0; i < numeroDeResultados; i++) {
-                    const valor = parseFloat($('#valor_insumo_' + i).val() || 0);
-                    total += valor;
+                // Recorre cada insumo para calcular su subtotal y luego sumarlo al total
+                for (let i = 1; i <= <?php echo $result->num_rows; ?>; i++) {
+                    const cantidad = parseFloat($("#cantidad_insumo_" + i).val() || 0);
+                    const valor = parseFloat($("#valor_insumo_" + (i - 1)).val() || 0);  // Asegúrate de que los IDs de los valores coincidan
+
+                    const subtotalInsumo = cantidad * valor;
+                    total += subtotalInsumo;
                 }
 
-                // Actualiza el valor del input de Total con el total calculado
-                $('#total_fac').val(total.toFixed(2));  // Asegura que el total tenga dos decimales
+                // Ahora, total contiene la suma de todos los subtotales de insumos
+                $("#total_fac").val(total.toFixed(2));  // Esto mostrará el total con dos decimales
             }
+
+            // Escucha cambios en los inputs de cantidad y valor de insumo para calcular el total
+            $("[id^='cantidad_insumo_'], [id^='valor_insumo_']").on('input', calcularSubtotalYTotal);
+
+            // Además, puedes llamar a la función al cargar la página si es necesario
+            $(document).ready(function() {
+                calcularSubtotalYTotal();
+            });
+
+
         });
 
 
