@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 23-12-2023 a las 19:36:11
+-- Servidor: localhost
+-- Tiempo de generación: 23-12-2023 a las 23:32:41
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -58,7 +58,7 @@ CREATE TABLE `factura` (
 --
 
 INSERT INTO `factura` (`id_factura`, `id_comprobante`, `fecha_emision`, `total`) VALUES
-(4, 31, '2023-12-07', 412.56);
+(6, 31, '2023-12-14', 950.00);
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE `proveedor` (
 --
 
 INSERT INTO `proveedor` (`id_prove`, `nombre_empre`, `nombre_traba`, `direccion`, `num_tele`, `fecha_regis`, `estado`) VALUES
-(1, 'Ecua S.A.', 'Ing. Steven Rojas', 'Guasmo sur', 9695849, '2023-12-06', 'Operando'),
+(1, 'Ecua S.A.', 'Ing. Steven Rojas', 'Av. los ceibos y la cuarta', 969265483, '2023-12-06', 'Operando'),
 (2, 'Industrias S.A.', 'Ing. Marcos Ponguillo', 'Central 23', 9695849, '2023-12-05', 'Operando'),
 (3, 'Ali S.A.', 'Ing. Alejandro Joel', 'Central 23', 9695849, '2023-12-13', 'Operando');
 
@@ -296,7 +296,7 @@ ALTER TABLE `comprobante`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
