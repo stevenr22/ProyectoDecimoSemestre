@@ -95,7 +95,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                     
                                                   
                                                     <button type="button"  class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
-                                                    <button id="btn_enviar_factura" class="btn btn-success" type="button">Enviar</button>
 
                                                 </td>
                                             
@@ -131,9 +130,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 <form id="formRegistroFactura" class="form-group" enctype="multipart/form-data">
                                     <input type="hidden" name="id_usu_gerente" id="id_usu_gerente" value="<?php echo $_SESSION['DBid_usu'];?>">
 
-                                    <input type="hidden" name="id_factura" id="id_factura" value="<?php echo $arreglo['id_factura'] ?>">
 
-                                    <label>Cargue el comprobante de compra</label><br><br>
+                                    <label>Cargue la factura</label><br><br>
                                     <input class="form-control" type="file" name="comprobante" id="comprobante">
                                     <br>
                                     <button id="btn_enviar_comprobante" class="btn btn-success" type="button">Enviar</button>
@@ -174,7 +172,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
         //ENVIAR PDF--------------------------------------------------------------------
         $(document).ready(function() {
-            $('#btn_enviar_factura').click(function() {
+            $('#btn_enviar_comprobante').click(function() {
                 var formData = new FormData($('#formRegistroFactura')[0]);
                 
                
@@ -194,7 +192,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 // Si el usuario hace clic en "Aceptar" o si se cierra la notificación
                                 if (result.isConfirmed || result.isDismissed) {
                                     // Redireccionar a otra página
-                                    location.reload();
+                                   location.reload();
                                 }
                             });
                                

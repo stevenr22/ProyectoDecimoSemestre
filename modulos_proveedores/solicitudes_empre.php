@@ -251,6 +251,7 @@
             // puedes replicar esos inputs dinámicamente.
             const numeroDeResultados = <?php echo $result->num_rows; ?>;
 
+
             for (let i = 0; i < numeroDeResultados; i++) {
                 // Crear el contenedor principal del diseño input-group
                 const inputGroup = $('<div>', { class: 'input-group' });
@@ -356,6 +357,8 @@
 
 
         $(document).ready(function() {
+            const numeroDeResultados = <?php echo $result->num_rows; ?>;
+
     
           
 
@@ -365,10 +368,12 @@
                 var id_compro = $.trim($("#id_compro").val());
                 var fech_emision = $.trim($("#fech_emision").val());
                 var total_fac = $.trim($("#total_fac").val());
+                
+              
 
             
 
-                $.ajax({
+               $.ajax({
                     url: "../modulos_proveedores/regis_factura.php",
                     type: "POST",
                     dataType: "json",
@@ -376,6 +381,7 @@
                         id_compro: id_compro, 
                         fech_emision: fech_emision, 
                         total_fac: total_fac
+                        
                     },
                     success: function(response) {
                         if (response.status === 'success') {
