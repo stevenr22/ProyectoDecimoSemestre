@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 23-12-2023 a las 23:32:41
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 24-12-2023 a las 08:42:09
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `comprobante` (
   `id_comprobante` int(11) NOT NULL,
   `id_usu_gerente` int(11) NOT NULL,
+  `id_solicitudes` int(11) NOT NULL,
   `contenido_pdf` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -37,8 +38,11 @@ CREATE TABLE `comprobante` (
 -- Volcado de datos para la tabla `comprobante`
 --
 
-INSERT INTO `comprobante` (`id_comprobante`, `id_usu_gerente`, `contenido_pdf`) VALUES
-(31, 2, 'comprobante_compra_insumos (11).pdf');
+INSERT INTO `comprobante` (`id_comprobante`, `id_usu_gerente`, `id_solicitudes`, `contenido_pdf`) VALUES
+(53, 2, 24, 'comprobante_compra_insumos (7).pdf'),
+(54, 2, 25, 'comprobante_compra_insumos (8).pdf'),
+(55, 2, 26, 'comprobante_compra_insumos (9).pdf'),
+(58, 2, 27, 'comprobante_compra_insumos (11).pdf');
 
 -- --------------------------------------------------------
 
@@ -50,15 +54,9 @@ CREATE TABLE `factura` (
   `id_factura` int(11) NOT NULL,
   `id_comprobante` int(11) DEFAULT NULL,
   `fecha_emision` date NOT NULL,
-  `total` decimal(10,2) NOT NULL
+  `total` decimal(10,2) NOT NULL,
+  `contenido_pdf` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `factura`
---
-
-INSERT INTO `factura` (`id_factura`, `id_comprobante`, `fecha_emision`, `total`) VALUES
-(6, 31, '2023-12-14', 950.00);
 
 -- --------------------------------------------------------
 
@@ -169,8 +167,10 @@ CREATE TABLE `solicitudes` (
 --
 
 INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `nombre_insu`, `cantidad`, `proveedor`, `id_usu`, `estado`) VALUES
-(21, '2023-12-22', 'Insecticida', 'Amoniaco 23 kg', 10, 'Ecua S.A.', 3, 'Aprobado'),
-(22, '2023-12-24', 'Insecticida', 'Sulfato 34', 5, 'Ecua S.A.', 3, 'Aprobado');
+(24, '2023-12-24', 'Insecticida', 'Amoniaco 23 kg', 34, 'Ecua S.A.', 3, 'Aprobado'),
+(25, '2023-12-06', 'Herramienta', 'Pala', 5, 'Ecua S.A.', 3, 'Aprobado'),
+(26, '2023-12-23', 'Maquinaria', 'Tractor', 45, 'Ecua S.A.', 3, 'Aprobado'),
+(27, '2023-11-28', 'Mango', 'Mango kent', 89, 'Ecua S.A.', 3, 'Aprobado');
 
 -- --------------------------------------------------------
 
@@ -189,8 +189,10 @@ CREATE TABLE `soli_recibidas` (
 --
 
 INSERT INTO `soli_recibidas` (`id_soli_reci`, `estado`, `id_solicitudes`) VALUES
-(18, 'Aprobado', 21),
-(19, 'Aprobado', 22);
+(21, 'Entregado', 24),
+(22, 'Entregado', 25),
+(23, 'Entregado', 26),
+(24, 'Entregado', 27);
 
 -- --------------------------------------------------------
 
@@ -227,7 +229,8 @@ INSERT INTO `usuario` (`id_usu`, `nombre_completo`, `correo`, `nombre_usu`, `cla
 --
 ALTER TABLE `comprobante`
   ADD PRIMARY KEY (`id_comprobante`),
-  ADD KEY `id_usu_gerente` (`id_usu_gerente`);
+  ADD KEY `id_usu_gerente` (`id_usu_gerente`),
+  ADD KEY `id_solicitudes` (`id_solicitudes`);
 
 --
 -- Indices de la tabla `factura`
@@ -290,13 +293,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comprobante`
 --
 ALTER TABLE `comprobante`
-  MODIFY `id_comprobante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_comprobante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
@@ -326,13 +329,13 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `soli_recibidas`
 --
 ALTER TABLE `soli_recibidas`
-  MODIFY `id_soli_reci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_soli_reci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -348,7 +351,8 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `comprobante`
 --
 ALTER TABLE `comprobante`
-  ADD CONSTRAINT `comprobante_ibfk_1` FOREIGN KEY (`id_usu_gerente`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `comprobante_ibfk_1` FOREIGN KEY (`id_usu_gerente`) REFERENCES `usuario` (`id_usu`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comprobante_ibfk_2` FOREIGN KEY (`id_solicitudes`) REFERENCES `solicitudes` (`id_solicitud`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `factura`
