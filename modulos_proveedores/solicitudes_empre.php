@@ -113,7 +113,9 @@
                     </div>
                     <div class="modal-body">
                         <form id="formRegisFactu" class="form-group">
-                            <input type="hidden" name="id_compro" id="id_compro" value="<?php echo $arreglo['id_comprobante']; ?>">
+                            <!--ID OCULTO DEL COMPROBANTE-->
+                            <input type="text" class="form-control readonly-field" readonly name="id_compro" id="id_compro"><br>
+                           
                             
                             <label>Fecha de factura: </label>
                             <input type="date" name="fech_emision" id="fech_emision" class="form-control"><br>
@@ -202,7 +204,7 @@
                                 
                             </div>
                             <br>
-                            <button type="submit" style="color: white; font-weight: bold;" class="btn btn-primary">Enviar factura</button>
+                            <button type="submit" id="btn_fac_pdf" style="color: white; font-weight: bold;" class="btn btn-primary">Enviar factura</button>
                             <button type="button" style="color: white; font-weight: bold;" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </form>
 
@@ -347,8 +349,8 @@
         //-----------------MODAL GLOBAL
         function generarFactura(idComprobante) {
             // Establecer el ID del comprobante en el campo input oculto
-            $('#id_compro').val(idComprobante);
-            
+           $('#id_compro').val(idComprobante);
+         
             // Mostrar el modal
             $('#miModal').modal('show');
         }

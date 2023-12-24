@@ -78,7 +78,7 @@
                                             <th><b>Cargo</b></th>
 
                                             <th><b>Estado</b></th>
-                                            <th style="width: 20%;"><b>Acciones</b></th>
+                                            <th><b>Acciones</b></th>
 
 
                                         </thead>
@@ -227,7 +227,7 @@
                             proveedor: proveedor},
                         success: function(response) {
                             if (response.status === 'success') {
-                                $("#verde").show();
+                            
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Actualización exitosa!',

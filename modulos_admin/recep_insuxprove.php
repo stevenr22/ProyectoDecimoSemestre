@@ -120,6 +120,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><h2><b>Factuas de insumos recibidas</b></h2></div>
+                    </div>  
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="miTabla" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <th>Código de factura</th>
+                                            <th>Factura</th>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                include("../bd/conexion.php");
+                                                $senten = $conn->query("SELECT * FROM comprobante");
+                                                while ($arreglo = $senten->fetch_array()) {
+                                                    $estado = $arreglo['estado'];
+
+                                                    if ($estado == 'Operando') {
+                                                        $clase_estado = 'operando';
+                                                    } else {
+                                                        $clase_estado = 'Deshabilitado';
+                                                    }
+                                                    
+                                            ?>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <?php include("../recursos/modals/modales.php");?>
                                 
                

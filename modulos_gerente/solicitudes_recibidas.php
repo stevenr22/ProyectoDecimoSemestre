@@ -13,6 +13,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
 
     <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+  
+
 
 </head>
 <body>
@@ -98,18 +100,25 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
+                                               
+
+                                                $clase_fila = ($estado == 'Aprobado') ? 'aprobado-row' : '';
+
+
 
                                                 if ($estado == 'Recibido') {
                                                     $clase_estado = 'Recibido';
                                                 }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
+                                                }else if($estado== 'Entregado'){
+                                                    $clase_estado = 'Entregado';
                                                 }else{
                                                     $clase_estado = 'Denegado';
                                                 }
                                                
                                                         
                                                 ?>
-                                            <tr>
+                                            <tr class="<?php echo $clase_fila; ?>">
                                                 <td><?php echo $arreglo['id_soli_reci'] ?></td>
                                                 <td><?php echo $arreglo['id_solicitud'] ?></td>
                                                 <td><?php echo $arreglo['fecha_solicitud'] ?></td>
@@ -135,6 +144,12 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                     '<?php echo $estado ?>');" 
                                                     id="celeste"><i class="fa-solid fa-pencil"></i></button>
                                                     <button type="button"  class="delete-button" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                
+
+                                                    <!--BTN SE GENERA AUTOMATICAMENTE-->
+                                                    <button type="button" onclick="enviarReporte('<?php echo $arreglo['id_solicitud'] ?>','<?php echo $arreglo['id_soli_reci'] ?>');" class="btn_enviar_comprobante">
+                                                        <i class="fa-solid fa-paper-plane"></i>
+                                                    </button>
                                                 </td>
                                             
                                             </tr>
@@ -155,30 +170,47 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     </div>
 
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"><h2><b>Enviar comprobante al proveedor</b></h2></div>
-                    </div>  
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="card w-100">
-                            <div class="card-body">
-                                <form id="formRegistroComprobante" class="form-group" enctype="multipart/form-data">
-                                    <input type="hidden" name="id_usu_gerente" id="id_usu_gerente" value="<?php echo $_SESSION['DBid_usu'];?>">
+
+
+                <!--MODAL ENVIAR COMPROBANTE-->
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Enviar comprobante al proveedor</h2>
+                            <button class="close" onclick="cerrarGeneral();">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                                <form id="formEnviarComprobante" class="form-group" enctype="multipart/form-data">
+                                    <label>ID GERENTE</label>
+                                    <input type="text" class="form-control readonly-field" readonly name="id_usu_gerente" id="id_usu_gerente" value="<?php echo $_SESSION['DBid_usu'];?>"><br>
+                                    <label>ID SOLICITUD</label>
+                                    <input type="text" class="form-control readonly-field" readonly name="id_solicitud" id="id_solicitud"><br>
+                                    <label>ID SOLICITUD RECI</label>
+                                    <input type="text" class="form-control readonly-field" readonly name="id_solicitud_reci" id="id_solicitud_reci"><br>
+                                  
+
+
 
                                     <label>Cargue el comprobante de compra</label><br><br>
                                     <input class="form-control" type="file" name="comprobante" id="comprobante">
                                     <br>
                                     <button id="btn_enviar_comprobante" class="btn btn-success" type="button">Enviar</button>
+                                    <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral();">Cerrar</button>
                                 </form>
 
-                            </div>
+                              
                         </div>
+                      
+                           
+                       
                     </div>
                 </div>
 
-                <!--MORAL-->
+
+               
+
+
+                <!--MODAL-->
                 <?php include("../recursos/modals/modales.php");?>
 
             </div>
@@ -189,9 +221,9 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <script>
         
         function cerrarGeneral() {
-            var modalVerificarSoli = document.getElementById("modalVerificarSoli");
-            if (modalVerificarSoli) {
-                modalVerificarSoli.style.display = 'none';
+            var myModal = document.getElementById("myModal");
+            if (myModal) {
+                myModal.style.display = 'none';
             }  
         }
        
@@ -218,10 +250,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
         }
              $(document).ready(function() {
-               
-               
-                
-                
                 $("#formVeriSoli").submit(function(e){
                     e.preventDefault();
                     
@@ -240,14 +268,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     } else if (denegado_soli_reci !== "") {
                         estadoSeleccionado = denegado_soli_reci;
                     }
-
-                    console.log(id_soli_veri);
-                    console.log(estadoSeleccionado);
-                  
-
-                   
-                
-
                     $.ajax({
                         url: "../actualizar/aprobar_soli_recibi.php",
                         type: "POST",
@@ -257,20 +277,17 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                             estadoSeleccionado: estadoSeleccionado},
                         success: function(response) {
                             if (response.status === 'success') {
-                                $("#verde").show();
+                               
+                               
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'Actualización exitosa!',
+                                    title: 'Verificación exitosa!',
                                 }).then((result) => {
                 
                                     if(result.value){
                                         location.reload();
+                                        
                                        
-                                       
-                                      
-                                     
-                                      
-                                      
                                     }
                                 });
                             } else {
@@ -291,6 +308,9 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 });
                   
             });
+
+
+          
 
 
             //------GENERAR PDF--------------------
@@ -314,13 +334,24 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
  
 
+        // Función para abrir el modal
+        function enviarReporte(idSoli, idSoliRecibi) {
+            // Mostrar el modal
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'block';
 
-        //ENVIAR PDF--------------------------------------------------------------------
-        $(document).ready(function() {
-            $('#btn_enviar_comprobante').click(function() {
-                var formData = new FormData($('#formRegistroComprobante')[0]);
-                
-               
+            // Configurar los valores para los campos
+            document.getElementById('id_solicitud').value = idSoli;
+            document.getElementById('id_solicitud_reci').value = idSoliRecibi;
+
+            document.getElementById('id_usu_gerente').value = "<?php echo $_SESSION['DBid_usu'];?>";
+
+            // Enviar el formulario cuando se haga clic en el botón
+            $('#btn_enviar_comprobante').click(function(event) {
+                event.preventDefault(); // Evitar comportamiento por defecto del botón
+
+                var formData = new FormData($('#formEnviarComprobante')[0]);
+
                 $.ajax({
                     url: '../validacion_datos/validar_regis_comprobante.php',
                     type: 'POST',
@@ -332,21 +363,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Comprobante enviado con exito!',
+                                title: 'Comprobante enviado con éxito!',
                             }).then((result) => {
-                                // Si el usuario hace clic en "Aceptar" o si se cierra la notificación
                                 if (result.isConfirmed || result.isDismissed) {
-                                    // Redireccionar a otra página
-                                    window.location.href = '../modulos_gerente/solicitudes_recibidas.php';
+                                    location.reload();
+
                                 }
                             });
-                               
-                           
                         } else {
                             Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Error al guardar el archivo y datos. Detalles: ' + response.error,
-                                });
+                                icon: 'warning',
+                                title: 'Error al guardar el archivo y datos. Detalles: ' + response.error,
+                            });
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -355,15 +383,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         console.log("Response Text: " + jqXHR.responseText);  // Esto mostrará el mensaje de error del servidor.
                         
                         Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error en la solicitud AJAX.',
-                                });
-                        
-                  
+                            icon: 'error',
+                            title: 'Error en la solicitud AJAX.',
+                        });
                     }
                 });
             });
-        });
+        }
+
+
+
+
+       
 
 
            
