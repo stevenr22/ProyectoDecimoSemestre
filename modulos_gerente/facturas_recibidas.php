@@ -101,7 +101,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
                                                     <button type="button" class="delete-button" id="rojo"><i
-                                                            class="fa-solid fa-trash-can"></i></button>
+                                                        class="fa-solid fa-trash-can"></i></button>
 
                                                 </td>
 

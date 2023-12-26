@@ -4,8 +4,8 @@ include("../bd/conexion.php");
 
 // Realizar la consulta
 $query = "SELECT p.nombre_empre, p.direccion, p.num_tele, f.id_factura, f.fecha_emision, f.total, c.id_comprobante, s.nombre_insu as DETALLES, s.cantidad
-          FROM proveedor as p, factura as f, comprobante as c, solicitudes as s
-          WHERE p.nombre_empre = 'Ecua S.A.'";
+FROM proveedor as p, factura as f, comprobante as c, solicitudes as s
+WHERE p.nombre_empre = 'Ecua S.A.' and f.id_comprobante= c.id_comprobante";
 
 $result = $conn->query($query);
 

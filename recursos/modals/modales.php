@@ -568,7 +568,7 @@
 <div id="modalVerificarSoli" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Editar rol</h2>
+            <h2>Verificar solicitud</h2>
             <button class="close" onclick="cerrarGeneral()">&times;</button>
         </div>
         <div class="modal-body">

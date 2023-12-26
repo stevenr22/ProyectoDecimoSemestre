@@ -58,6 +58,9 @@
             </div>
         </div>
         <br>
+        <button type="button" class="btn btn-success" onclick="generarFactura();">Generar factura</button>
+
+
         
         
 
@@ -90,8 +93,7 @@
                         <td>Gestión mango S.A.</td>
                         <td>
                             <a href='../reportes/<?php echo $arreglo["contenido_pdf"]; ?>' download class='btn btn-primary'>Descargar</a>
-                            <button type="button" class="btn btn-success" onclick="generarFactura('<?php echo $arreglo['id_comprobante']?>');">Generar factura</button>
-                            
+
 
                         </td>
                         
@@ -114,7 +116,6 @@
                     <div class="modal-body">
                         <form id="formRegisFactu" class="form-group">
                             <!--ID OCULTO DEL COMPROBANTE-->
-                            <input type="text" class="form-control readonly-field" readonly name="id_compro" id="id_compro"><br>
                            
                             
                             <label>Fecha de factura: </label>
@@ -348,8 +349,7 @@
 
         //-----------------MODAL GLOBAL
         function generarFactura(idComprobante) {
-            // Establecer el ID del comprobante en el campo input oculto
-           $('#id_compro').val(idComprobante);
+        
          
             // Mostrar el modal
             $('#miModal').modal('show');
@@ -367,7 +367,6 @@
             // Escucha el evento submit del formulario
             $("#formRegisFactu").submit(function(e) {
                 e.preventDefault();
-                var id_compro = $.trim($("#id_compro").val());
                 var fech_emision = $.trim($("#fech_emision").val());
                 var total_fac = $.trim($("#total_fac").val());
                 
@@ -380,7 +379,6 @@
                     type: "POST",
                     dataType: "json",
                     data: {
-                        id_compro: id_compro, 
                         fech_emision: fech_emision, 
                         total_fac: total_fac
                         

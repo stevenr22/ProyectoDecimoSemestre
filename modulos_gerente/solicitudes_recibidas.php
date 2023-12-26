@@ -219,13 +219,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         </div>
     </div>
     <script>
-        
-        function cerrarGeneral() {
-            var myModal = document.getElementById("myModal");
-            if (myModal) {
-                myModal.style.display = 'none';
-            }  
-        }
+      
+
        
           //Editar actualizar
           function modalVerificarSoli(id_soli, id_solicitud_remitente, fecha, tipo_insu, nombre_insu, cantidad, proveedor, nombre_empleado, cargo, estado) {
@@ -390,6 +385,20 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                 });
             });
         }
+
+          
+        function cerrarGeneral() {
+            var myModal = document.getElementById("myModal");
+            var modalVerificarSoli = document.getElementById("modalVerificarSoli");
+            
+            if (myModal && myModal.style.display !== 'none') {
+                myModal.style.display = 'none';
+            } 
+            if (modalVerificarSoli && modalVerificarSoli.style.display !== 'none') {
+                modalVerificarSoli.style.display = 'none';
+            }
+        }
+
 
 
 
