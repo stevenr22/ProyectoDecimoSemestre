@@ -2,15 +2,14 @@
 session_start();
 include("../bd/conexion.php");
 
-$id_soli_veri = $_POST['id_soli_veri'];
-$id_soli_remi = $_POST['id_soli_remi'];
+$id_solicitud = $_POST['id_solicitud'];
+
 $estadoSeleccionado = $_POST['estadoSeleccionado'];
 
 // Corrección de la consulta SQL utilizando CASE
-$sql = "UPDATE soli_recibidas AS sr
-JOIN solicitudes AS s ON sr.id_solicitudes = s.id_solicitud
-SET sr.estado = '$estadoSeleccionado', s.estado = '$estadoSeleccionado'
-WHERE sr.id_soli_reci = $id_soli_veri";
+$sql = "UPDATE solicitudes
+SET estado = '$estadoSeleccionado', estado = '$estadoSeleccionado'
+WHERE id_solicitud = $id_solicitud";
 
 
 if ($conn->query($sql) === TRUE) {

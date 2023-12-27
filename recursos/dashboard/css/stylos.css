@@ -234,24 +234,6 @@ td button#naranja:hover {
 }
 
 
-  /* Oculta el botón por defecto */
-  .btn_enviar_comprobante {
-    display: none;
-    background-color: green;
-    padding: 10px; 
-    border: none;
-    cursor: pointer;
-}
-.btn_enviar_comprobante:hover{
-
-    background-color: rgb(1, 72, 1);
-      
-}
-
-/* Muestra el botón solo dentro de una fila con la clase 'aprobado-row' */
-.aprobado-row .btn_enviar_comprobante {
-    display: inline-block; /* o block, dependiendo de tu diseño */
-}
 
 /*ESTADOS SOLICITUDES*/
 
@@ -329,7 +311,17 @@ tbody td.Entregado:hover {
 
 
 
+tbody td.Verificando {
+  font-size: 20px;
+  font-weight: bold;
+  color: #06b8e5; /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
+}
 
+tbody td.Verificando:hover {
+  color: #085569; /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
+}
 
 
 

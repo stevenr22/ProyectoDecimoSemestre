@@ -28,22 +28,10 @@ if (empty($usu) || empty($contra)) {
             $_SESSION['DBcargo'] = $fila['cargo'];
             $_SESSION['DBid_rol'] = $fila['id_rol'];
 
-            // Verificar si el usuario tiene el rol de administrador
-            if ($_SESSION['DBcargo'] === 'Administrador') {
-                // Actualizar el estado de las solicitudes a 'Recibido'
-                $sqlActualizarEstado = "UPDATE solicitudes SET estado = 'Recibido' WHERE estado = 'Enviado'";
-                $conn->query($sqlActualizarEstado);
-
-                $response = array(
-                    'message' => 'Sesión iniciada correctamente. El estado de las solicitudes ha sido actualizado.',
-                    'type' => 'success'
-                );
-            } else {
-                $response = array(
-                    'message' => 'Sesión iniciada correctamente.',
-                    'type' => 'success'
-                );
-            }
+            $response = array(
+                'message' => 'Sesión iniciada correctamente.',
+                'type' => 'success'
+            );
         }
     } else {
         $response = array(

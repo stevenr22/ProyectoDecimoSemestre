@@ -47,7 +47,7 @@ class PDF extends FPDF
         $this->Cell(0, 5, utf8_decode("Gestión mango © Todos los derechos reservados."), 0, 0, "C");
     }
 }
-// Create PDF instance with horizontal orientation
+
 $pdf = new PDF('L', 'mm', 'A4');
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -56,40 +56,23 @@ $pdf->SetTopMargin(15);
 $pdf->SetLeftMargin(10);
 $pdf->SetRightMargin(10);
 
-// Set initial position for the table
-$pdf->setY(60);
-$pdf->setX(10);
-
-// Table headers
+// Encabezados de la tabla con fondo de color
 $pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(20, 7, utf8_decode('ID'), 1, 0, 'C');
-$pdf->Cell(20, 7, utf8_decode('Solicitud ID'), 1, 0, 'C');
-$pdf->Cell(25, 7, utf8_decode('Fecha'), 1, 0, 'C');
-$pdf->Cell(25, 7, utf8_decode('Tipo Insumo'), 1, 0, 'C');
-$pdf->Cell(30, 7, utf8_decode('Nombre Insumo'), 1, 0, 'C');
-$pdf->Cell(20, 7, utf8_decode('Cantidad'), 1, 0, 'C');
-$pdf->Cell(30, 7, utf8_decode('Proveedor'), 1, 0, 'C');
-$pdf->Cell(30, 7, utf8_decode('Usuario'), 1, 0, 'C');
-$pdf->Cell(20, 7, utf8_decode('Cargo'), 1, 0, 'C');
-$pdf->Cell(20, 7, utf8_decode('Estado'), 1, 1, 'C');
+$pdf->SetFillColor(200, 220, 255); // Color de fondo
+$pdf->Cell(20, 7, utf8_decode('Código de la solicitud'), 1, 0, 'C', true);
+$pdf->Cell(25, 7, utf8_decode('Fecha'), 1, 0, 'C', true);
+$pdf->Cell(25, 7, utf8_decode('Tipo Insumo'), 1, 0, 'C',true);
+$pdf->Cell(30, 7, utf8_decode('Nombre Insumo'), 1, 0, 'C',true);
+$pdf->Cell(20, 7, utf8_decode('Cantidad'), 1, 0, 'C',true);
+$pdf->Cell(30, 7, utf8_decode('Proveedor'), 1, 0, 'C',true);
+$pdf->Cell(30, 7, utf8_decode('Usuario'), 1, 0, 'C',true);
+$pdf->Cell(20, 7, utf8_decode('Cargo'), 1, 0, 'C',true);
+$pdf->Cell(20, 7, utf8_decode('Estado'), 1, 1, 'C',true);
 
 // Fetch data from the database
-$sql = "SELECT 
-            sr.id_soli_reci,
-            s.id_solicitud,
-            s.fecha_solicitud,
-            s.tipo_insumo,
-            s.nombre_insu,
-            s.cantidad,
-            s.proveedor,
-            u.nombre_completo,
-            r.cargo,
-            sr.estado
-        FROM soli_recibidas sr
-        JOIN solicitudes s ON sr.id_solicitudes = s.id_solicitud
-        JOIN usuario u ON s.id_usu = u.id_usu
-        JOIN rol r ON u.id_rol = r.id_rol
-        WHERE sr.estado='Aprobado'";
+$sql = "SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,s.proveedor, u.nombre_completo, r.cargo, s.estado
+FROM solicitudes as s, usuario as u, rol as r
+WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu and s.estado='Aprobado'";
 
 $result = $conn->query($sql);
 
@@ -97,7 +80,6 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Table data
-        $pdf->Cell(20, 7, $row['id_soli_reci'], 1, 0, 'C');
         $pdf->Cell(20, 7, $row['id_solicitud'], 1, 0, 'C');
         $pdf->Cell(25, 7, $row['fecha_solicitud'], 1, 0, 'C');
         $pdf->Cell(25, 7, $row['tipo_insumo'], 1, 0, 'C');
@@ -124,3 +106,6 @@ exit;
 
 
 ?>
+
+
+

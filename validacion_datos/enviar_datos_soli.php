@@ -2,35 +2,42 @@
 session_start();
 include("../bd/conexion.php");
 
-// Recibir datos del cliente
+// Recibir ID de la solicitud
 $id_solicitud = isset($_POST['id_solicitud']) ? $_POST['id_solicitud'] : '';
 
-// Verificar si ya existe un registro con el mismo id_solicitud
-$sql_verificar = "SELECT id_solicitudes FROM soli_recibidas WHERE id_solicitudes = '$id_solicitud'";
-$result_verificar = $conn->query($sql_verificar);
-
-if ($result_verificar->num_rows > 0) {
-    // Ya existe un registro con el mismo id_solicitud
-    $response = array('status' => 'error', 'message' => 'Ya se envió esta solicitud, por favor envíe una diferente.');
-} else {
-    // No existe un registro, realizar la inserción
-    $sql_insertar = "INSERT INTO soli_recibidas (id_solicitudes) VALUES ('$id_solicitud')";
-
-    if ($conn->query($sql_insertar) === TRUE) {
-        // Después de la inserción, actualiza el estado en la tabla original (solicitudes)
-        $sql_actualizar_estado = "UPDATE solicitudes SET estado = 'Enviado' WHERE id_solicitud = '$id_solicitud'";
-        $conn->query($sql_actualizar_estado);
-
-        $response = array('status' => 'success', 'message' => 'Datos almacenados correctamente.');
-    } else {
-        $response = array('status' => 'error', 'message' => 'Error al almacenar datos: ' . $conn->error);
-    }
+if (empty($id_solicitud)) {
+    $response = array('status' => 'error', 'message' => 'ID de solicitud no proporcionado.');
+    echo json_encode($response);
+    exit; // Detener el script si no se proporciona el ID de solicitud
 }
 
-// Cerrar conexión
+// Verificar si la solicitud existe (opcional, dependiendo de tu lógica de negocio)
+$sql_verificar = "SELECT id_solicitud FROM solicitudes WHERE id_solicitud = ?";
+$stmt = $conn->prepare($sql_verificar);
+$stmt->bind_param("s", $id_solicitud);
+$stmt->execute();
+$result_verificar = $stmt->get_result();
+
+if ($result_verificar->num_rows > 0) {
+    // Actualizar el estado de la solicitud a 'Enviado'
+    $sql_actualizar_estado = "UPDATE solicitudes SET estado = 'Verificando' WHERE id_solicitud = ?";
+    $stmt = $conn->prepare($sql_actualizar_estado);
+    $stmt->bind_param("s", $id_solicitud);
+    
+    if ($stmt->execute()) {
+        $response = array('status' => 'success', 'message' => 'Estado de la solicitud actualizado correctamente.');
+    } else {
+        $response = array('status' => 'error', 'message' => 'Error al actualizar el estado: ' . $conn->error);
+    }
+} else {
+    $response = array('status' => 'error', 'message' => 'La solicitud no existe.');
+}
+
+// Cerrar la conexión y liberar recursos
+$stmt->close();
 $conn->close();
 
-// Devolver la respuesta al cliente en formato JSON
+// Devolver respuesta al cliente en formato JSON
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
