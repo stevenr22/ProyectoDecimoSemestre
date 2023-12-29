@@ -132,6 +132,8 @@
                                                 <td><?php echo $arreglo['cargo'] ?></td>
 
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                
+                                                
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-info" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',

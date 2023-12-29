@@ -90,14 +90,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
-                                                if ($estado == 'Denegado' || $estado == 'Recibido' || $estado == 'Enviado') {
+                                                if ($estado == 'Denegado' || $estado == 'Recibido') {
                                                     $mostrarBotonEnviar = false; // No mostrar el botón
                                                 } else {
                                                     $mostrarBotonEnviar = true; // Mostrar el botón si hay un proveedor
                                                 }
                                                
 
-                                                $clase_fila = ($estado == 'Aprobado') ? 'aprobado-row' : '';
 
 
 
@@ -145,10 +144,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                     <button type="button" class="btn btn-danger" id="rojo"><i
                                                             class="fa-solid fa-trash-can"></i></button>
 
+                                                            
                                                     <?php if ($mostrarBotonEnviar): ?>
-                                                        <button type="button" class="btn btn-success btn_enviar" 
-                                                            onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>','<?php echo $arreglo['fecha_solicitud'] ?>','<?php echo $arreglo['tipo_insumo'] ?>','<?php echo $arreglo['nombre_insu'] ?>','<?php echo $arreglo['cantidad'] ?>','<?php echo $arreglo['id_usu'] ?>'
-                                                            )">
+                                                        <button type="button" class="btn btn-success btn_enviar"  id="btn_enviar"
+                                                            onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>','<?php echo $arreglo['fecha_solicitud'] ?>','<?php echo $arreglo['tipo_insumo'] ?>','<?php echo $arreglo['nombre_insu'] ?>','<?php echo $arreglo['cantidad'] ?>',<?php echo $arreglo['id_prove'] ?>)">
                                                             <i class="fa-solid fa-paper-plane"></i>
                                                         </button>
                                                     <?php endif; ?>
@@ -369,7 +368,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
 
-    function enviarDatosSolicitud(id_solicitud, fech_soli, tipo_insu, nomb_insu, cantidad, id_usu, id_prove) {
+    function enviarDatosSolicitud(id_solicitud, fech_soli, tipo_insu, nomb_insu, cantidad, id_prove) {
         // Mostrar mensaje de confirmación
         Swal.fire({
             title: '¿Estás seguro de enviar esta solicitud para su compra?',
@@ -390,7 +389,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         tipo_insu: tipo_insu,
                         nomb_insu: nomb_insu,
                         cantidad: cantidad,
-                        id_usu: id_usu,
+                        
                         id_prove: id_prove
                     },
                     success: function(response) {
@@ -400,7 +399,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 title: 'Envío exitoso!',
                             }).then((result) => {
                                 if (result.value) {
-                                    location.reload();
+                                    location.reload();  
 
                                 }
                             });
@@ -423,7 +422,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     }
 
 
-
+ 
 
 
     function cerrarGeneral() {

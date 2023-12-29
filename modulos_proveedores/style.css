@@ -9,3 +9,33 @@ label{
 .dollar-icon:hover {
     transform: scale(1.1);  /* Hace que el icono se agrande al 110% de su tamaño original */
 }
+
+
+
+
+/* Asegúrate de que este CSS está correctamente enlazado y es accesible desde tu página */
+tbody td.Recibido {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e00ff;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+tbody td.Recibido:hover {
+    color: #543efc;
+    transform: scale(1.2);
+}
+
+tbody td.Facturado {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00e5ff;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+tbody td.Facturado:hover {
+    color: #047a87;
+    transform: scale(1.2);
+}
+
+  
