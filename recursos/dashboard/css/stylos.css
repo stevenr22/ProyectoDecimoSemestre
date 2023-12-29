@@ -114,27 +114,67 @@ body .container-fluid .card-body .iz{
 
 
 
+
+
+/*BOTONES DE LA TABLA*/
+
 /* Estilos iniciales */
+/*
 td{
   text-align: center;
 
 }
+
+
+.btn_enviar{
+  display: none;
+  
+  background-color: green;
+  height: 27px;
+  width: 27px;
+}
+
+
+
+
+
 td button#celeste {
   background-color: #17A2B8;
+  height: 27px;
+  width: 27px;
 }
 td button#naranja {
   background-color: #d0a517;
+  height: 27px;
+  width: 27px;
 }
 
 td button#rojo {
   background-color: #DC3545;
-}
+  height: 27px;
+  width: 27px;
+}*/
+/* Estilo para el contenedor td */
 
-td button i {
+/* Estilo para cada botón dentro del td */
+/* Estilo para los botones dentro del td */
+
+/* Estilo para el icono dentro del botón */
+td > button > i {
   color: white;
-  
 }
 
+
+
+
+td .btn.btn-success.btn_enviar {
+  display: none;
+}
+
+
+
+
+/*
 td button {
   display: inline-block;
   font-weight: 400;
@@ -142,13 +182,13 @@ td button {
   border: none;
   transition: background-color 0.3s;
   text-align: center;
-  padding: .5rem .8rem;
+ 
   font-size: 1rem;
   line-height: 1.5;
 
 }
-
 /* Efecto hover */
+/*
 td button#celeste:hover {
   background-color: #126a7f;
 }
@@ -160,7 +200,11 @@ td button#rojo:hover {
 td button#naranja:hover {
   background-color: #897227;
 }
-
+.btn_enviar:hover{
+  background-color: rgb(1, 72, 1);
+}
+*/
+/*-------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -218,24 +262,6 @@ td button#naranja:hover {
 
 
 
-
-.btn_enviar{
-  display: none; 
-  background-color: green;
-  padding: 10px; 
-  border: none;
-  cursor: pointer;
-}
-
-.btn_enviar:hover{
- 
-  background-color: rgb(1, 72, 1);
-  
-}
-
-
-
-/*ESTADOS SOLICITUDES*/
 
 /*ESTADOS*/
 

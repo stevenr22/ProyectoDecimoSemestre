@@ -59,7 +59,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                             <div class="card-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <th><b>Código de solicitud recibida</b></th>
 
@@ -84,8 +84,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             FROM solicitudes AS s
                                             JOIN usuario AS u ON s.id_usu = u.id_usu
                                             JOIN rol AS r ON u.id_rol = r.id_rol
-                                            WHERE s.estado != 'Enviado';
-                                            ");
+                                            WHERE s.estado != 'Enviado'");
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
@@ -95,19 +94,21 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
 
-                                                if ($estado == 'Recibido') {
+                                                if ($estado == 'Recibido'){
                                                     $clase_estado = 'Recibido';
                                                 }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
                                                 } else if($estado== 'Entregado'){
                                                     $clase_estado = 'Entregado';
                                                 }else if($estado== 'Verificando'){
-                                                    $clase_estado = 'Verificando';
+                                                    // Actualiza el estado de "Enviado" a "Recibido"
+                                                    $update = "UPDATE solicitudes SET estado = 'Recibido' WHERE id_solicitud = " . $arreglo['id_solicitud'];
+                                                    $conn->query($update); // Ejecuta la consulta para actualizar el estado
+                                                    $estado = 'Recibido'; // Actualiza el estado para mostrarlo en la tabla
+                                                    $clase_estado = 'Recibido'; // Actualiza la clase CSS correspondiente
                                                 }else{
                                                     $clase_estado = 'Denegado';
                                                 }
-                                               
-                                                        
                                                 ?>
                                             <tr class="<?php echo $clase_fila; ?>">
                                                 <td><?php echo $arreglo['id_solicitud'] ?></td>
@@ -122,7 +123,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                                 <td>
 
-                                                    <button type="button" onclick="modalVerificarSoli(
+                                                    <button type="button" class="btn btn-info" onclick="modalVerificarSoli(
                                                     '<?php echo $arreglo['id_solicitud'] ?>',
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',
                                                     '<?php echo $arreglo['tipo_insumo'] ?>',
@@ -134,12 +135,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                     '<?php echo $estado ?>');" id="celeste"><i
                                                             class="fa-solid fa-pencil"></i></button>
 
-                                                    <button type="button" class="delete-button" id="rojo"><i
+                                                    <button type="button" class="btn btn-danger" id="rojo"><i
                                                             class="fa-solid fa-trash-can"></i></button>
 
-                                                    <button type="button" class="btn_enviar"
-                                                        id="NuevoBoton_<?php echo $arreglo['id_solicitud']?>"><i
-                                                            class="fa-solid fa-paper-plane"></i></button>
+
 
 
                                                 </td>
@@ -330,11 +329,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         }).then((result) => {
 
                             if (result.value) {
+                                location.reload();
 
 
-                                localStorage.setItem("nuevoBotonVisible_" + id_solicitud, true);                             
 
-                             
+
+
+
 
 
                             }
@@ -359,24 +360,12 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     });
 
 
-    //SCRIPT PARA QUE SE MANTENGA EL BOTON ENVIAR 
-    $(window).on('load', function() {
-        // Iterar sobre todas las claves del almacenamiento local
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-
-            // Verificar si la clave pertenece a un botón y si es visible
-            if (key.startsWith("nuevoBotonVisible_") && localStorage.getItem(key) === "true") {
-                var id_solicitud = key.replace("nuevoBotonVisible_", "");
-                $("#NuevoBoton_" + id_solicitud).show();
-            }
-        }
-    });
-
-  
 
 
-    
+
+
+
+
 
 
 

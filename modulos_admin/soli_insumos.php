@@ -48,15 +48,12 @@
 
 
                 <div class="botones_container">
-
-
                     <div class="rojo">
                         <button type="button" id="btn_pdf_arriba" class="btn">Exportar reporte
                             <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
                         </button>
 
                     </div>
-
                 </div><br>
 
 
@@ -70,9 +67,7 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-
-                                    <table id="tabla_solici_regis_estado" class="table table-bordered"
-                                        style="width:100%">
+                                    <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <th><b>Código</b></th>
                                             <th><b>Fecha solicitud</b></th>
@@ -90,7 +85,6 @@
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                           
                                               
                                             
                                             
@@ -109,7 +103,11 @@
                                                 } else if($estado == 'Verificando'){
                                                     $clase_estado = 'Verificando';
                                                 }elseif($estado == 'Enviado'){
-                                                    $clase_estado = 'Enviado';
+                                                    // Actualiza el estado de "Enviado" a "Recibido"
+                                                    $update = "UPDATE solicitudes SET estado = 'Recibido' WHERE id_solicitud = " . $arreglo['id_solicitud'];
+                                                    $conn->query($update); // Ejecuta la consulta para actualizar el estado
+                                                    $estado = 'Recibido'; // Actualiza el estado para mostrarlo en la tabla
+                                                    $clase_estado = 'Recibido'; // Actualiza la clase CSS correspondiente
                                                 }
                                                 else {
                                                     $clase_estado = 'Denegado';
@@ -128,17 +126,16 @@
 
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                                 <td>
-                                                    <button type="button" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
+                                                    <button type="button" class="btn btn-info" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',
                                                     '<?php echo $arreglo['tipo_insumo'] ?>',
                                                     '<?php echo $arreglo['nombre_insu'] ?>',
                                                     '<?php echo $arreglo['cantidad'] ?>');" id="celeste"><i
                                                             class="fa-solid fa-pencil"></i></button>
 
-                                                    <button type="button" class="delete-button" id="rojo"><i
-                                                            class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="btn btn-danger" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
 
-                                                    <button type="button" class="btn_enviar"
+                                                    <button type="button" class="btn btn-success btn_enviar" 
                                                         onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>')"
                                                         id="nuevoBoton_<?php echo $arreglo['id_solicitud']?>">
                                                         <i class="fa-solid fa-paper-plane"></i>
