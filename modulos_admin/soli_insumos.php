@@ -91,10 +91,17 @@
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad, u.nombre_completo, r.cargo, s.proveedor, s.estado
                                             FROM solicitudes as s, usuario as u, rol as r
                                             WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu
-                                        ");
+                                            ");
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
+                                                $tieneProveedor = !empty($arreglo['proveedor']);
+                                                if ($estado == 'Verificando' || $estado == 'Aprobado') {
+                                                    $mostrarBotonEnviar = false; // No mostrar el botón
+                                                } else {
+                                                    $mostrarBotonEnviar = $tieneProveedor; // Mostrar el botón si hay un proveedor
+                                                }
+
 
                                                 if ($estado == 'Recibido') {
                                                     $clase_estado = 'Recibido';
@@ -130,18 +137,20 @@
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',
                                                     '<?php echo $arreglo['tipo_insumo'] ?>',
                                                     '<?php echo $arreglo['nombre_insu'] ?>',
-                                                    '<?php echo $arreglo['cantidad'] ?>');" id="celeste"><i
-                                                            class="fa-solid fa-pencil"></i></button>
-
-                                                    <button type="button" class="btn btn-danger" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
-
-                                                    <button type="button" class="btn btn-success btn_enviar" 
-                                                        onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>')"
-                                                        id="nuevoBoton_<?php echo $arreglo['id_solicitud']?>">
-                                                        <i class="fa-solid fa-paper-plane"></i>
+                                                    '<?php echo $arreglo['cantidad'] ?>');" id="celeste">
+                                                        <i class="fa-solid fa-pencil"></i>
                                                     </button>
 
+                                                    <button type="button" class="btn btn-danger" id="rojo">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
 
+                                                    <?php if ($mostrarBotonEnviar): ?>
+                                                        <button type="button" class="btn btn-success btn_enviar" 
+                                                            onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>')">
+                                                            <i class="fa-solid fa-paper-plane"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 </td>
 
                                             </tr>
@@ -222,14 +231,6 @@
                         }).then((result) => {
                             if (result.value) {
                                 location.reload();
-
-                                // Mostrar el nuevo botón después de una actualización exitosa
-                                localStorage.setItem("nuevoBotonVisible_" +
-                                    id_soli_reci, true);
-
-
-
-
                             }
                         });
                     } else {
@@ -251,19 +252,7 @@
 
     });
 
-    //SCRIPT PARA QUE SE MANTENGA EL BOTON ENVIAR 
-    $(window).on('load', function() {
-        // Iterar sobre todas las claves del almacenamiento local
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-
-            // Verificar si la clave pertenece a un botón y si es visible
-            if (key.startsWith("nuevoBotonVisible_") && localStorage.getItem(key) === "true") {
-                var id_soli_reci = key.replace("nuevoBotonVisible_", "");
-                $("#nuevoBoton_" + id_soli_reci).show();
-            }
-        }
-    });
+   
 
 
     //SCRIPT PARA ENVIAR LA SOLICITUD AL MODULO GERENTE PARA SU VERIFICACION
@@ -286,6 +275,7 @@
                         id_solicitud: id_solicitud
                     },
                     success: function(response) {
+
                         if (response.status === 'success') {
                             Swal.fire({
                                 icon: 'success',
@@ -313,6 +303,8 @@
             }
         });
     }
+   
+ 
     </script>
 
 </body>

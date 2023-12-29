@@ -118,48 +118,6 @@ body .container-fluid .card-body .iz{
 
 /*BOTONES DE LA TABLA*/
 
-/* Estilos iniciales */
-/*
-td{
-  text-align: center;
-
-}
-
-
-.btn_enviar{
-  display: none;
-  
-  background-color: green;
-  height: 27px;
-  width: 27px;
-}
-
-
-
-
-
-td button#celeste {
-  background-color: #17A2B8;
-  height: 27px;
-  width: 27px;
-}
-td button#naranja {
-  background-color: #d0a517;
-  height: 27px;
-  width: 27px;
-}
-
-td button#rojo {
-  background-color: #DC3545;
-  height: 27px;
-  width: 27px;
-}*/
-/* Estilo para el contenedor td */
-
-/* Estilo para cada botón dentro del td */
-/* Estilo para los botones dentro del td */
-
-/* Estilo para el icono dentro del botón */
 td > button > i {
   color: white;
 }
@@ -200,52 +158,58 @@ td > button > i {
 }
 
 
-
-
-
-td .btn.btn-success.btn_enviar {
-  display: none;
-}
-
-
 .acciones{
   width: 150px;
 }
 
-
-
-/*
-td button {
-  display: inline-block;
-  font-weight: 400;
-  border-radius: 0.2rem;
-  border: none;
-  transition: background-color 0.3s;
-  text-align: center;
- 
-  font-size: 1rem;
-  line-height: 1.5;
-
-}
-/* Efecto hover */
-/*
-td button#celeste:hover {
-  background-color: #126a7f;
-}
-
-td button#rojo:hover {
-  background-color: #ac2b38;
-}
-
-td button#naranja:hover {
-  background-color: #897227;
-}
-.btn_enviar:hover{
-  background-color: rgb(1, 72, 1);
-}
-*/
 /*-------------------------------------------------------------------------------------------------------*/
+/*RECARGAR PAGINA DISEÑO*/
+.loader {
+  width: calc(100px - 24px);
+  height: 50px;
+  position: relative;
+  animation: flippx 2s infinite linear;
+}
+.loader:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFF;
+  transform-origin: -24px 50%;
+  animation: spin 1s infinite linear;
+}
+.loader:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50% , -50%);
+  background: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
 
+@keyframes flippx {
+  0%, 49% {
+    transform: scaleX(1);
+  }
+  50%, 100% {
+    transform: scaleX(-1);
+  }
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+      
+
+/*----------------------------------------------------------------------*/
 
 
 

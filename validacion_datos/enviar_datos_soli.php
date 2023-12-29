@@ -25,6 +25,7 @@ if ($result_verificar->num_rows > 0) {
     $stmt->bind_param("s", $id_solicitud);
     
     if ($stmt->execute()) {
+
         $response = array('status' => 'success', 'message' => 'Estado de la solicitud actualizado correctamente.');
     } else {
         $response = array('status' => 'error', 'message' => 'Error al actualizar el estado: ' . $conn->error);
