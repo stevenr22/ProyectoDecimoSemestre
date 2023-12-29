@@ -202,6 +202,9 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         var nom_insu = $.trim($("#nom_insu").val());
         var Canti = $.trim($("#Canti").val());
         var id_usuario_empleado = $.trim($("#id_usuario_empleado").val());
+
+
+      
         // Enviar los datos mediante AJAX
         $.ajax({
             url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
@@ -221,9 +224,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         title: 'Registro exitoso!',
                     }).then((result) => {
                         if (result.value) {
-                            // Puedes redirigir a otra página o hacer algo más después del registro exitoso
-                            window.location.href = "../modulos_trabajador/r_solicitud.php";
-
+                            location.reload();
                         }
                     });
                 } else {

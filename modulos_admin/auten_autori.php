@@ -49,7 +49,7 @@
                                             <th><b>Nombre de usuario</b></th>
                                             <th><b>rol</b></th>
                                             <th><b>Correo electronico</b></th>
-                                            <th><b>Acciones</b></th>
+                                            <th class="acciones"><b>Acciones</b></th>
 
 
                                         </thead>
@@ -70,10 +70,10 @@
                                                 <td><?php echo $arreglo['cargo'] ?></td>
                                                 <td><?php echo $arreglo['correo'] ?></td>
                                                     
-                                                <td>
-                                                    <button type="button" onclick="abrirModal('<?php echo $arreglo['id_usu'];?>','<?php echo $arreglo['nombre_completo'];?>','<?php echo $arreglo['nombre_usu'];?>','<?php echo $arreglo['cargo'];?>','<?php echo $arreglo['correo'];?>');" class="edit-button"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info" onclick="abrirModal('<?php echo $arreglo['id_usu'];?>','<?php echo $arreglo['nombre_completo'];?>','<?php echo $arreglo['nombre_usu'];?>','<?php echo $arreglo['cargo'];?>','<?php echo $arreglo['correo'];?>');" class="edit-button"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
 
-                                                    <button type="button" class="delete-button"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="btn btn-danger"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>

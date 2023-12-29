@@ -83,7 +83,7 @@
                                             <th>N° de teléfono</th>
                                             <th>Fecha de registro</th>
                                             <th>Estado</th>
-                                            <th>Acciones</th>
+                                            <th class="acciones">Acciones</th>
 
 
                                         </thead>
@@ -109,11 +109,11 @@
                                                 <td><?php echo $arreglo['num_tele'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
                                                 <td  class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
-                                                <td>
+                                                <td class="text-center">
                                                    
-                                                    <button type="button" onclick="modalActuProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>','<?php echo $arreglo['nombre_traba'] ?>','<?php echo $arreglo['direccion'] ?>','<?php echo $arreglo['num_tele'] ?>','<?php echo $arreglo['fecha_regis'] ?>','<?php echo $arreglo['estado'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
-                                                    <button type="button" onclick="desabilitarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="naranja"><i class="ti ti-user-off"></i></button>
-                                                    <button type="button" onclick="eliminarProveedor('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="btn btn-info" onclick="modalActuProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>','<?php echo $arreglo['nombre_traba'] ?>','<?php echo $arreglo['direccion'] ?>','<?php echo $arreglo['num_tele'] ?>','<?php echo $arreglo['fecha_regis'] ?>','<?php echo $arreglo['estado'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button type="button" class="btn btn-warning" onclick="desabilitarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="naranja"><i class="ti ti-user-off"></i></button>
+                                                    <button type="button" class="btn btn-danger" onclick="eliminarProveedor('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"  id="rojo"><i class="fa-solid fa-trash-can"></i></button>
 
                                                 </td>
                                               

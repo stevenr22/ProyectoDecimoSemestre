@@ -75,7 +75,7 @@
                                             <th><b>Código</b></th>
                                             <th><b>Cargo</b></th>
                                             <th><b>Descripción</b></th>
-                                            <th><b>Acciones</b></th>
+                                            <th class="acciones"><b>Acciones</b></th>
 
 
                                         </thead>
@@ -91,10 +91,10 @@
 
                                                 <td><?php echo $arreglo['cargo'] ?></td>
                                                 <td><?php echo $arreglo['descripcion'] ?></td>
-                                                <td>
-                                                    <button type="button" class="edit-button" onclick="modalActuRol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>','<?php echo $arreglo['descripcion'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info" onclick="modalActuRol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>','<?php echo $arreglo['descripcion'] ?>');"  id="celeste"><i class="fa-solid fa-pencil"></i></button>
 
-                                                    <button type="button" class="delete-button" onclick="eliminar_rol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>');" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="btn btn-danger" onclick="eliminar_rol('<?php echo $arreglo['id_rol'] ?>','<?php echo $arreglo['cargo'] ?>');" id="rojo"><i class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             
                                             </tr>

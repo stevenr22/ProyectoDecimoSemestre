@@ -67,7 +67,7 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <th><b>Código</b></th>
                                             <th><b>Fecha solicitud</b></th>
@@ -78,7 +78,7 @@
                                             <th><b>Cargo</b></th>
 
                                             <th><b>Estado</b></th>
-                                            <th><b>Acciones</b></th>
+                                            <th class="acciones"><b>Acciones</b></th>
 
 
                                         </thead>
@@ -125,7 +125,7 @@
                                                 <td><?php echo $arreglo['cargo'] ?></td>
 
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
-                                                <td>
+                                                <td class="text-center">
                                                     <button type="button" class="btn btn-info" onclick="modalActuSoliTraba('<?php echo $arreglo['id_solicitud'] ?>',
                                                     '<?php echo $arreglo['fecha_solicitud'] ?>',
                                                     '<?php echo $arreglo['tipo_insumo'] ?>',

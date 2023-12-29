@@ -164,6 +164,42 @@ td > button > i {
   color: white;
 }
 
+.btn-info{
+  background-color: #17A2B8;
+  border: none;
+}
+.btn-warning{
+  background-color: #d0a517;
+  border: none;
+}
+
+.btn-danger{
+  background-color: #DC3545;
+  border: none;
+}
+
+.btn-success.btn-enviar{
+  background-color: green;
+  border: none;
+}
+
+
+.btn-info:hover{
+  background-color: #0b5561;
+}
+.btn-warning:hover{
+  background-color: #46390f;
+}
+
+.btn-danger:hover{
+  background-color: #691820;
+}
+
+.btn-success.btn-enviar:hover{
+  background-color: rgb(1, 63, 1);
+}
+
+
 
 
 
@@ -171,6 +207,10 @@ td .btn.btn-success.btn_enviar {
   display: none;
 }
 
+
+.acciones{
+  width: 150px;
+}
 
 
 
