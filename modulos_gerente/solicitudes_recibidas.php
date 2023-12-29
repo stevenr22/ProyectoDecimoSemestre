@@ -80,14 +80,21 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad, u.nombre_completo, r.cargo, s.proveedor, s.estado
+                                            $senten = $conn->query("SELECT s.id_solicitud,  p.id_prove, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad, u.nombre_completo, r.cargo, s.proveedor, s.estado
                                             FROM solicitudes AS s
                                             JOIN usuario AS u ON s.id_usu = u.id_usu
                                             JOIN rol AS r ON u.id_rol = r.id_rol
+                                            JOIN proveedor AS p ON s.proveedor = p.nombre_empre
                                             WHERE s.estado != 'Enviado'");
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
+
+                                                if ($estado == 'Denegado' || $estado == 'Recibido' || $estado == 'Enviado') {
+                                                    $mostrarBotonEnviar = false; // No mostrar el botón
+                                                } else {
+                                                    $mostrarBotonEnviar = true; // Mostrar el botón si hay un proveedor
+                                                }
                                                
 
                                                 $clase_fila = ($estado == 'Aprobado') ? 'aprobado-row' : '';
@@ -137,6 +144,14 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                                     <button type="button" class="btn btn-danger" id="rojo"><i
                                                             class="fa-solid fa-trash-can"></i></button>
+
+                                                    <?php if ($mostrarBotonEnviar): ?>
+                                                        <button type="button" class="btn btn-success btn_enviar" 
+                                                            onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>','<?php echo $arreglo['fecha_solicitud'] ?>','<?php echo $arreglo['tipo_insumo'] ?>','<?php echo $arreglo['nombre_insu'] ?>','<?php echo $arreglo['cantidad'] ?>','<?php echo $arreglo['id_usu'] ?>'
+                                                            )">
+                                                            <i class="fa-solid fa-paper-plane"></i>
+                                                        </button>
+                                                    <?php endif; ?>
 
 
 
@@ -331,13 +346,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                             if (result.value) {
                                 location.reload();
 
-
-
-
-
-
-
-
                             }
                         });
                     } else {
@@ -361,18 +369,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    function enviarDatosSolicitud(id_solicitud) {
+    function enviarDatosSolicitud(id_solicitud, fech_soli, tipo_insu, nomb_insu, cantidad, id_usu, id_prove) {
         // Mostrar mensaje de confirmación
         Swal.fire({
             title: '¿Estás seguro de enviar esta solicitud para su compra?',
@@ -388,7 +385,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     type: "POST",
                     dataType: "json",
                     data: {
-                        id_solicitud: id_solicitud
+                        id_solicitud: id_solicitud,
+                        fech_soli: fech_soli,
+                        tipo_insu: tipo_insu,
+                        nomb_insu: nomb_insu,
+                        cantidad: cantidad,
+                        id_usu: id_usu,
+                        id_prove: id_prove
                     },
                     success: function(response) {
                         if (response.status === 'success') {

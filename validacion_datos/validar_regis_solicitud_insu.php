@@ -3,16 +3,12 @@ session_start();
 include("../bd/conexion.php");
 $response = array(); // Inicializamos el array de respuesta
 
-//$fechSoli = (isset($_POST['fechSoli'])) ? $_POST['fechSoli'] : '';
-//$selecttipoIns = (isset($_POST['selecttipoIns'])) ? $_POST['selecttipoIns'] : '';
-//$nom_insu = (isset($_POST['nom_insu'])) ? $_POST['nom_insu'] : '';
-//$Canti = (isset($_POST['Canti'])) ? $_POST['Canti'] : '';
-//$id_usuario_empleado = (isset($_POST['id_usuario_empleado'])) ? $_POST['id_usuario_empleado'] : '';
-$fechSoli = '2023-12-12';
-$selecttipoIns = 'Herramienta';
-$nom_insu = 'Pla';
-$Canti = 45;
-$id_usuario_empleado = 3;
+$fechSoli = (isset($_POST['fechSoli'])) ? $_POST['fechSoli'] : '';
+$selecttipoIns = (isset($_POST['selecttipoIns'])) ? $_POST['selecttipoIns'] : '';
+$nom_insu = (isset($_POST['nom_insu'])) ? $_POST['nom_insu'] : '';
+$Canti = (isset($_POST['Canti'])) ? $_POST['Canti'] : '';
+$id_usuario_empleado = (isset($_POST['id_usuario_empleado'])) ? $_POST['id_usuario_empleado'] : '';
+
 
 
 

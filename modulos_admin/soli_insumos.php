@@ -96,7 +96,7 @@
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
                                                 $tieneProveedor = !empty($arreglo['proveedor']);
-                                                if ($estado == 'Verificando' || $estado == 'Aprobado') {
+                                                if ($estado == 'Verificando' || $estado == 'Aprobado' || $estado == 'Denegado') {
                                                     $mostrarBotonEnviar = false; // No mostrar el botón
                                                 } else {
                                                     $mostrarBotonEnviar = $tieneProveedor; // Mostrar el botón si hay un proveedor
