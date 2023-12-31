@@ -69,38 +69,44 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                     <table class="table table-bordered">
                                         <thead>
-                                            <th><b>Código de factura</b></th>
+                                            <th>Código de factura</th>
 
-                                            <th><b>Fecha de emisión</b></th>
+                                            <th>Fecha de emisión</th>
 
-                                            <th><b>Total</b></th>
-                                            <th><b>Acciones</b></th>
+                                            <th>Total</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                           
 
 
                                         </thead>
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT * FROM factura");
+                                            $senten = $conn->query("SELECT * FROM factura WHERE estado = 'Recibido' OR estado='Enviado'");
 
                                             while ($arreglo = $senten->fetch_array()) {
-                                               
+                                                $estado = $arreglo['estado'];
+                                                if ($estado == 'Recibido') {
+                                                    $clase_estado = 'Recibido';
+                                                }else{
+                                                    $clase_estado = 'Enviado';
 
+
+                                                }
                                                
-                                                        
                                                 ?>
                                             <tr>
                                                 <td><?php echo $arreglo['id_factura'] ?></td>
                                                 <td><?php echo $arreglo['fecha_emision'] ?></td>
-
-
                                                 <td><?php echo $arreglo['total'] ?></td>
+                                                <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
 
 
                                                 <td>
 
 
-                                                    <button type="button" class="delete-button" id="rojo"><i
+                                                    <button type="button" class="btn btn-danger" id="rojo"><i
                                                         class="fa-solid fa-trash-can"></i></button>
 
                                                 </td>
@@ -124,7 +130,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                 </div>
 
-                <!--MODAL-->
+                
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
@@ -137,8 +143,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card w-100">
                             <div class="card-body">
                                 <form id="formRegistroFactura" class="form-group" enctype="multipart/form-data">
-                                    <input type="hidden" name="id_usu_gerente" id="id_usu_gerente"
-                                        value="<?php echo $_SESSION['DBid_usu'];?>">
+                                   
 
 
                                     <label>Cargue la factura</label><br><br>
@@ -162,21 +167,37 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <script>
     //------GENERAR PDF--------------------
     function exportarPDF() {
-        var btn_pdf_factura = document.getElementById("btn_pdf_factura");
+        // Realiza una petición AJAX para verificar el estado
+        fetch('../validacion_datos/estado_factura.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.estado === 'Recibido') {
+                toastr.success("Descargando...", "", {
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 3000,
+                    extendedTimeOut: 1000,
+                    showDuration: 300,
+                    hideDuration: 1000,
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut"
+                });
+                window.location.href = '../reportes/factura.php';
+            } else {
+                // Si el estado no es 'Recibido', muestra un mensaje de error o haz lo que necesites
+                
 
-        toastr.success("Descargando...", "", {
-            progressBar: true,
-            positionClass: "toast-top-right",
-            timeOut: 3000,
-            extendedTimeOut: 1000,
-            showDuration: 300,
-            hideDuration: 1000,
-            showEasing: "swing",
-            hideEasing: "linear",
-            showMethod: "fadeIn",
-            hideMethod: "fadeOut"
+                toastr.warning("<span style='color:white; font-weight:bold;'>No tienes facturas recibidas</span>",{
+                    "toastClass": "blue-toast",
+                    "timeOut": "3000"
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error al verificar el estado:", error);
         });
-        window.location.href = '../reportes/factura.php';
     }
 
 

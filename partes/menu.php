@@ -216,6 +216,14 @@
                 <span class="hide-menu">Facturas recibidas</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="../modulos_gerente/historial_facturas.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file"></i>
+                </span>
+                <span class="hide-menu">Historial de Facturas</span>
+                </a>
+            </li>
         <?php
           }
         ?>

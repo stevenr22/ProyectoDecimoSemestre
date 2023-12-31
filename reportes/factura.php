@@ -1,11 +1,15 @@
 <?php
+
 include "../fpdf/fpdf.php";
 include("../bd/conexion.php");
 
+
+
+
 // Realizar la consulta
-$query = "SELECT p.nombre_empre, p.direccion, p.num_tele, f.id_factura, f.fecha_emision, f.total, c.id_comprobante, s.nombre_insu as DETALLES, s.cantidad
-FROM proveedor as p, factura as f, comprobante as c, solicitudes as s
-WHERE p.nombre_empre = 'Ecua S.A.' and f.id_comprobante= c.id_comprobante";
+$query = "SELECT f.id_factura,  f.fecha_emision, s.nombre_insu as DETALLES, s.cantidad, f.valor, f.total, p.nombre_empre, p.nombre_traba, p.direccion, p.num_tele
+FROM solicitudes as s, factura as f, proveedor as p
+Where f.id_solicitud = s.id_solicitud and f.estado = 'Recibido' and p.nombre_empre='Ecua S.A.'";
 
 $result = $conn->query($query);
 
@@ -62,10 +66,10 @@ if (!empty($products)) {
     // Agregamos los datos del cliente
     $pdf->SetFont('Arial','B',10);    
     $pdf->setY(30);$pdf->setX(135);
-    $pdf->Cell(5, $textypos, "FACTURA # " . $row['id_factura']);
+   
     $pdf->SetFont('Arial','',10);    
     $pdf->setY(35);$pdf->setX(135);
-    $pdf->Cell(5,$textypos,"Fecha: " . $row['fecha_emision']);
+    $pdf->Cell(5,$textypos,"Fecha de emisión: " . $row['fecha_emision']);
     $pdf->setY(40);$pdf->setX(135);
 
     $pdf->Cell(5,$textypos,"");
@@ -79,19 +83,23 @@ if (!empty($products)) {
     $pdf->setY(60);
     $pdf->setX(135);
     $pdf->Ln();
+
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetFillColor(200, 220, 255);
     
     // Array de Cabecera
-    $header = array("Cod.", "Descripcion", "Cant.");
+    $header = array("Cod.", "Descripcion", "Cant.", "Valor", "Total");
 
     // Column widths
-    $w = array(20, 87, 30, 30);
-
-    // Encabezado de la tabla
-    $pdf->SetFont('Arial', 'B', 10);
+    $w = array(20, 87, 30, 30, 30);
     foreach ($header as $col) {
-        $pdf->Cell($w[array_search($col, $header)], 7, $col, 1, 0, 'C');
+        $pdf->Cell($w[array_search($col, $header)], 7, $col, 1, 0, 'C', true);
     }
     $pdf->Ln();
+
+    // Variables para acumular totales
+    $total_subtotal = 0; // Para el subtotal
+    $total_general = 0;  // Para el total general
 
     // Datos de los productos
     $pdf->SetFont('Arial', '', 10);
@@ -99,23 +107,35 @@ if (!empty($products)) {
         $pdf->Cell($w[0], 6, $row['id_factura'], 1);
         $pdf->Cell($w[1], 6, $row['DETALLES'], 1);
         $pdf->Cell($w[2], 6, $row['cantidad'], 1, 0, 'C');
+        $pdf->Cell($w[2], 6, $row['valor'], 1, 0, 'C');
+        $pdf->Cell($w[2], 6, $row['total'], 1, 0, 'C');
+
+        // Calcular subtotal por producto (cantidad x valor)
+        $subtotal_producto = $row['cantidad'] * $row['valor'];
+        $total_subtotal += $subtotal_producto;  // Acumular subtotal
+
         $pdf->Ln();
     }
+    // Cálculo del total general (usando el subtotal por ahora, pero puedes ajustarlo según tus necesidades)
+    $total_general = $total_subtotal; 
 
     //// Apartir de aqui esta la tabla con los subtotales y totales
 	$yposdinamic = 60 + (count($products)*10);
 	
 	$pdf->setY($yposdinamic);
 	$pdf->setX(235);
-	    $pdf->Ln();
+	$pdf->Ln();
 	/////////////////////////////
 	$header = array("", "");
-	$data2 = array(
-		array("Subtotal", $row['total']),
-		array("Descuento", 0),
-		array("Impuesto", 0),
-		array("Total", $row['total']),
-	);
+
+
+
+    $data2 = array(
+        array("Subtotal", $total_subtotal),
+        array("Descuento", 0),  // Puedes ajustar este valor si tienes descuentos
+        array("Impuesto", 0),   // Puedes ajustar este valor si tienes impuestos
+        array("Total", $total_general),
+    );
 	    // Column widths
 	    $w2 = array(40, 40);
 	    // Header

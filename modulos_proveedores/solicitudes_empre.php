@@ -61,7 +61,6 @@
             </div>
         </div>
         <br>
-        <button type="button" class="btn btn-success" onclick="generarFactura();">Generar factura</button>
 
 
 
@@ -71,7 +70,7 @@
 
 
         <div class="table-responsive">
-            <table id="tablaSolicitudes" class="table table-bordered">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Código solicitud</th>
@@ -80,6 +79,7 @@
                         <th>Nombre insumo</th>
                         <th>Cantidad</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
 
                     </tr>
                 </thead>
@@ -109,7 +109,13 @@
                         <td><?php echo $arreglo['cantidad_insu']; ?></td>
 
                         <td class="<?php echo $clase_estado; ?> text-center"><?php echo $estado; ?></td>
+                        <th class="text-center">
+                            <button type="button" class="btn btn-success"
+                                onclick="generarFactura('<?php echo $arreglo['id_solicitud']; ?>','<?php echo $arreglo['nombre_insu']; ?>','<?php echo $arreglo['cantidad_insu']; ?>');"><i
+                                    class="fas fa-file-archive"></i></button>
 
+
+                        </th>
 
                     </tr>
                     <?php
@@ -128,20 +134,20 @@
                 </div>
             </div>
             <div class="table-responsive">
-            <table id="tablaSolicitudes" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Código solicitud</th>
-                        <th>Empresa solicitante</th>
-                        <th>Tipo de insumo</th>
-                        <th>Nombre insumo</th>
-                        <th>Cantidad</th>
-                        <th>Estado</th>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Código solicitud</th>
+                            <th>Empresa solicitante</th>
+                            <th>Tipo de insumo</th>
+                            <th>Nombre insumo</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                     include("../bd/conexion.php");
                       $sql = "SELECT id_detalle, id_solicitud, tipo_insu, nombre_insu, cantidad_insu, estado
                       FROM detalle_solicitud WHERE estado='Facturado'";
@@ -156,26 +162,28 @@
                         } 
 
                     ?>
-                    <tr>
-                        <td><?php echo $arreglo['id_solicitud']; ?></td>
-                        <td>Gestión mango S.A.</td>
-                        <td><?php echo $arreglo['tipo_insu']; ?></td>
+                        <tr>
+                            <td><?php echo $arreglo['id_solicitud']; ?></td>
+                            <td>Gestión mango S.A.</td>
+                            <td><?php echo $arreglo['tipo_insu']; ?></td>
 
-                        <td><?php echo $arreglo['nombre_insu']; ?></td>
+                            <td><?php echo $arreglo['nombre_insu']; ?></td>
 
-                        <td><?php echo $arreglo['cantidad_insu']; ?></td>
+                            <td><?php echo $arreglo['cantidad_insu']; ?></td>
 
-                        <td class="<?php echo $clase_estado; ?> text-center"><?php echo $estado; ?></td>
+                            <td class="<?php echo $clase_estado; ?> text-center"><?php echo $estado; ?></td>
 
 
-                    </tr>
-                    <?php
+
+                        </tr>
+                        <?php
                     }
                     ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        </div>
+
         <br>
         <!--MODAL FACTURA-->
         <div class="modal fade" tabindex="-1" id="miModal">
@@ -188,6 +196,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="formRegisFactu" class="form-group">
+
+                            <input type="text" class="form-control readonly-field" readonly name="id_soli" id="id_soli">
 
 
 
@@ -220,36 +230,28 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Insumos solicitado: </label>
-                                    <?php
-                                    include("../bd/conexion.php");
-                                    $sql = "SELECT nombre_insu, cantidad_insu FROM detalle_solicitud WHERE estado = 'Recibido'";
-                                    $result = $conn->query($sql);
-                                    while ($arreglo = $result->fetch_array()) {
-                                    ?>
-                                    <input type="text" class="form-control readonly-field" readonly
-                                        value="<?php echo $arreglo['nombre_insu']; ?>"><br>
-                                    <?php } ?>
+
+                                    <input type="text" id="nombre_insu" class="form-control readonly-field" readonly><br>
+
                                 </div>
 
                                 <div class="col-md-2">
                                     <label>Cantidad: </label>
-                                    <?php
-                                        mysqli_data_seek($result, 0);
-                                        $contador = 1;  // Inicializa el contador para IDs únicos
-                                        while ($arreglo = $result->fetch_array()) {
-                                        ?>
-                                    <input type="text" id="cantidad_insumo_<?php echo $contador; ?>"
-                                        class="form-control readonly-field" readonly
-                                        value="<?php echo $arreglo['cantidad_insu']; ?>"><br>
-                                    <?php 
-                                            $contador++;  // Incrementa el contador
-                                        } 
-                                        ?>
+
+                                    <input type="number" class="form-control readonly-field" readonly id="cantidad_insu"><br>
+
                                 </div>
 
                                 <div class="col">
                                     <label>Valor: </label>
-                                    <div id="camposValor"></div>
+                                    <div class="input-group">
+                                        <input type="text"  class="form-control" name="valor_insu" onkeypress="validarNumeros(event);"
+                                            id="valor_insu"
+                                            aria-label="Dollar amount (with dot and two decimal places)">
+                                        <span class="input-group-text bg-success dollar-icon"
+                                            style="color: white;"><b>$</b></span>
+
+                                    </div>
                                     <hr>
 
                                     <label>Total: </label>
@@ -265,8 +267,9 @@
 
                             </div>
                             <br>
-                            <button type="submit" id="btn_fac_pdf" style="color: white; font-weight: bold;"
+                            <button type="submit" style="color: white; font-weight: bold;"
                                 class="btn btn-primary">Enviar factura</button>
+
                             <button type="button" style="color: white; font-weight: bold;" class="btn btn-secondary"
                                 data-bs-dismiss="modal">Cerrar</button>
                         </form>
@@ -299,7 +302,7 @@
 
     <script>
     $(document).ready(function() {
-        $('#tablaSolicitudes').DataTable({
+        $('.table').DataTable({
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             }
@@ -311,121 +314,74 @@
 
 
 
-    //-----------------FUNCION PARA AGG INPUT Y CALCULAR EL VALOR--------------------------------------------
-    $(document).ready(function() {
-        // Suponiendo que la consulta devuelve un número X de resultados,
-        // puedes replicar esos inputs dinámicamente.
-        const numeroDeResultados = <?php echo $result->num_rows; ?>;
-
-
-        for (let i = 0; i < numeroDeResultados; i++) {
-            // Crear el contenedor principal del diseño input-group
-            const inputGroup = $('<div>', {
-                class: 'input-group'
-            });
-
-            // Crear el input con la clase form-control y el atributo aria-label
-            const inputValor = $('<input>', {
-                type: 'text',
-                class: 'form-control',
-                'aria-label': 'Dollar amount (with dot and two decimal places)',
-                id: 'valor_insumo_' + i,
-                placeholder: 'Ingrese el valor en dólares'
-
-
-            });
-            // Agregar el input al contenedor input-group
-            inputGroup.append(inputValor);
-
-            // Agregar el símbolo de dólar con estilo
-            const dollarSymbol = $('<span>', {
-                class: 'input-group-text bg-success dollar-icon',
-                style: 'color: white; font-weight: bold;'
-            }).text('$');
-
-            inputGroup.append(dollarSymbol);
-
-
-
-
-            // Agregar el contenedor con el diseño al div principal
-            const divContenedor = $('<div>').append(inputGroup, '<br>');
-
-            $('#camposValor').append(divContenedor);
 
 
 
 
 
 
+    function validarNumeros(evt) {
+        let key = evt.key || String.fromCharCode(evt.which || evt.keyCode);
+        let input = evt.target.value;
 
-            $('#camposValor').append(divContenedor);
-
-            // Escucha el evento de cambio en cada input
-            inputValor.on('input', function() {
-                // Validar la entrada para permitir solo números y un máximo de dos decimales
-                let valorActual = $(this).val();
-
-                // Eliminar caracteres no numéricos y dejar solo dos decimales después del punto
-                valorActual = valorActual.replace(/[^0-9.]/g, '');
-                const parts = valorActual.split('.');
-
-                if (parts.length > 1) {
-                    parts[1] = parts[1].substring(0, 2); // Limita a dos decimales
-                    valorActual = parts[0] + '.' + parts[1];
-                }
-
-                // Actualiza el valor del input con la validación realizada
-                $(this).val(valorActual);
-
-                calcularSubtotalYTotal();
-            });
-        }
-
-        // Función para actualizar el total
-        function calcularSubtotalYTotal() {
-            let total = 0;
-
-            // Recorre cada insumo para calcular su subtotal y luego sumarlo al total
-            for (let i = 1; i <= <?php echo $result->num_rows; ?>; i++) {
-                const cantidad = parseFloat($("#cantidad_insumo_" + i).val() || 0);
-                const valor = parseFloat($("#valor_insumo_" + (i - 1)).val() ||
-                    0); // Asegúrate de que los IDs de los valores coincidan
-
-                const subtotalInsumo = cantidad * valor;
-                total += subtotalInsumo;
+        // Permitir números, tecla de retroceso, tecla de entrada, y punto decimal
+        if (/[\d\b\r.]/.test(key)) {
+            // Si ya hay un punto decimal, y después de él hay dos dígitos, no permitir más
+            if (input.includes('.') && input.split('.')[1] && input.split('.')[1].length >= 2) {
+                evt.preventDefault();
+                return false;
             }
+            return true;
+        } else {
+            evt.preventDefault();
+            return false;
+        }
+    }
 
-            // Ahora, total contiene la suma de todos los subtotales de insumos
-            $("#total_fac").val(total.toFixed(2)); // Esto mostrará el total con dos decimales
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Función para calcular el total
+        function calcularTotal() {
+            const cantidad = parseFloat(document.getElementById('cantidad_insu').value) || 0;
+            const valor = parseFloat(document.getElementById('valor_insu').value) || 0;
+            const total = cantidad * valor;
+
+            document.getElementById('total_fac').value = total.toFixed(2); // Actualiza el campo de total
         }
 
-        // Escucha cambios en los inputs de cantidad y valor de insumo para calcular el total
-        $("[id^='cantidad_insumo_'], [id^='valor_insumo_']").on('input', calcularSubtotalYTotal);
-
-        // Además, puedes llamar a la función al cargar la página si es necesario
-        $(document).ready(function() {
-            calcularSubtotalYTotal();
-        });
-
-
+        // Agregamos el evento 'input' a los campos de cantidad y valor
+        document.getElementById('cantidad_insu').addEventListener('input', calcularTotal);
+        document.getElementById('valor_insu').addEventListener('input', calcularTotal);
     });
 
 
 
-    //-----------------MODAL GLOBAL
-    function generarFactura(idComprobante) {
 
 
-        // Mostrar el modal
+   
+
+
+
+
+
+
+
+
+    function generarFactura(id_solicitud, nombre_insu, cantidad_insu) {
         $('#miModal').modal('show');
+
+        // Llenar el formulario con datos del usuario
+        document.getElementById('id_soli').value = id_solicitud;
+        document.getElementById('nombre_insu').value = nombre_insu;
+        document.getElementById('cantidad_insu').value = cantidad_insu;
+
     }
 
 
 
 
     $(document).ready(function() {
-        const numeroDeResultados = <?php echo $result->num_rows; ?>;
 
 
 
@@ -435,25 +391,29 @@
             e.preventDefault();
             var fech_emision = $.trim($("#fech_emision").val());
             var total_fac = $.trim($("#total_fac").val());
+            var valor_insu = $.trim($("#valor_insu").val());
+            var id_solicitud = $.trim($("#id_soli").val());
+          
 
 
 
-
-
+            
             $.ajax({
                 url: "../modulos_proveedores/regis_factura.php",
                 type: "POST",
                 dataType: "json",
                 data: {
                     fech_emision: fech_emision,
-                    total_fac: total_fac
+                    total_fac: total_fac,
+                    valor_insu: valor_insu,
+                    id_solicitud: id_solicitud
 
                 },
                 success: function(response) {
                     if (response.status === 'success') {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Envio exitoso!',
+                            title: 'La solicitud se facturo exitosamente!',
                         }).then((result) => {
                             if (result.value) {
                                 location.reload(); // Recargar la página
