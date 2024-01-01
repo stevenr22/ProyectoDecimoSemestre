@@ -20,6 +20,9 @@ body{
   background-color: #F4F6F9;
 }
 
+.table{
+  text-align: center;
+}
 
 #linkNombre a:hover {
     color: #098f09; /* Cambia el color del texto del enlace al pasar el mouse sobre él */

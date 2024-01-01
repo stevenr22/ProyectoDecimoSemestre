@@ -1,6 +1,7 @@
 <?php include("../autorizacion/admin.php");?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,17 @@
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
     <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
 
-    
+
 
 
 </head>
+
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
         <aside class="left-sidebar">
-        <!-- Sidebar scroll-->
+            <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="../inicio/dashboard.php" class="text-nowrap logo-img">
@@ -38,8 +40,10 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Recepción nuevos insumos - Stock disponible</b></h2></div>
-                    </div>  
+                        <div class="card-title">
+                            <h2><b>Recepción nuevos insumos - Stock disponible</b></h2>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="botones_container">
@@ -49,15 +53,15 @@
                         </button>
 
                     </div>
-                   
-             
+
+
                     <div class="rojo">
-                        <button type="button" id="btn_pdf_arriba" class="btn" >Exportar reporte   
+                        <button type="button" id="btn_pdf_arriba" class="btn">Exportar reporte
                             <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
                         </button>
 
                     </div>
-                    
+
                 </div><br>
 
 
@@ -73,16 +77,16 @@
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Categoría</th>
-                                            
+
                                             <th>Fecha de registro</th>
                                             <th>cantidad</th>
                                             <th>Estado</th>
-                                           
+
 
 
                                         </thead>
                                         <tbody>
-                                        <?php
+                                            <?php
                                             include("../bd/conexion.php");
                                             $senten = $conn->query("SELECT * FROM insumos WHERE estado = 'Disponible' ORDER BY nombre");
                                             while ($arreglo = $senten->fetch_array()) {
@@ -101,8 +105,8 @@
                                                 <td><?php echo $arreglo['estado'] ?></td>
 
 
-                                                
-                                              
+
+
                                             </tr>
                                         </tbody>
                                         <?php } ?>
@@ -113,17 +117,19 @@
 
 
                                 </div>
-                                
+
                             </div>
 
-                        
+
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Factuas de insumos recibidas</b></h2></div>
-                    </div>  
+                        <div class="card-title">
+                            <h2><b>Factuas de insumos recibidas</b></h2>
+                        </div>
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -134,23 +140,38 @@
                                         <thead>
                                             <th>Código de factura</th>
                                             <th>Factura</th>
-                                            
+                                            <th>Acciones</th>
+
+
                                         </thead>
                                         <tbody>
                                             <?php
-                                                include("../bd/conexion.php");
-                                                $senten = $conn->query("SELECT * FROM comprobante");
-                                                while ($arreglo = $senten->fetch_array()) {
-                                                    $estado = $arreglo['estado'];
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT * FROM pdf_files");
 
-                                                    if ($estado == 'Operando') {
-                                                        $clase_estado = 'operando';
-                                                    } else {
-                                                        $clase_estado = 'Deshabilitado';
-                                                    }
-                                                    
-                                            ?>
+                                            while ($arreglo = $senten->fetch_array()) {
+                                              
+                                               
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $arreglo['id_pdf'] ?></td>
+                                                <td><?php echo $arreglo['file_name'] ?></td>
+
+
+                                                <td>
+
+
+                                                    <button type="button" class="btn btn-info"
+                                                        onclick="descargarPDF('<?php echo $arreglo['file_name']; ?>')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+
+                                                </td>
+
+                                            </tr>
                                             <?php } ?>
+
+
                                         </tbody>
                                     </table>
 
@@ -161,18 +182,18 @@
                 </div>
 
                 <?php include("../recursos/modals/modales.php");?>
-                                
-               
-              
 
-           
-          
-             
 
-                
-                
 
-               
+
+
+
+
+
+
+
+
+
 
 
 
@@ -184,114 +205,148 @@
 
 
     <script>
-        // Obtener elementos del DOM
+    // Obtener elementos del DOM
+    var modal = document.getElementById('modalRegisInsumosComprados');
+    var openModalBtn = document.getElementById('openModalBtn');
+
+    // Evento para abrir el modal
+    openModalBtn.onclick = function() {
+        modal.style.display = 'block';
+    }
+
+
+    function cerrarModal() {
         var modal = document.getElementById('modalRegisInsumosComprados');
-        var openModalBtn = document.getElementById('openModalBtn');
-
-        // Evento para abrir el modal
-        openModalBtn.onclick = function() {
-            modal.style.display = 'block';
-        }
+        modal.style.display = 'none';
 
 
-        function cerrarModal() {
-            var modal = document.getElementById('modalRegisInsumosComprados');
-            modal.style.display = 'none';
-           
-            
-        }
+    }
 
-
-        //----------------------------------------------------------------
-        //Registrar parcela
-
-        $("#formRegisInsuCompra").submit(function(e){
-            e.preventDefault();
-
-            // Obtener los valores del formulario
-            var nombre_insu = $.trim($("#nombre_insu").val());
-            var tip_insu = $.trim($("#tip_insu").val());
-            var canti_insu = $.trim($("#canti_insu").val());
-            var f_regis = $.trim($("#f_regis").val());
-
-
-           
-
-            // Enviar los datos mediante AJAX
-            $.ajax({
-                url: "../validacion_datos/validar_regis_nue_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
-                type: "POST",
-                dataType: "json",
-                data: {nombre_insu: nombre_insu, 
-                    tip_insu: tip_insu, 
-                    canti_insu: canti_insu, 
-                    f_regis: f_regis},
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Registro exitoso!',
-                        }).then((result) => {
-                            if(result.value){
-                                // Puedes redirigir a otra página o hacer algo más después del registro exitoso
-                                window.location.href = "../modulos_admin/recep_insuxprove.php";
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'warning'
-                        });
-                    }
-                },
-                error: function() {
-                    Swal.fire({
-                        title: 'Error en la solicitud',
-                        icon: 'error'
-                    });
-                }
-            });
+    function descargarPDF(fileName) {
+            // Mostrar el toast antes de iniciar la descarga.
+            toastr.info("<span style='color:white; font-weight:bold;'>Descargando</span>", {
+            "toastClass": "blue-toast",
+            "timeOut": 3000,
+            "positionClass": "toast-bottom-right",
+            "progressBar": true,
+            "extendedTimeOut": 1000,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
         });
 
-      
 
-       
-    
 
-//--------------------------------------------------------------------------
-        function exportarPDF(){
-            var btn_pdf = document.getElementById("btnPDF");
-           
-            toastr.success("Descargando...", "", {
-                    progressBar: true,
-                    positionClass: "toast-top-right",
-                    timeOut: 3000,
-                    extendedTimeOut: 1000,
-                    showDuration: 300,
-                    hideDuration: 1000,
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut"
-                });
-                window.location.href = '../reportes/reporte_histo_nue_insu.php';
+          
 
-                    
 
-            
+            // Crear un enlace temporal y simular un clic en él.
+            var link = document.createElement('a');
+            link.href = '../reportes/' + fileName;
+            link.download = fileName;  // Esto hará que se descargue el archivo con el nombre original.
+            document.body.appendChild(link);  // Agregar el enlace al cuerpo del documento.
+            link.click();  // Simular el clic en el enlace.
+
+            // Eliminar el enlace del cuerpo del documento después de iniciar la descarga.
+            document.body.removeChild(link);
         }
 
- 
+
+
+    //----------------------------------------------------------------
+    //Registrar parcela
+
+    $("#formRegisInsuCompra").submit(function(e) {
+        e.preventDefault();
+
+        // Obtener los valores del formulario
+        var nombre_insu = $.trim($("#nombre_insu").val());
+        var tip_insu = $.trim($("#tip_insu").val());
+        var canti_insu = $.trim($("#canti_insu").val());
+        var f_regis = $.trim($("#f_regis").val());
+
+
+
+
+        // Enviar los datos mediante AJAX
+        $.ajax({
+            url: "../validacion_datos/validar_regis_nue_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+            type: "POST",
+            dataType: "json",
+            data: {
+                nombre_insu: nombre_insu,
+                tip_insu: tip_insu,
+                canti_insu: canti_insu,
+                f_regis: f_regis
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro exitoso!',
+                    }).then((result) => {
+                        if (result.value) {
+                            // Puedes redirigir a otra página o hacer algo más después del registro exitoso
+                            window.location.href = "../modulos_admin/recep_insuxprove.php";
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'warning'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error en la solicitud',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+
+
+
+
+
+
+    //--------------------------------------------------------------------------
+    function exportarPDF() {
+        var btn_pdf = document.getElementById("btnPDF");
+
+        toastr.success("Descargando...", "", {
+            progressBar: true,
+            positionClass: "toast-top-right",
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+            showDuration: 300,
+            hideDuration: 1000,
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        });
+        window.location.href = '../reportes/reporte_histo_nue_insu.php';
+
+
+
+
+    }
     </script>
-    
-
-    
-
- 
 
 
-   
-   
+
+
+
+
+
+
+
 
 </body>
+
 </html>
