@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2023 a las 04:34:16
+-- Tiempo de generación: 01-01-2024 a las 19:57:58
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,9 +34,18 @@ CREATE TABLE `detalle_solicitud` (
   `nombre_insu` varchar(255) NOT NULL,
   `cantidad_insu` int(11) NOT NULL,
   `id_solicitud` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_prove` int(11) NOT NULL
+  `id_prove` int(11) NOT NULL,
+  `estado` varchar(255) NOT NULL DEFAULT 'Recibido'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_solicitud`
+--
+
+INSERT INTO `detalle_solicitud` (`id_detalle`, `fech_solicitud`, `tipo_insu`, `nombre_insu`, `cantidad_insu`, `id_solicitud`, `id_prove`, `estado`) VALUES
+(64, '2023-12-09', 'Maquinaria', 'Podadora', 65, 54, 1, 'Facturado'),
+(65, '2023-12-12', 'Maquinaria', 'Pala industrial', 67, 55, 1, 'Facturado'),
+(66, '2023-12-16', 'Mango', 'Mango kent', 3, 56, 1, 'Facturado');
 
 -- --------------------------------------------------------
 
@@ -47,9 +56,20 @@ CREATE TABLE `detalle_solicitud` (
 CREATE TABLE `factura` (
   `id_factura` int(11) NOT NULL,
   `fecha_emision` date NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `contenido_pdf` varchar(255) NOT NULL
+  `id_solicitud` int(11) NOT NULL,
+  `estado` varchar(255) NOT NULL DEFAULT 'Recibido'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`id_factura`, `fecha_emision`, `valor`, `total`, `id_solicitud`, `estado`) VALUES
+(24, '2023-12-09', 46.00, 2975.70, 54, 'Enviado'),
+(27, '2023-12-01', 79.00, 5285.63, 55, 'Enviado'),
+(31, '2023-12-16', 1.35, 4.05, 56, 'Enviado');
 
 -- --------------------------------------------------------
 
@@ -90,6 +110,29 @@ INSERT INTO `parcela` (`id_parcela`, `nombre`, `ancho`, `alto`, `fecha_registro`
 (1, 'Parcela A', 23, 23, '2023-12-06', 'Operando'),
 (2, 'Parcela B', 756, 5675, '2023-11-29', 'Operando'),
 (3, 'Parcela C', 576, 678, '2023-11-29', 'Operando');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pdf_files`
+--
+
+CREATE TABLE `pdf_files` (
+  `id_pdf` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pdf_files`
+--
+
+INSERT INTO `pdf_files` (`id_pdf`, `file_name`) VALUES
+(1, 'factura_65910280ebde82.87809697.pdf'),
+(2, 'factura_6591030779d012.28297117.pdf'),
+(3, 'factura.pdf'),
+(4, 'factura (1).pdf'),
+(5, 'factura (2).pdf'),
+(6, 'factura (4).pdf');
 
 -- --------------------------------------------------------
 
@@ -160,16 +203,9 @@ CREATE TABLE `solicitudes` (
 --
 
 INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `nombre_insu`, `cantidad`, `proveedor`, `id_usu`, `estado`) VALUES
-(35, '2023-12-13', 'Insecticida', 'Amoniaco 23 kg', 5, 'Ecua S.A.', 3, 'Aprobado'),
-(36, '2023-12-07', 'Mango', 'Mango kent', 500, 'Ecua S.A.', 3, 'Aprobado'),
-(37, '2023-12-27', 'Herramienta', 'Tractor', 3, 'Ecua S.A.', 3, 'Aprobado'),
-(38, '2023-12-27', 'Maquinaria', 'Tractor', 3, 'Ecua S.A.', 3, 'Aprobado'),
-(39, '2023-12-06', 'Herramienta', 'Pala metalica', 10, 'Ecua S.A.', 3, 'Aprobado'),
-(40, '2023-12-12', 'Insecticida', 'SDF', 43, 'Ecua S.A.', 3, 'Aprobado'),
-(41, '2023-12-15', 'Herramienta', 'Lentes 4k', 20, 'Ecua S.A.', 3, 'Aprobado'),
-(42, '2023-12-28', 'Mango', 'Mango sdfsd', 120, 'Ecua S.A.', 3, 'Aprobado'),
-(43, '2023-12-28', 'Insecticida', 'DFSGAGGERG', 456, 'Ecua S.A.', 3, 'Verificando'),
-(44, '2023-12-28', 'Mango', 'DJSRJSRJ', 67, 'Ecua S.A.', 3, 'Verificando');
+(54, '2023-12-09', 'Maquinaria', 'Podadora', 65, 'Ecua S.A.', 3, 'Aprobado'),
+(55, '2023-12-12', 'Maquinaria', 'Pala industrial', 67, 'Ecua S.A.', 3, 'Aprobado'),
+(56, '2023-12-16', 'Mango', 'Mango kent', 3, 'Ecua S.A.', 3, 'Aprobado');
 
 -- --------------------------------------------------------
 
@@ -205,13 +241,16 @@ INSERT INTO `usuario` (`id_usu`, `nombre_completo`, `correo`, `nombre_usu`, `cla
 -- Indices de la tabla `detalle_solicitud`
 --
 ALTER TABLE `detalle_solicitud`
-  ADD PRIMARY KEY (`id_detalle`);
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `id_solicitud` (`id_solicitud`),
+  ADD KEY `id_prove` (`id_prove`);
 
 --
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
-  ADD PRIMARY KEY (`id_factura`);
+  ADD PRIMARY KEY (`id_factura`),
+  ADD KEY `id_solicitud` (`id_solicitud`);
 
 --
 -- Indices de la tabla `insumos`
@@ -225,6 +264,12 @@ ALTER TABLE `insumos`
 --
 ALTER TABLE `parcela`
   ADD PRIMARY KEY (`id_parcela`);
+
+--
+-- Indices de la tabla `pdf_files`
+--
+ALTER TABLE `pdf_files`
+  ADD PRIMARY KEY (`id_pdf`);
 
 --
 -- Indices de la tabla `proveedor`
@@ -260,13 +305,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `detalle_solicitud`
 --
 ALTER TABLE `detalle_solicitud`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
@@ -279,6 +324,12 @@ ALTER TABLE `insumos`
 --
 ALTER TABLE `parcela`
   MODIFY `id_parcela` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `pdf_files`
+--
+ALTER TABLE `pdf_files`
+  MODIFY `id_pdf` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -296,7 +347,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -307,6 +358,19 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `detalle_solicitud`
+--
+ALTER TABLE `detalle_solicitud`
+  ADD CONSTRAINT `detalle_solicitud_ibfk_1` FOREIGN KEY (`id_prove`) REFERENCES `proveedor` (`id_prove`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detalle_solicitud_ibfk_2` FOREIGN KEY (`id_solicitud`) REFERENCES `solicitudes` (`id_solicitud`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `factura`
+--
+ALTER TABLE `factura`
+  ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`id_solicitud`) REFERENCES `solicitudes` (`id_solicitud`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `insumos`
