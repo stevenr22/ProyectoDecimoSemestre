@@ -1,5 +1,6 @@
 let myChart = null;
 let insumosAgregados = {}; // Objeto para almacenar insumos únicos
+
 // Objeto para traducir nombres de meses
 const mesesTraducidos = {
     January: 'Enero',
@@ -18,65 +19,49 @@ const mesesTraducidos = {
 
 // Función para traducir nombres de meses
 function traducirMeses(mesesEnIngles) {
-    return mesesEnIngles.map(mes => mesesTraducidos[mes] || mes); // Si no encuentra una traducción, devuelve el mismo nombre
+    return mesesEnIngles.map(mes => mesesTraducidos[mes] ?? mes);
 }
 
 function llenarSelectConInsumos(data) {
-    fetch('../solicitar_datos/datos_insu_grafico.php') // Asegúrate de tener este archivo que devuelve los nombres de los insumos
-    .then(response => response.json())
-    .then(data => {
-        const insumoSeleccionado = document.getElementById('selectInsumo');
-        insumoSeleccionado.innerHTML = '<option selected>Seleccione el insumo a mostrar</option>';
-        
-        data.forEach(insumo => {
-            // Verifica si el insumo ya ha sido agregado
-            if (!insumosAgregados[insumo.nombre]) {
-                const option = document.createElement('option');
-                option.value = insumo.nombre;
-                option.textContent = insumo.nombre;
-                insumoSeleccionado.appendChild(option);
-    
-                // Marca el insumo como agregado para evitar duplicados
-                insumosAgregados[insumo.nombre] = true;
-            }
-        });
-    })
-    .catch(error => {
-        console.error('Error al obtener nombres de insumos:', error);
+    const insumoSeleccionado = document.getElementById('selectInsumo');
+    insumoSeleccionado.innerHTML = '<option selected>Seleccione el insumo a mostrar</option>';
+
+    data.forEach(insumo => {
+        // Verifica si el insumo ya ha sido agregado
+        if (!insumosAgregados[insumo.nombre]) {
+            const option = document.createElement('option');
+            option.value = insumo.nombre;
+            option.textContent = insumo.nombre;
+            insumoSeleccionado.appendChild(option);
+
+            // Marca el insumo como agregado para evitar duplicados
+            insumosAgregados[insumo.nombre] = true;
+        }
     });
 }
 
-function obtenerDatosDesdeBD() {
+function obtenerDatosDesdeBD(data) {
     const insumoSeleccionadoValue = document.getElementById('selectInsumo').value;
+    const datosFiltrados = data.filter(item => item.nombre === insumoSeleccionadoValue);
+    const mesesEnIngles = datosFiltrados.map(item => item.mes);
+    const meses = traducirMeses(mesesEnIngles);
+    const cantidades = datosFiltrados.map(item => item.cantidad_total);
 
-    fetch('../solicitar_datos/datos_insu_grafico.php')
-    .then(response => response.json())
-    .then(data => {
-        const datosFiltrados = data.filter(item => item.nombre === insumoSeleccionadoValue);
-        const mesesEnIngles = datosFiltrados.map(item => item.mes); // Suponiendo que estos son los nombres de los meses en inglés
-        const meses = traducirMeses(mesesEnIngles); // Traduce los nombres de los meses
-        const cantidades = datosFiltrados.map(item => item.cantidad_insumo);
-
-
-        actualizarGraficoConDatos(meses, cantidades, insumoSeleccionadoValue);
-    })
-    .catch(error => {
-        console.error('Error al obtener datos:', error);
-    });
+    actualizarGraficoConDatos(meses, cantidades, insumoSeleccionadoValue);
 }
 
 const ctx = document.getElementById('graficoConsumoInsumos').getContext('2d');
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('../solicitar_datos/datos_insu_grafico.php') // Aquí deberías obtener los datos para llenar el select
-    .then(response => response.json())
-    .then(data => {
-        llenarSelectConInsumos(data);
-        obtenerDatosDesdeBD();  // Llama a esta función después de llenar el select
-    })
-    .catch(error => {
-        console.error('Error al obtener nombres de insumos:', error);
-    });
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('../solicitar_datos/datos_insu_grafico.php')
+        .then(response => response.json())
+        .then(data => {
+            llenarSelectConInsumos(data);
+            obtenerDatosDesdeBD(data); // Pasa los datos obtenidos para evitar hacer una segunda solicitud
+        })
+        .catch(error => {
+            console.error('Error al obtener nombres de insumos:', error);
+        });
 });
 
 function actualizarGraficoConDatos(meses, cantidades, insumoSeleccionado) {
@@ -118,6 +103,13 @@ function actualizarGraficoConDatos(meses, cantidades, insumoSeleccionado) {
     });
 }
 
-document.getElementById('selectInsumo').addEventListener('change', function() {
-    obtenerDatosDesdeBD();
+document.getElementById('selectInsumo').addEventListener('change', function () {
+    fetch('../solicitar_datos/datos_insu_grafico.php')
+        .then(response => response.json())
+        .then(data => {
+            obtenerDatosDesdeBD(data);
+        })
+        .catch(error => {
+            console.error('Error al obtener datos:', error);
+        });
 });
