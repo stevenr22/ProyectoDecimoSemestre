@@ -79,8 +79,13 @@
                                             <th>Categoría</th>
 
                                             <th>Fecha de registro</th>
-                                            <th>cantidad</th>
+                                            <th>Cantidad Previa</th>
+
+                                            <th>Cantidad Sumada</th>
+
+                                            <th>Cantidad total</th>
                                             <th>Estado</th>
+                                            <th>Acciones</th>
 
 
 
@@ -101,11 +106,23 @@
                                                 <td><?php echo $arreglo['nombre'] ?></td>
                                                 <td><?php echo $arreglo['tipo'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
-                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                <td><?php echo $arreglo['cantidad_previa'] ?></td>
+
+                                                <td>
+                                                    <p><?php echo $arreglo['cantidad_sumada'] ?></p>
+                                                   
+                                                </td>
+
+                                                <td><?php echo $arreglo['cantidad_total'] ?></td>
                                                 <td><?php echo $arreglo['estado'] ?></td>
 
 
-
+                                                <td>
+                                                    <button class="btn btn-secondary" onclick="actualizarRegistro('<?php echo $arreglo['id_insumo'] ?>',
+                                                    '<?php echo $arreglo['cantidad_total'] ?>','<?php echo $arreglo['nombre'] ?>')">
+                                                     <i class="fas fa-pencil"></i>
+                                                    </button>
+                                                </td>
 
                                             </tr>
                                         </tbody>
@@ -166,6 +183,8 @@
                                                         <i class="fas fa-download"></i>
                                                     </button>
 
+                                                  
+
                                                 </td>
 
                                             </tr>
@@ -215,12 +234,8 @@
     }
 
 
-    function cerrarModal() {
-        var modal = document.getElementById('modalRegisInsumosComprados');
-        modal.style.display = 'none';
+    
 
-
-    }
 
     function descargarPDF(fileName) {
             // Mostrar el toast antes de iniciar la descarga.
@@ -336,6 +351,77 @@
 
 
     }
+
+
+    /*ACTUALIZAR REGISTROS*/
+
+    function actualizarRegistro(id_insu, cantidad, nombre) {
+        var modalActuRecepInsu = document.getElementById('modalActuRecepInsu');
+        modalActuRecepInsu.style.display = 'block';
+        document.getElementById('id_insu_recep').value = id_insu;
+        document.getElementById('nombre_insu_recep').value = nombre;
+        document.getElementById('canti_actual').value = cantidad;
+
+        $(document).ready(function() {
+                $("#modalActuRecepInsu").submit(function(e){
+                    e.preventDefault();
+                    var id_insu_recep = $.trim($("#id_insu_recep").val());
+
+                  
+                    var canti_suma = $.trim($("#canti_suma").val()); 
+
+                   
+                
+
+                    $.ajax({
+                        url: "../actualizar/actualizar_inventario.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {id_insu_recep: id_insu_recep, 
+                           
+                            canti_suma: canti_suma},
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Actualización exitosa!',
+                                }).then((result) => {
+                                    if(result.value){
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'warning'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error en la solicitud',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                });
+            });
+    }
+
+
+
+    function cerrarModal() {
+        var modal = document.getElementById('modalRegisInsumosComprados');
+        var modalActuRecepInsu = document.getElementById('modalActuRecepInsu');
+        
+        if (modal) {
+            modal.style.display = 'none';
+        } 
+        if (modalActuRecepInsu) {
+            modalActuRecepInsu.style.display = 'none';
+        }
+    }
+
     </script>
 
 

@@ -20,6 +20,20 @@ body{
   background-color: #F4F6F9;
 }
 
+td p {
+  color: green;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+/* Efecto de zoom al pasar el cursor sobre el párrafo */
+td p:hover {
+  transform: scale(1.2); 
+}
+
+
+
 .table{
   text-align: center;
 }

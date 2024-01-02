@@ -74,7 +74,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
 
-                                    <table id="miParcela" class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <th>Código</th>
                                             <th>Nombre</th>
@@ -82,7 +82,7 @@
                                             <th>Alto</th>
                                             <th>Fecha de registro</th>
                                             <th>Estado</th>
-                                            <th class="acciones">Acciones</th>
+                                            <th>Acciones</th>
 
 
                                         </thead>
@@ -110,7 +110,7 @@
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
 
 
-                                                <td class="text-center">
+                                                <td>
 
                                                     <button type="button" class="btn btn-info"
                                                         onclick="modalActuParce('<?php echo $arreglo['id_parcela'] ?>','<?php echo $arreglo['nombre'] ?>','<?php echo $arreglo['ancho'] ?>','<?php echo $arreglo['alto'] ?>','<?php echo $arreglo['fecha_registro'] ?>');"
@@ -277,7 +277,7 @@
                             title: 'Actualización exitosa!',
                         }).then((result) => {
                             if (result.value) {
-                                window.location.reload(); // Recargar la página
+                                location.reload(); // Recargar la página
                             }
                         });
                     } else {

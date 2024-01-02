@@ -564,3 +564,43 @@
 </div>
 
 
+<!-- MODAL ACTUALIZAR DATOS RECEPCION INSUMOS -->
+<div id="modalActuRecepInsu" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Insumos registrados</h2>
+            <button class="close" onclick="cerrarModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" id="formActuaRecepInsu">
+
+                <label>Código: </label>
+                <input type="text" readonly class="form-control readonly-field" id="id_insu_recep"><br>
+
+
+                <label >Nombre: </label>
+                <input type="text" class="form-control readonly-field" readonly id="nombre_insu_recep">
+
+                <label >Cantidad actual: </label>
+                <input type="number" name="canti_actual" id="canti_actual" 
+                    class="form-control readonly-field" readonly><br>
+
+                
+
+
+
+                <label >Cantidad a sumar: </label>
+                <input type="text" name="" id="canti_suma" placeholder="Ingrese la cantidad"
+                    class="form-control"><br>
+
+             
+                <br>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-danger me-auto" onclick="cerrarModal()">Cerrar</button>
+            </form>
+        </div>
+        
+            
+      
+    </div>
+</div>

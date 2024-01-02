@@ -15,7 +15,7 @@ if (empty($nombre_insu) || empty($tip_insu) || empty($canti_insu)|| empty($f_reg
     $response['status'] = 'warning';
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
-    $query = "SELECT * FROM insumos WHERE nombre = '$nombre_insu' AND (estado IS NULL OR estado <> 'Eliminado');";
+    $query = "SELECT * FROM insumos WHERE fecha_regis = '$f_regis' AND (estado IS NULL OR estado <> 'Eliminado');";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
