@@ -83,6 +83,10 @@
 
                                             <th>Cantidad Sumada</th>
 
+                                            <th>Cantidad Restada</th>
+
+
+
                                             <th>Cantidad total</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
@@ -109,7 +113,12 @@
                                                 <td><?php echo $arreglo['cantidad_previa'] ?></td>
 
                                                 <td>
-                                                    <p><?php echo $arreglo['cantidad_sumada'] ?></p>
+                                                    <p id="cverde"><?php echo $arreglo['cantidad_sumada'] ?></p>
+                                                   
+                                                </td>
+
+                                                <td>
+                                                    <p id="crojo"><?php echo $arreglo['cantidad_restada'] ?></p>
                                                    
                                                 </td>
 

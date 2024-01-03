@@ -49,45 +49,93 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             <input type="date" id="fechUso" class="form-control">
                                         </div>
                                         <div class="col">
+                                            <?php
+                                                // Suponiendo que ya tienes una conexión a la base de datos, por ejemplo, $conn
+                                                include("../bd/conexion.php");
+
+                                                // Consulta SQL para obtener las parcelas
+                                                $query = "SELECT id_parcela, nombre FROM parcela";
+                                                $result = mysqli_query($conn, $query);
+
+                                                // Crear un array para almacenar las parcelas
+                                                $parcelas = [];
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    while($row = mysqli_fetch_assoc($result)) {
+                                                        $parcelas[] = $row;
+                                                    }
+                                                }
+                                            ?>
+
                                             <label for="selectParcela">Seleccione la parcela a aplicar</label>
                                             <select name="selectParcela" class="form-select" id="selectParcela">
-                                                <option value="">A</option>
-                                                <option value="">B</option>
-                                                <option value="">C</option>
-                                                <option value="">D</option>
+                                                <?php foreach ($parcelas as $parcela): ?>
+                                                    <option value="<?php echo $parcela['id_parcela']; ?>">
+                                                        <?php echo $parcela['nombre']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
+                                        <?php
+                                            // Suponiendo que ya tienes una conexión a la base de datos, por ejemplo, $conn
+                                            include("../bd/conexion.php");
+
+                                            // Consulta SQL para obtener los tipos de insumos
+                                            $query = "SELECT id_insumo, tipo FROM insumos";
+                                            $result = mysqli_query($conn, $query);
+
+                                            // Crear un array temporal para almacenar tipos únicos
+                                            $tempArray = [];
+
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while($row = mysqli_fetch_assoc($result)) {
+                                                    // Verifica si el tipo de insumo ya está en el array temporal
+                                                    if (!isset($tempArray[$row['tipo']])) {
+                                                        $tempArray[$row['tipo']] = $row['id_insumo'];
+                                                    }
+                                                }
+                                            }
+
+                                            // Convertir el array temporal en el formato deseado para $ti_insu
+                                            $ti_insu = [];
+                                            foreach ($tempArray as $tipo => $id_insumo) {
+                                                $ti_insu[] = ['tipo' => $tipo, 'id_insumo' => $id_insumo];
+                                            }
+
+                                            ?>
+
+
                                             <label for="selecttipoIns">Seleccione el tipo de insumo</label>
                                             <select name="selecttipoIns" class="form-select" id="selecttipoIns">
-                                                <option value="">A</option>
-                                                <option value="">B</option>
-                                                <option value="">C</option>
-                                                <option value="">D</option>
-                                            </select>
+                                                <?php foreach ($ti_insu as $ti_insumo): ?>
+                                                    <option value="<?php echo $ti_insumo['id_insumo']; ?>">
+                                                        <?php echo $ti_insumo['tipo']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select><br>
                                         </div>
-                                        <div class="col">
-                                            <label for="Canti">Cantidad: </label>
-                                            <input type="number" id="Canti" class="form-control">
+
+                                        <div class="row">
+                                       
+                                            <div class="col">
+                                                <label for="Nombre_insu">Stock disponible: </label>
+                                                    <input type="text" id="nom_insu" class="form-control" placeholder="Ingrese el nombre del insumo">
+                                                </div>
+
+                                            <div class="col">
+                                                <label for="Canti">Cantidad a utilizar: </label>
+                                                <input type="number" id="Canti" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="selecRespon">Seleccione el responsable</label>
-                                            <select name="selecRespon" class="form-select" id="selecRespon">
-                                                <option value="">A</option>
-                                                <option value="">B</option>
-                                                <option value="">C</option>
-                                                <option value="">D</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <label for="Nombre_insu">Nombre del insumo: </label>
-                                            <input type="text" id="nom_insu" class="form-control" placeholder="Ingrese el nombre del insumo">
-                                        </div>
-                                    </div>
+
+
+
+                                    
+                                    </div><br>
+                                  
                                 </form>
                             </div>
                             <div class="card-footer">
