@@ -5,15 +5,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uso de insumos.:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
 </head>
+
 <body>
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-   
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
         <!-- Sidebar Start -->
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
@@ -34,8 +37,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><h2><b>Registro uso de insumos</b></h2></div>
-                    </div>  
+                        <div class="card-title">
+                            <h2><b>Registro uso de insumos</b></h2>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row justify-content-center">
@@ -70,16 +75,16 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             <label for="selectParcela">Seleccione la parcela a aplicar</label>
                                             <select name="selectParcela" class="form-select" id="selectParcela">
                                                 <?php foreach ($parcelas as $parcela): ?>
-                                                    <option value="<?php echo $parcela['id_parcela']; ?>">
-                                                        <?php echo $parcela['nombre']; ?>
-                                                    </option>
+                                                <option value="<?php echo $parcela['id_parcela']; ?>">
+                                                    <?php echo $parcela['nombre']; ?>
+                                                </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div><br>
                                     <div class="row">
                                         <div class="col">
-                                        <?php
+                                            <?php
                                             // Suponiendo que ya tienes una conexión a la base de datos, por ejemplo, $conn
                                             include("../bd/conexion.php");
 
@@ -111,19 +116,21 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             <label for="selecttipoIns">Seleccione el tipo de insumo</label>
                                             <select name="selecttipoIns" class="form-select" id="selecttipoIns">
                                                 <?php foreach ($ti_insu as $ti_insumo): ?>
-                                                    <option value="<?php echo $ti_insumo['id_insumo']; ?>">
-                                                        <?php echo $ti_insumo['tipo']; ?>
-                                                    </option>
+                                                <option value="<?php echo $ti_insumo['id_insumo']; ?>">
+                                                    <?php echo $ti_insumo['tipo']; ?>
+                                                </option>
                                                 <?php endforeach; ?>
                                             </select><br>
                                         </div>
 
                                         <div class="row">
-                                       
+
                                             <div class="col">
-                                                <label for="Nombre_insu">Stock disponible: </label>
-                                                    <input type="text" id="nom_insu" class="form-control" placeholder="Ingrese el nombre del insumo">
-                                                </div>
+                                                <label for="Nombre_insu">Nombre del insumo en stock: </label>
+                                                <select name="selectNombreInsumo" class="form-select"
+                                                    id="selectNombreInsumo"></select>
+                                            </div>
+
 
                                             <div class="col">
                                                 <label for="Canti">Cantidad a utilizar: </label>
@@ -133,13 +140,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
 
-                                    
+
                                     </div><br>
-                                  
+
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" onclick="registrar();" id="btn_regis" class="btn btn-info">Registrar</button>
+                                <button type="button" id="btn_regis" class="btn btn-info">Registrar</button>
                             </div>
 
                         </div>
@@ -147,25 +154,42 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                 </div>
             </div>
-            
+
 
         </div>
     </div>
 
     <script>
-        function registrar(){
-            var btn_registrar = document.getElementById("btn_regis");
-            if (btn_registrar){
-                Swal.fire({
-                title: "Registro exitoso!",
-                text: "Los insumos fueron aplicados con exito!",
-                icon: "success"
-                });
+    document.getElementById('selecttipoIns').addEventListener('change', function() {
+        var tipoInsumoId = this.value; // Obtener el ID del tipo de insumo seleccionado
 
-            }
-        }
-        
+        // Realizar una llamada AJAX usando el método POST
+        fetch('../solicitar_datos/datos_insumos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id_tipo_insumo=${encodeURIComponent(tipoInsumoId)}` // Utilizando template literals para una mejor legibilidad
+            })
+            .then(response => response.json())
+            .then(data => {
+                const selectNombreInsumo = document.getElementById('selectNombreInsumo');
+                selectNombreInsumo.innerHTML = ''; // Limpiar las opciones anteriores
+
+                data.forEach(insumo => {
+                    const option = new Option(insumo.nombre, insumo
+                    .id_insumo); // Crear una opción directamente
+                    selectNombreInsumo.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener insumos:', error);
+                console.log('Mensaje del error:', error.message); // Esto te ayudará a identificar qué está sucediendo
+            });
+
+    });
     </script>
-    
+
 </body>
+
 </html>
