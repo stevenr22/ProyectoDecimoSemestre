@@ -114,9 +114,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
                                             <label for="selecttipoIns">Seleccione el tipo de insumo</label>
-                                            <select name="selecttipoIns" class="form-select" id="selecttipoIns">
+                                            <select name="selecttipoIns" class="form-select" id="selecttipoIns"
+                                                onchange="cargarInsumos()">
                                                 <?php foreach ($ti_insu as $ti_insumo): ?>
-                                                <option value="<?php echo $ti_insumo['id_insumo']; ?>">
+                                                <option value="<?php echo $ti_insumo['tipo']; ?>">
                                                     <?php echo $ti_insumo['tipo']; ?>
                                                 </option>
                                                 <?php endforeach; ?>
@@ -126,16 +127,27 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <div class="row">
 
                                             <div class="col">
-                                                <label for="Nombre_insu">Nombre del insumo en stock: </label>
-                                                <select name="selectNombreInsumo" class="form-select"
-                                                    id="selectNombreInsumo"></select>
+                                                <label for="selectInsumos">Seleccione el insumo</label>
+                                                    <select name="selectInsumos" class="form-select" id="selectInsumos">
+                                                        <!-- Las opciones se cargarán aquí mediante AJAX -->
+                                                    </select>
                                             </div>
 
 
                                             <div class="col">
-                                                <label for="Canti">Cantidad a utilizar: </label>
-                                                <input type="number" id="Canti" class="form-control">
+                                                <label for="Canti">Unidades en stock disponible: </label>
+                                                <input type="text" class="form-control readonly-field" id="cantidadStock" readonly><br>
+
                                             </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="CantidadUsar">Cantidad a utilizar:</label>
+                                                <input type="text" class="form-control" name="canti_utili" id="canti_utili">
+
+                                            </div>
+                                            
                                         </div>
 
 
@@ -160,34 +172,39 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </div>
 
     <script>
-    document.getElementById('selecttipoIns').addEventListener('change', function() {
-        var tipoInsumoId = this.value; // Obtener el ID del tipo de insumo seleccionado
+    function cargarInsumos() {
+        var tipoInsumo = $('#selecttipoIns').val(); // Obtiene el valor seleccionado del primer select
+        console.log(tipoInsumo);
 
-        // Realizar una llamada AJAX usando el método POST
-        fetch('../solicitar_datos/datos_insumos.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `id_tipo_insumo=${encodeURIComponent(tipoInsumoId)}` // Utilizando template literals para una mejor legibilidad
-            })
-            .then(response => response.json())
-            .then(data => {
-                const selectNombreInsumo = document.getElementById('selectNombreInsumo');
-                selectNombreInsumo.innerHTML = ''; // Limpiar las opciones anteriores
+        // Realiza la llamada AJAX
+        $.ajax({
+            url: '../solicitar_datos/datos_insumos.php', // Archivo PHP que manejará la petición
+            type: 'POST',
+            data: {
+                tipoInsumo: tipoInsumo
+            },
+            success: function(response) {
+                $('#selectInsumos').html(response); // Actualiza el segundo select
+                mostrarCantidad();
+            }
+        });
+    }
 
-                data.forEach(insumo => {
-                    const option = new Option(insumo.nombre, insumo
-                    .id_insumo); // Crear una opción directamente
-                    selectNombreInsumo.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error al obtener insumos:', error);
-                console.log('Mensaje del error:', error.message); // Esto te ayudará a identificar qué está sucediendo
-            });
 
-    });
+    function mostrarCantidad() {
+        var nombreInsumo = $('#selectInsumos').val();
+        console.log(nombreInsumo);
+
+
+        $.ajax({
+            url: '../solicitar_datos/obtener_cantidad.php', // Crearemos este archivo para obtener la cantidad en stock por nombre
+            type: 'POST',
+            data: { nombreInsumo: nombreInsumo },
+            success: function(response) {
+                $('#cantidadStock').val(response); // Actualizar el valor del input con la cantidad en stock
+            }
+        });
+    }
     </script>
 
 </body>
