@@ -48,6 +48,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card w-100">
                             <div class="card-body">
                                 <form id="formRegisUsoInsu" class="form-group">
+                                    <input type="text" class="form-control readonly-field" readonly name="id_usu"
+                                        id="id_usu" value="<?php echo $_SESSION['DBid_usu'] ?>"><br>
                                     <div class="row">
                                         <div class="col">
                                             <label for="Fecha">Fecha de uso: </label>
@@ -72,8 +74,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 }
                                             ?>
 
-                                            <label for="selectParcela">Seleccione la parcela a aplicar</label>
+                                            <label for="selectParcela">Parcela a aplicar</label>
                                             <select name="selectParcela" class="form-select" id="selectParcela">
+                                                <option value="" selected disabled>Seleccione la parcela</option>
+
                                                 <?php foreach ($parcelas as $parcela): ?>
                                                 <option value="<?php echo $parcela['id_parcela']; ?>">
                                                     <?php echo $parcela['nombre']; ?>
@@ -113,9 +117,14 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             ?>
 
 
-                                            <label for="selecttipoIns">Seleccione el tipo de insumo</label>
+                                            <label for="selecttipoIns">
+                                                <Tr></Tr>Tipo de insumo
+                                            </label>
                                             <select name="selecttipoIns" class="form-select" id="selecttipoIns"
                                                 onchange="cargarInsumos()">
+                                                <!-- Opción inicial como placeholder -->
+                                                <option value="" selected disabled>Seleccione un tipo de insumo</option>
+
                                                 <?php foreach ($ti_insu as $ti_insumo): ?>
                                                 <option value="<?php echo $ti_insumo['tipo']; ?>">
                                                     <?php echo $ti_insumo['tipo']; ?>
@@ -127,16 +136,19 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <div class="row">
 
                                             <div class="col">
-                                                <label for="selectInsumos">Seleccione el insumo</label>
-                                                    <select name="selectInsumos" class="form-select" id="selectInsumos">
-                                                        <!-- Las opciones se cargarán aquí mediante AJAX -->
-                                                    </select>
+                                                <label for="selectInsumos">Insumo</label>
+                                                <select name="selectInsumos" class="form-select" id="selectInsumos">
+
+                                                    <!-- Las opciones se cargarán aquí mediante AJAX -->
+                                                </select>
                                             </div>
 
 
                                             <div class="col">
                                                 <label for="Canti">Unidades en stock disponible: </label>
-                                                <input type="text" class="form-control readonly-field" id="cantidadStock" readonly><br>
+                                                <input type="text" class="form-control readonly-field"
+                                                    id="cantidadStockInput" readonly><br>
+
 
                                             </div>
                                         </div>
@@ -144,10 +156,11 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <div class="row">
                                             <div class="col">
                                                 <label for="CantidadUsar">Cantidad a utilizar:</label>
-                                                <input type="text" class="form-control" name="canti_utili" id="canti_utili">
+                                                <input type="text" class="form-control" name="canti_utili"
+                                                    id="canti_utili">
 
                                             </div>
-                                            
+
                                         </div>
 
 
@@ -158,7 +171,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" id="btn_regis" class="btn btn-info">Registrar</button>
+                                <button type="button" onclick="enviarUsoCantiInsu();" id="btn_regis"
+                                    class="btn btn-info">Registrar</button>
                             </div>
 
                         </div>
@@ -173,37 +187,115 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
     <script>
     function cargarInsumos() {
-        var tipoInsumo = $('#selecttipoIns').val(); // Obtiene el valor seleccionado del primer select
-        console.log(tipoInsumo);
+        var tipoInsumo = $('#selecttipoIns').val();
 
-        // Realiza la llamada AJAX
         $.ajax({
-            url: '../solicitar_datos/datos_insumos.php', // Archivo PHP que manejará la petición
+            url: '../solicitar_datos/datos_insumos.php',
             type: 'POST',
             data: {
                 tipoInsumo: tipoInsumo
             },
             success: function(response) {
-                $('#selectInsumos').html(response); // Actualiza el segundo select
-                mostrarCantidad();
+                $('#selectInsumos').empty(); // Limpiar el select actual
+                $('#selectInsumos').append(response); // Agregar nuevas opciones al select
+                $('#cantidadStockInput').val(''); // Limpiar el campo de cantidad
             }
         });
     }
 
 
-    function mostrarCantidad() {
-        var nombreInsumo = $('#selectInsumos').val();
-        console.log(nombreInsumo);
+    // Este código se ejecutará cuando cambies la opción seleccionada en el select
+    $('#selectInsumos').change(function() {
+        let id_insumo = $(this).val(); // Obtener el valor seleccionado
+        let nombre = $('#selectInsumos option:selected').text(); // Obtener el texto seleccionado
+
+    });
 
 
-        $.ajax({
-            url: '../solicitar_datos/obtener_cantidad.php', // Crearemos este archivo para obtener la cantidad en stock por nombre
-            type: 'POST',
-            data: { nombreInsumo: nombreInsumo },
-            success: function(response) {
-                $('#cantidadStock').val(response); // Actualizar el valor del input con la cantidad en stock
+    $(document).ready(function() {
+        $('#selectInsumos').change(function() {
+            var stockData = $('#selectInsumos option:selected').data('stock');
+
+            if (stockData !== undefined) {
+                $('#cantidadStockInput').val(stockData); // Si tiene stock, muestra la cantidad
+            } else {
+                $('#cantidadStockInput').val(''); // Si no tiene stock (undefined), limpia el campo
             }
         });
+    });
+
+
+
+
+
+
+
+
+
+
+    function enviarUsoCantiInsu() {
+        var cantidad_a_restar = document.getElementById("canti_utili").value;
+        var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
+        var id_usuario = document.getElementById("id_usu").value;
+        var id_parcela = $('#selectParcela').val();
+        var fech_uso = document.getElementById("fechUso").value;
+
+        console.log("Cantidad a restar: " + cantidad_a_restar +
+         ", Nombre de insumo a restar: " +
+          nombre_de_insumo_a_restar + ", ID usuario: " +
+           id_usuario + ", ID parcela: " + id_parcela +
+            ", Fecha de uso: " + fech_uso);
+
+
+        // Validar campos vacíos
+        if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" || id_parcela === "" ||
+            fech_uso === "") {
+            Swal.fire({
+                title: '¡Advertencia!',
+                text: 'Todos los campos son obligatorios.',
+                icon: 'warning', // Cambio de 'error' a 'warning'
+                confirmButtonText: 'Aceptar'
+            });
+
+            return; // Detener la ejecución si hay campos vacíos
+        }
+
+        /*$.ajax({
+            url: '../validacion_datos/restar_cantidad_insu.php',
+            type: 'POST',
+            data: {
+                cantidad_a_restar: cantidad_a_restar,
+                nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
+                id_usuario: id_usuario,
+                id_parcela: id_parcela,
+                fech_uso: fech_uso
+            },
+            success: function(response) {
+                // Aquí comprobamos si la inserción fue exitosa y mostramos el modal de confirmación
+                var responseData = JSON.parse(response); // Convertir la respuesta a un objeto JSON
+
+                if (responseData.success) {
+                    Swal.fire({
+                        title: '¡Inserción exitosa!',
+                        text: responseData.message,
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        // Aquí puedes agregar cualquier lógica adicional que desees ejecutar después de que el usuario haga clic en 'Aceptar'
+                        if (result.isConfirmed) {
+                            location.reload(); // Redireccionar o cualquier otra acción que desees
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: responseData.message,
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            }
+        });*/
     }
     </script>
 

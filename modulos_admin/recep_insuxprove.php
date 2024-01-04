@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <h2><b>Recepción nuevos insumos - Stock disponible</b></h2>
+                            <h2><b>Recepción nuevos insumos</b></h2>
                         </div>
                     </div>
                 </div>
@@ -66,31 +66,28 @@
 
 
 
-
+                <!--INSUMOS REGISTRADOS-->
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="miTabla" class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Categoría</th>
 
                                             <th>Fecha de registro</th>
-                                            <th>Cantidad Previa</th>
+                                          
 
-                                            <th>Cantidad Sumada</th>
-
-                                            <th>Cantidad Restada</th>
+                                           
 
 
 
-                                            <th>Cantidad total</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-
+                                            <th>Cantidad total por fecha</th>
+                                           
+                                          
 
 
                                         </thead>
@@ -110,25 +107,132 @@
                                                 <td><?php echo $arreglo['nombre'] ?></td>
                                                 <td><?php echo $arreglo['tipo'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
-                                                <td><?php echo $arreglo['cantidad_previa'] ?></td>
 
-                                                <td>
-                                                    <p id="cverde"><?php echo $arreglo['cantidad_sumada'] ?></p>
-                                                   
-                                                </td>
+                                               
 
-                                                <td>
-                                                    <p id="crojo"><?php echo $arreglo['cantidad_restada'] ?></p>
-                                                   
-                                                </td>
+                                             
 
                                                 <td><?php echo $arreglo['cantidad_total'] ?></td>
+
+
+
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+
+
+                                    </table>
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--STOCK DISPONIBLE-->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2><b>Stock disponible</b></h2>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Categoría</th>
+
+
+
+
+                                            <!--th>Cantidad Restada</th-->
+                                            <th>Cantidad previa</th>
+
+                                            <th>Cantidad sumada</th>
+
+
+
+
+                                            <th>Cantidad Actual</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+
+
+
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT 
+                                            id_insumo, 
+                                            nombre, 
+                                            tipo, 
+                                            cantidad_previa, 
+                                           cantidad_sumada, 
+                                            SUM(cantidad_total) AS total_cantidad,
+                                            estado
+                                        FROM 
+                                            insumos
+                                        WHERE 
+                                            estado = 'Disponible'
+                                        GROUP BY 
+                                            nombre, 
+                                            tipo, 
+                                            estado
+                                        ");
+
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
+
+                                                if ($estado == 'Disponible') {
+                                                    $clase_estado = 'operando';
+                                                } 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $arreglo['id_insumo'] ?></td>
+                                                <td><?php echo $arreglo['nombre'] ?></td>
+                                                <td><?php echo $arreglo['tipo'] ?></td>
+
+                                               
+
+                                             
+                                                <td>
+                                                    <?php 
+                                                        $cantidad_tot = $arreglo['total_cantidad'];
+                                                        $cantidad_sum =  $arreglo['cantidad_sumada'];
+                                                        $ope = $cantidad_tot - $cantidad_sum;
+                                                        echo $ope;
+                                                    ?>
+                                                </td>
+
+                                                <td>
+                                                    <p  id="cverde">
+                                                        <?php echo $arreglo['cantidad_sumada'] ?>
+                                                    </p>
+                                                </td>
+
+                                                <td><?php echo $arreglo['total_cantidad'] ?></td>
                                                 <td><?php echo $arreglo['estado'] ?></td>
 
 
                                                 <td>
                                                     <button class="btn btn-secondary" onclick="actualizarRegistro('<?php echo $arreglo['id_insumo'] ?>',
-                                                    '<?php echo $arreglo['cantidad_total'] ?>','<?php echo $arreglo['nombre'] ?>')">
+                                                    '<?php echo $arreglo['total_cantidad'] ?>','<?php echo $arreglo['nombre'] ?>')">
                                                      <i class="fas fa-pencil"></i>
                                                     </button>
                                                 </td>
@@ -150,6 +254,10 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
@@ -368,6 +476,7 @@
         var modalActuRecepInsu = document.getElementById('modalActuRecepInsu');
         modalActuRecepInsu.style.display = 'block';
         document.getElementById('id_insu_recep').value = id_insu;
+
         document.getElementById('nombre_insu_recep').value = nombre;
         document.getElementById('canti_actual').value = cantidad;
 
@@ -379,15 +488,17 @@
                   
                     var canti_suma = $.trim($("#canti_suma").val()); 
 
+                    console.log(id_insu_recep);
+                    console.log(canti_suma);
+
                    
                 
 
-                    $.ajax({
+                   $.ajax({
                         url: "../actualizar/actualizar_inventario.php",
                         type: "POST",
                         dataType: "json",
-                        data: {id_insu_recep: id_insu_recep, 
-                           
+                        data: {id_insu_recep: id_insu_recep,
                             canti_suma: canti_suma},
                         success: function(response) {
                             if (response.status === 'success') {
