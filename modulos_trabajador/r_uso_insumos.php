@@ -61,7 +61,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 include("../bd/conexion.php");
 
                                                 // Consulta SQL para obtener las parcelas
-                                                $query = "SELECT id_parcela, nombre FROM parcela";
+                                                $query = "SELECT id_parcela, nombre FROM parcela WHERE estado = 'Operando'";
                                                 $result = mysqli_query($conn, $query);
 
                                                 // Crear un array para almacenar las parcelas
@@ -118,7 +118,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
                                             <label for="selecttipoIns">
-                                                <Tr></Tr>Tipo de insumo
+                                                Tipo de insumo
                                             </label>
                                             <select name="selecttipoIns" class="form-select" id="selecttipoIns"
                                                 onchange="cargarInsumos()">
@@ -234,69 +234,73 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
     function enviarUsoCantiInsu() {
-        var cantidad_a_restar = document.getElementById("canti_utili").value;
-        var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
-        var id_usuario = document.getElementById("id_usu").value;
-        var id_parcela = $('#selectParcela').val();
-        var fech_uso = document.getElementById("fechUso").value;
+    var cantidad_a_restar = document.getElementById("canti_utili").value;
+    var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
+    var id_usuario = document.getElementById("id_usu").value;
+    var id_parcela = $('#selectParcela').val();
+    var fech_uso = document.getElementById("fechUso").value;
 
-        console.log("Cantidad a restar: " + cantidad_a_restar +
-         ", Nombre de insumo a restar: " +
-          nombre_de_insumo_a_restar + ", ID usuario: " +
-           id_usuario + ", ID parcela: " + id_parcela +
-            ", Fecha de uso: " + fech_uso);
+    console.log("Cantidad a restar: " + cantidad_a_restar +
+        ", Nombre de insumo a restar: " +
+        nombre_de_insumo_a_restar + ", ID usuario: " +
+        id_usuario + ", ID parcela: " + id_parcela +
+        ", Fecha de uso: " + fech_uso);
 
+    // Validar campos vacíos
+    if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" || id_parcela === "" || fech_uso === "") {
+        Swal.fire({
+            title: '¡Advertencia!',
+            text: 'Todos los campos son obligatorios.',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return; // Detener la ejecución si hay campos vacíos
+    }
 
-        // Validar campos vacíos
-        if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" || id_parcela === "" ||
-            fech_uso === "") {
+    $.ajax({
+        url: '../validacion_datos/restar_cantidad_insu.php',
+        type: 'POST',
+        data: {
+            cantidad_a_restar: cantidad_a_restar,
+            nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
+            id_usuario: id_usuario,
+            id_parcela: id_parcela,
+            fech_uso: fech_uso
+        },
+        success: function(response) {
+            var responseData = JSON.parse(response); 
+
+            if (responseData.success) {
+                Swal.fire({
+                    title: '¡Inserción exitosa!',
+                    text: responseData.message,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload(); 
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: responseData.message,
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        },
+        error: function() {
             Swal.fire({
-                title: '¡Advertencia!',
-                text: 'Todos los campos son obligatorios.',
-                icon: 'warning', // Cambio de 'error' a 'warning'
+                title: '¡Error!',
+                text: 'Hubo un error al procesar la solicitud.',
+                icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
-
-            return; // Detener la ejecución si hay campos vacíos
         }
+    });
+}
 
-        /*$.ajax({
-            url: '../validacion_datos/restar_cantidad_insu.php',
-            type: 'POST',
-            data: {
-                cantidad_a_restar: cantidad_a_restar,
-                nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
-                id_usuario: id_usuario,
-                id_parcela: id_parcela,
-                fech_uso: fech_uso
-            },
-            success: function(response) {
-                // Aquí comprobamos si la inserción fue exitosa y mostramos el modal de confirmación
-                var responseData = JSON.parse(response); // Convertir la respuesta a un objeto JSON
-
-                if (responseData.success) {
-                    Swal.fire({
-                        title: '¡Inserción exitosa!',
-                        text: responseData.message,
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        // Aquí puedes agregar cualquier lógica adicional que desees ejecutar después de que el usuario haga clic en 'Aceptar'
-                        if (result.isConfirmed) {
-                            location.reload(); // Redireccionar o cualquier otra acción que desees
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: '¡Error!',
-                        text: responseData.message,
-                        icon: 'error',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            }
-        });*/
-    }
     </script>
 
 </body>

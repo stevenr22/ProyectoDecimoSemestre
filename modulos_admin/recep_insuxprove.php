@@ -160,10 +160,6 @@
 
 
 
-                                            <!--th>Cantidad Restada</th-->
-                                            <th>Cantidad previa</th>
-
-                                            <th>Cantidad sumada</th>
 
 
 
@@ -182,8 +178,7 @@
                                             id_insumo, 
                                             nombre, 
                                             tipo, 
-                                            cantidad_previa, 
-                                           cantidad_sumada, 
+                                        
                                             SUM(cantidad_total) AS total_cantidad,
                                             estado
                                         FROM 
@@ -211,20 +206,7 @@
                                                
 
                                              
-                                                <td>
-                                                    <?php 
-                                                        $cantidad_tot = $arreglo['total_cantidad'];
-                                                        $cantidad_sum =  $arreglo['cantidad_sumada'];
-                                                        $ope = $cantidad_tot - $cantidad_sum;
-                                                        echo $ope;
-                                                    ?>
-                                                </td>
-
-                                                <td>
-                                                    <p  id="cverde">
-                                                        <?php echo $arreglo['cantidad_sumada'] ?>
-                                                    </p>
-                                                </td>
+                                            
 
                                                 <td><?php echo $arreglo['total_cantidad'] ?></td>
                                                 <td><?php echo $arreglo['estado'] ?></td>
