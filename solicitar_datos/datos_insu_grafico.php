@@ -2,7 +2,17 @@
 // Conexión a la base de datos (ajusta los valores según tu configuración)
 include("../bd/conexion.php");
 // Consulta SQL para obtener datos
-$sql = "SELECT MONTHNAME(fecha_regis) AS mes, cantidad_total, nombre FROM insumos";
+$sql = "SELECT 
+MONTHNAME(fecha_regis) AS mes, 
+SUM(cantidad) AS cantidad_total,
+nombre
+FROM 
+insumos
+GROUP BY 
+MONTHNAME(fecha_regis), nombre
+ORDER BY 
+MONTH(fecha_regis);
+";
 $result = $conn->query($sql);
 
 $data = [];
