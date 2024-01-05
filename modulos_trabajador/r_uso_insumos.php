@@ -93,7 +93,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             include("../bd/conexion.php");
 
                                             // Consulta SQL para obtener los tipos de insumos
-                                            $query = "SELECT id_insumo, tipo FROM insumos";
+                                            $query = "SELECT id_total_insumo, tipo FROM total_insumos";
                                             $result = mysqli_query($conn, $query);
 
                                             // Crear un array temporal para almacenar tipos únicos
@@ -103,7 +103,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 while($row = mysqli_fetch_assoc($result)) {
                                                     // Verifica si el tipo de insumo ya está en el array temporal
                                                     if (!isset($tempArray[$row['tipo']])) {
-                                                        $tempArray[$row['tipo']] = $row['id_insumo'];
+                                                        $tempArray[$row['tipo']] = $row['id_total_insumo'];
                                                     }
                                                 }
                                             }
@@ -111,7 +111,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             // Convertir el array temporal en el formato deseado para $ti_insu
                                             $ti_insu = [];
                                             foreach ($tempArray as $tipo => $id_insumo) {
-                                                $ti_insu[] = ['tipo' => $tipo, 'id_insumo' => $id_insumo];
+                                                $ti_insu[] = ['tipo' => $tipo, 'id_total_insumo' => $id_insumo];
                                             }
 
                                             ?>
@@ -239,15 +239,18 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     var id_usuario = document.getElementById("id_usu").value;
     var id_parcela = $('#selectParcela').val();
     var fech_uso = document.getElementById("fechUso").value;
+    var unidades_stock = document.getElementById("cantidadStockInput").value;
 
     console.log("Cantidad a restar: " + cantidad_a_restar +
         ", Nombre de insumo a restar: " +
         nombre_de_insumo_a_restar + ", ID usuario: " +
         id_usuario + ", ID parcela: " + id_parcela +
-        ", Fecha de uso: " + fech_uso);
+        ", Fecha de uso: " + fech_uso +
+        "CANTIDAD STOCK: " + unidades_stock);
 
     // Validar campos vacíos
-    if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" || id_parcela === "" || fech_uso === "") {
+    if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" 
+    || id_parcela === "" || fech_uso === "") {
         Swal.fire({
             title: '¡Advertencia!',
             text: 'Todos los campos son obligatorios.',
@@ -265,7 +268,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
             nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
             id_usuario: id_usuario,
             id_parcela: id_parcela,
-            fech_uso: fech_uso
+            fech_uso: fech_uso,
+            unidades_stock: unidades_stock
         },
         success: function(response) {
             var responseData = JSON.parse(response); 

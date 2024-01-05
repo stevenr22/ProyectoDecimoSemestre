@@ -8,20 +8,16 @@ if(isset($_POST['tipoInsumo'])) {
     $options = "<option value='' selected disabled>Seleccione un insumo</option>";
     
     $query = "SELECT
-    id_insumo, 
+    id_total_insumo, 
     nombre, 
-    SUM(cantidad_total) AS cantidad_stock 
-FROM 
-    insumos 
-WHERE tipo = '$tipoInsumo'
-GROUP BY 
-    nombre;
-";
+    cantidad_total_usada AS cantidad_stock 
+FROM total_insumos 
+WHERE tipo = '$tipoInsumo'";
     
     $result = mysqli_query($conn, $query);
 
     while($row = mysqli_fetch_assoc($result)) {
-        $options .= "<option value='".$row['id_insumo']."' data-stock='".$row['cantidad_stock']."'>".$row['nombre']."</option>";
+        $options .= "<option value='".$row['id_total_insumo']."' data-stock='".$row['cantidad_stock']."'>".$row['nombre']."</option>";
     }
 
     echo $options;

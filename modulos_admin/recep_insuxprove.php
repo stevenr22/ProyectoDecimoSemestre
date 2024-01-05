@@ -112,7 +112,8 @@
 
                                              
 
-                                                <td><?php echo $arreglo['cantidad_total'] ?></td>
+                                                <td><?php echo $arreglo['cantidad'] ?></td>
+                                                
 
 
 
@@ -156,83 +157,69 @@
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Categoría</th>
+                                            <th>Cantiadad Restada por aplicación</th>
 
-
-
-
-
-
-
-
+                                            <th>Cantiadad Sumada por registro</th>
                                             <th>Cantidad Actual</th>
+                                          
+
                                             <th>Estado</th>
-                                            <th>Acciones</th>
+                                         
 
 
 
                                         </thead>
                                         <tbody>
                                             <?php
-                                            include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT 
-                                            id_insumo, 
-                                            nombre, 
-                                            tipo, 
-                                        
-                                            SUM(cantidad_total) AS total_cantidad,
-                                            estado
-                                        FROM 
-                                            insumos
-                                        WHERE 
-                                            estado = 'Disponible'
-                                        GROUP BY 
-                                            nombre, 
-                                            tipo, 
-                                            estado
-                                        ");
+                                                include("../bd/conexion.php");
+                                                $senten = $conn->query("SELECT * FROM total_insumos");
+                                                while ($arreglo = $senten->fetch_array()) {
+                                                    $estado = $arreglo['estado'];
 
-                                            while ($arreglo = $senten->fetch_array()) {
-                                                $estado = $arreglo['estado'];
+                                                    // Cambiar el estado a "Agotado" si cantidad_total_usada es 0
+                                                    if ($arreglo['cantidad_total_usada'] == 0) {
+                                                        $estado = 'Agotado';
+                                                    }
 
-                                                if ($estado == 'Disponible') {
-                                                    $clase_estado = 'operando';
-                                                } 
+                                                    if ($estado == 'Operando') {
+                                                        $clase_estado = 'Operando';
+                                                    } else if($estado == 'Agotado') {
+                                                        $clase_estado = 'Agotado';  // Puedes definir una clase CSS específica para "Agotado" si lo deseas
+                                                    }
                                             ?>
                                             <tr>
-                                                <td><?php echo $arreglo['id_insumo'] ?></td>
+                                                <td><?php echo $arreglo['id_total_insumo'] ?></td>
                                                 <td><?php echo $arreglo['nombre'] ?></td>
                                                 <td><?php echo $arreglo['tipo'] ?></td>
-
-                                               
-
-                                             
-                                            
-
-                                                <td><?php echo $arreglo['total_cantidad'] ?></td>
-                                                <td><?php echo $arreglo['estado'] ?></td>
-
-
                                                 <td>
-                                                    <button class="btn btn-secondary" onclick="actualizarRegistro('<?php echo $arreglo['id_insumo'] ?>',
-                                                    '<?php echo $arreglo['total_cantidad'] ?>','<?php echo $arreglo['nombre'] ?>')">
-                                                     <i class="fas fa-pencil"></i>
-                                                    </button>
-                                                </td>
+                                                    <p id="crojo">
+                                                        <?php echo $arreglo['cantidad_restada'] ?>
 
+
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p id="cverde">
+                                                        <?php echo $arreglo['cantidad_sumada'] ?>
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <h3 id="stock">
+                                                        <?php echo $arreglo['cantidad_total_usada'] ?>
+                                                    </h3>
+                                                </td>
+                                                <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
                                             </tr>
+                                            <?php } ?>
                                         </tbody>
-                                        <?php } ?>
+
+                                        
+                                     
 
 
                                     </table>
-
-
-
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>

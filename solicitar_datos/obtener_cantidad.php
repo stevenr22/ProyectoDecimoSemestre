@@ -5,7 +5,7 @@ if (isset($_POST['nombre'])) {
     $nombreInsumo = $_POST['nombre'];
 
     // Consulta para obtener la suma total de cantidad_total para el nombre específico
-    $query = "SELECT SUM(cantidad_total) AS cantidad_stock FROM insumos WHERE nombre = ?";
+    $query = "SELECT cantidad_total_usada AS cantidad_stock FROM total_insumos WHERE nombre = ?";
     
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $nombreInsumo); // Bind del nombre directamente
