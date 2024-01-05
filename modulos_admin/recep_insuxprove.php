@@ -159,7 +159,7 @@
                                             <th>Categoría</th>
                                             <th>Cantiadad Restada por aplicación</th>
 
-                                            <th>Cantiadad Sumada por registro</th>
+                                        
                                             <th>Cantidad Actual</th>
                                           
 
@@ -198,11 +198,7 @@
 
                                                     </p>
                                                 </td>
-                                                <td>
-                                                    <p id="cverde">
-                                                        <?php echo $arreglo['cantidad_sumada'] ?>
-                                                    </p>
-                                                </td>
+                                            
                                                 <td>
                                                     <h3 id="stock">
                                                         <?php echo $arreglo['cantidad_total_usada'] ?>

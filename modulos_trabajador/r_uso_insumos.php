@@ -238,10 +238,13 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
     var id_usuario = document.getElementById("id_usu").value;
     var id_parcela = $('#selectParcela').val();
+    var id_insumo = $('#selectInsumos').val();
+
     var fech_uso = document.getElementById("fechUso").value;
     var unidades_stock = document.getElementById("cantidadStockInput").value;
 
     console.log("Cantidad a restar: " + cantidad_a_restar +
+        "ID INSUMOS : " + id_insumo +
         ", Nombre de insumo a restar: " +
         nombre_de_insumo_a_restar + ", ID usuario: " +
         id_usuario + ", ID parcela: " + id_parcela +
@@ -249,7 +252,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         "CANTIDAD STOCK: " + unidades_stock);
 
     // Validar campos vacíos
-    if (cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" 
+    if (id_insumo === "" || cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" 
     || id_parcela === "" || fech_uso === "") {
         Swal.fire({
             title: '¡Advertencia!',
@@ -266,10 +269,10 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         data: {
             cantidad_a_restar: cantidad_a_restar,
             nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
+            id_insumo: id_insumo,
             id_usuario: id_usuario,
             id_parcela: id_parcela,
-            fech_uso: fech_uso,
-            unidades_stock: unidades_stock
+            fech_uso: fech_uso
         },
         success: function(response) {
             var responseData = JSON.parse(response); 
