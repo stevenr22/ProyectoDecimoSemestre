@@ -82,7 +82,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     </select><br>
 
                                     <label for="Nombre_insu">Nombre del insumo: </label>
-                                    <input type="text" class="form-control" id="nombre_insu">
+                                    <input type="text" class="form-control" id="nombre_insu"><br>
 
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
@@ -223,7 +223,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
         // Enviar los datos mediante AJAX
-        /*$.ajax({
+        $.ajax({
              url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
              type: "POST",
              dataType: "json",
@@ -257,7 +257,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                      icon: 'error'
                  });
              }
-         });*/
+         });
     });
 
 
