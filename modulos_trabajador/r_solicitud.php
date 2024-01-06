@@ -66,51 +66,23 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <label for="selecttipoIns">
                                         Tipo de insumo
                                     </label>
-                                    <?php
-                                            // Suponiendo que ya tienes una conexión a la base de datos, por ejemplo, $conn
-                                            include("../bd/conexion.php");
 
-                                            // Consulta SQL para obtener los tipos de insumos
-                                            $query = "SELECT id_insumo, tipo FROM insumos";
-                                            $result = mysqli_query($conn, $query);
 
-                                            // Crear un array temporal para almacenar tipos únicos
-                                            $tempArray = [];
-
-                                            if (mysqli_num_rows($result) > 0) {
-                                                while($row = mysqli_fetch_assoc($result)) {
-                                                    // Verifica si el tipo de insumo ya está en el array temporal
-                                                    if (!isset($tempArray[$row['tipo']])) {
-                                                        $tempArray[$row['tipo']] = $row['id_insumo'];
-                                                    }
-                                                }
-                                            }
-
-                                            // Convertir el array temporal en el formato deseado para $ti_insu
-                                            $ti_insu = [];
-                                            foreach ($tempArray as $tipo => $id_insumo) {
-                                                $ti_insu[] = ['tipo' => $tipo, 'id_insumo' => $id_insumo];
-                                            }
-
-                                            ?>
-
-                                    <select name="selecttipoIns" class="form-select" id="selecttipoIns"
-                                        onchange="cargarInsumos()">
+                                    <select name="selecttipoIns" class="form-select" id="selecttipoIns">
                                         <!-- Opción inicial como placeholder -->
                                         <option value="" selected disabled>Seleccione un tipo de insumo</option>
+                                        <option value="1">Insecticida</option>
+                                        <option value="2">Herramienta</option>
+                                        <option value="3">Maquinaria</option>
+                                        <option value="4">Mango</option>
+                                        <option value="5">Otro</option>
 
-                                        <?php foreach ($ti_insu as $ti_insumo): ?>
-                                        <option value="<?php echo $ti_insumo['tipo']; ?>">
-                                            <?php echo $ti_insumo['tipo']; ?>
-                                        </option>
-                                        <?php endforeach; ?>
+
+
                                     </select><br>
 
                                     <label for="Nombre_insu">Nombre del insumo: </label>
-                                    <select name="selectInsumos" class="form-select" id="selectInsumos">
-
-                                        <!-- Las opciones se cargarán aquí mediante AJAX -->
-                                    </select><br>
+                                    <input type="text" class="form-control" id="nombre_insu">
 
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
@@ -238,20 +210,20 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         // Obtener los valores del formulario
         var fechSoli = $.trim($("#fechSoli").val());
         var selecttipoIns = $.trim($('#selecttipoIns option:selected').text());
-        var nom_insu = $.trim($('#selectInsumos option:selected').text());
+        var nom_insu = $.trim($("#nombre_insu").val());
         var Canti = $.trim($("#Canti").val());
         var id_usuario_empleado = $.trim($("#id_usuario_empleado").val());
 
-        /*console.log("Fecha Solicitud:", fechSoli,
+        console.log("Fecha Solicitud:", fechSoli,
             "\nTipo de Insumo:", selecttipoIns,
             "\nNombre del Insumo:", nom_insu,
             "\nCantidad:", Canti,
-            "\nID del Usuario Empleado:", id_usuario_empleado);*/
+            "\nID del Usuario Empleado:", id_usuario_empleado);
 
 
 
         // Enviar los datos mediante AJAX
-        $.ajax({
+        /*$.ajax({
              url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
              type: "POST",
              dataType: "json",
@@ -285,11 +257,11 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                      icon: 'error'
                  });
              }
-         });
+         });*/
     });
 
 
-    function cargarInsumos() {
+    /*function cargarInsumos() {
         var tipoInsumo = $('#selecttipoIns').val();
 
         $.ajax({
@@ -309,7 +281,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
         let id_insumo = $(this).val(); // Obtener el valor seleccionado
         let nombre = $('#selectInsumos option:selected').text(); // Obtener el texto seleccionado
 
-    });
+    });*/
 
 
 

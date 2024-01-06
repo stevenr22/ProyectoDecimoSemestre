@@ -14,7 +14,7 @@ if (empty($fechSoli) || empty($selecttipoIns) || empty($nom_insu) || empty($Cant
     $response['message'] = 'CAMPOS VACIOS!';
 } else {
     // Consulta el stock disponible para el insumo seleccionado
-    $consultaStock = "SELECT SUM(cantidad_total) as stock FROM insumos WHERE tipo = '$selecttipoIns' AND nombre = '$nom_insu'";
+    $consultaStock = "SELECT SUM(cantidad) as stock FROM insumos WHERE tipo = '$selecttipoIns' AND nombre = '$nom_insu'";
     $resultadoStock = mysqli_query($conn, $consultaStock);
 
     if ($resultadoStock && mysqli_num_rows($resultadoStock) > 0) {
