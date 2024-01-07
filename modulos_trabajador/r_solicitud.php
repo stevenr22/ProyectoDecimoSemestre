@@ -131,7 +131,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
-                                            $senten = $conn->query("SELECT * FROM solicitudes WHERE estado = 'Enviado' or estado = 'Verificando' or estado = 'Denegado' or estado = 'Aprobado' ORDER BY id_solicitud");
+                                            $senten = $conn->query("SELECT id_solicitud, fecha_solicitud, tipo_insumo, nombre_insu, cantidad, proveedor, id_usu, estado
+                                            FROM solicitudes WHERE estado = 'Enviado' or estado = 'Verificando' or estado = 'Denegado' or estado = 'Aprobado' or estado = 'Recibido' or estado = 'Añadido' ORDER BY id_solicitud");
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
@@ -139,8 +140,16 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                     $clase_estado = 'Enviado';
                                                 }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
+                                                    
+                                                    
+                                                }else if($estado == 'Añadido'){
+                                                    $clase_estado = 'Añadido';
                                                 }else if($estado == 'Verificando'){
                                                     $clase_estado = 'Verificando';
+                                                }
+                                                else if($estado == 'Recibido'){
+                                                   
+                                                    $clase_estado = 'Recibido';
                                                 }
                                                 else {
                                                     $clase_estado = 'Denegado';
@@ -332,6 +341,21 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 window.location.reload(); // Recargar la página
                             }
                         });
+                    }else if (response.status === 'warning') {
+                    // Mostrar un mensaje si el estado es 'Añadido'
+                    toastr.warning(response.message, '', {
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 3000,
+                        extendedTimeOut: 1000,
+                        showDuration: 300,
+                        hideDuration: 1000,
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                      
+                    });
                     } else {
                         Swal.fire({
                             title: response.message,

@@ -281,6 +281,30 @@ tbody td.Enviado:hover {
 
 
 
+
+
+
+tbody td.Añadido {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffd900; /* Color inicial */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
+}
+
+tbody td.Añadido:hover {
+  color: #8e7a09; /* Nuevo color al pasar el cursor */
+  transform: scale(1.2); /* Efecto de zoom al 120% al pasar el cursor */
+}
+
+
+
+
+
+
+
+
+
+
 tbody td.Recibido {
   font-size: 20px;
   font-weight: bold;

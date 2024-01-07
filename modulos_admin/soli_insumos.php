@@ -95,16 +95,18 @@
 
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
-                                                $tieneProveedor = !empty($arreglo['proveedor']);
-                                                if ($estado == 'Verificando' || $estado == 'Aprobado' || $estado == 'Denegado') {
-                                                    $mostrarBotonEnviar = false; // No mostrar el botón
+                                                if ($estado == 'Añadido') {
+                                                    $mostrarBotonEnviar = true; // Mostrar el botón si el estado es 'Añadido'
                                                 } else {
-                                                    $mostrarBotonEnviar = $tieneProveedor; // Mostrar el botón si hay un proveedor
+                                                    $mostrarBotonEnviar = false; // No mostrar el botón para cualquier otro estado
                                                 }
+                                                
 
 
                                                 if ($estado == 'Recibido') {
                                                     $clase_estado = 'Recibido';
+                                                }else if($estado == 'Añadido'){
+                                                    $clase_estado = 'Añadido';
                                                 }else if($estado == 'Aprobado'){
                                                     $clase_estado = 'Aprobado';
                                                 } else if($estado == 'Verificando'){
@@ -188,71 +190,84 @@
     //VERIFICAR PARA ENVIAR -------------------------------------
     //Editar actualizar
     function modalActuSoliTraba(id_soli, fecha, tipo_insu, nombre_insu, cantidad) {
-        var modalEditEnviSoli = document.getElementById('modalEditEnviSoli');
+    var modalEditEnviSoli = document.getElementById('modalEditEnviSoli');
+    modalEditEnviSoli.style.display = 'block';
 
-        modalEditEnviSoli.style.display = 'block';
+    // Llenar el formulario con datos del usuario
+    document.getElementById('id_soli_reci').value = id_soli;
+    document.getElementById('fecha_soli').value = fecha;
+    document.getElementById('t_insu_soli').value = tipo_insu;
+    document.getElementById('insu_soli').value = nombre_insu;
+    document.getElementById('canti_soli').value = cantidad;
+}
 
-        // Llenar el formulario con datos del usuario
-        document.getElementById('id_soli_reci').value = id_soli;
-        document.getElementById('fecha_soli').value = fecha;
-        document.getElementById('t_insu_soli').value = tipo_insu;
-        document.getElementById('insu_soli').value = nombre_insu;
-        document.getElementById('canti_soli').value = cantidad;
-    }
-    $(document).ready(function() {
-        $("#formEditSoli").submit(function(e) {
-            e.preventDefault();
-            var id_soli_reci = $.trim($("#id_soli_reci").val());
-            var fecha_soli = $.trim($("#fecha_soli").val());
-            var t_insu_soli = $.trim($("#t_insu_soli").val());
-            var insu_soli = $.trim($("#insu_soli").val());
-            var canti_soli = $.trim($("#canti_soli").val());
-            var proveedor = $.trim($("#select_prove_soli").val());
+$(document).ready(function() {
+    $("#formEditSoli").submit(function(e) {
+        e.preventDefault();
+        
+        var id_soli_reci = $.trim($("#id_soli_reci").val());
+        var fecha_soli = $.trim($("#fecha_soli").val());
+        var t_insu_soli = $.trim($("#t_insu_soli").val());
+        var insu_soli = $.trim($("#insu_soli").val());
+        var canti_soli = $.trim($("#canti_soli").val());
+        var proveedor = $.trim($("#select_prove_soli").val());
 
-
-
-
-            $.ajax({
-                url: "../actualizar/actualizar_datos_soli_enviar.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    id_soli_reci: id_soli_reci,
-                    fecha_soli: fecha_soli,
-                    t_insu_soli: t_insu_soli,
-                    insu_soli: insu_soli,
-                    canti_soli: canti_soli,
-                    proveedor: proveedor
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Actualización exitosa!',
-                        }).then((result) => {
-                            if (result.value) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'warning'
-                        });
-                    }
-
-                },
-                error: function() {
+        $.ajax({
+            url: "../actualizar/actualizar_datos_soli_enviar.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id_soli_reci: id_soli_reci,
+                fecha_soli: fecha_soli,
+                t_insu_soli: t_insu_soli,
+                insu_soli: insu_soli,
+                canti_soli: canti_soli,
+                proveedor: proveedor
+            },
+            success: function(response) {
+                if (response.status === 'success') {
                     Swal.fire({
-                        title: 'Error en la solicitud',
-                        icon: 'error'
+                        icon: 'success',
+                        title: 'Actualización exitosa!'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
+                    });
+                } else if (response.status === 'warning') {
+                    // Mostrar un mensaje si el estado es 'Añadido'
+                    toastr.warning(response.message, '', {
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 3000,
+                        extendedTimeOut: 1000,
+                        showDuration: 300,
+                        hideDuration: 1000,
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                      
+                    });
+
+                   
+                } else {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'warning'
                     });
                 }
-            });
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error en la solicitud',
+                    icon: 'error'
+                });
+            }
         });
-
     });
+});
+
 
    
 
