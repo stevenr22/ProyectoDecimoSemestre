@@ -47,14 +47,7 @@
                 </div>
 
 
-                <div class="botones_container">
-                    <div class="rojo">
-                        <button type="button" id="btn_pdf_arriba" class="btn">Exportar reporte
-                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
-                        </button>
-
-                    </div>
-                </div><br>
+          
 
 
 
@@ -89,8 +82,11 @@
                                             
                                             
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad, u.nombre_completo, r.cargo, s.proveedor, s.estado
-                                            FROM solicitudes as s, usuario as u, rol as r
-                                            WHERE u.id_rol = r.id_rol and s.id_usu = u.id_usu
+                                            FROM solicitudes as s
+                                            JOIN usuario as u ON s.id_usu = u.id_usu
+                                            JOIN rol as r ON u.id_rol = r.id_rol
+                                            WHERE (s.estado = 'Recibido' OR s.estado = 'Añadido' OR s.estado = 'Aprobado' OR s.estado = 'Verificado' OR s.estado = 'Enviado' OR s.estado = 'Denegado')
+                                            
                                             ");
 
                                             while ($arreglo = $senten->fetch_array()) {
@@ -145,7 +141,8 @@
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </button>
 
-                                                    <button type="button" class="btn btn-danger" id="rojo">
+                                                    <button type="button" class="btn btn-danger" id="rojo" onclick="eliminarSolicitud('<?php echo $arreglo['id_solicitud'] ?>');">
+                                                        
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
 
@@ -185,6 +182,45 @@
             modalEditEnviSoli.style.display = 'none';
         }
     }
+
+    //ELIMINAR SOLICITUD
+    function eliminarSolicitud(id_solicitud) {
+        swal.fire({
+            title: 'Está seguro?',
+            icon: 'warning',
+            text: 'Desea eliminar la la solicitud',
+            confirmButtonText: 'Sí, Eliminar',
+            showDenyButton: true,
+            denyButtonText: `Cancelar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '../eliminar/eliminar_solicitud.php',
+                    type: 'POST',
+                    data: {
+                        id_solicitud: id_solicitud
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Eiminado',
+                            icon: 'success',
+                            text: 'La solicitud se ha eliminado con exito!',
+                            confirmButtonText: 'ok',
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+
+                            location.reload(); // Recarga la página actual
+
+                        })
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire('No se ha eliminado la solicitud', '', 'info')
+            }
+        })
+    }
+
 
 
     //VERIFICAR PARA ENVIAR -------------------------------------

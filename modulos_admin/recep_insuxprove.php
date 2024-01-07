@@ -55,12 +55,7 @@
                     </div>
 
 
-                    <div class="rojo">
-                        <button type="button" id="btn_pdf_arriba" class="btn">Exportar reporte
-                            <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
-                        </button>
-
-                    </div>
+               
 
                 </div><br>
 
