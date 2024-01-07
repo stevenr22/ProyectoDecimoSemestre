@@ -83,7 +83,7 @@ try {
         $pdf->Cell(25, 8, $row['estado'], 1, 1, 'C');
     }
 
-    $pdf->Output('I', 'historial de solicitudes.pdf');
+    $pdf->Output('D', 'historial de solicitudes.pdf');
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
