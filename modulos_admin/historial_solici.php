@@ -8,7 +8,6 @@
     <title>Historial solicitudes .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
-
     <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
 
 </head>
@@ -60,7 +59,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
 
-                                    <table id="tabla_solici_histori" class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <th><b>Código</b></th>
                                             <th><b>Fecha solicitud</b></th>
@@ -154,10 +153,5 @@
         window.location.href = '../reportes/reporte_historial.php';
     }
     </script>
-
-
-
-
 </body>
-
 </html>
