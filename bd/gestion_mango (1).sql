@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-01-2024 a las 20:49:12
+-- Tiempo de generación: 07-01-2024 a las 20:56:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -49,7 +49,10 @@ INSERT INTO `detalle_solicitud` (`id_detalle`, `fech_solicitud`, `tipo_insu`, `n
 (67, '2023-12-26', 'Maquinaria', 'Tractor 34kg', 67, 57, 1, 'Facturado'),
 (68, '2024-01-11', 'Maquinaria', 'PICADORA 123', 2, 58, 1, 'Facturado'),
 (69, '2024-01-11', 'Herramienta', 'Podadora', 55, 59, 1, 'Facturado'),
-(70, '2024-01-24', 'Herramienta', 'Pala', 45, 60, 1, 'Facturado');
+(70, '2024-01-24', 'Herramienta', 'Pala', 45, 60, 1, 'Facturado'),
+(71, '2024-01-25', 'Herramienta', 'Pala industrial', 34, 61, 1, 'Recibido'),
+(72, '2024-01-16', 'Mango', 'Mango kent', 34, 65, 1, 'Recibido'),
+(73, '2024-01-26', 'Maquinaria', 'TRACTOR INDUSTRIAL', 34, 68, 1, 'Recibido');
 
 -- --------------------------------------------------------
 
@@ -236,7 +239,16 @@ INSERT INTO `solicitudes` (`id_solicitud`, `fecha_solicitud`, `tipo_insumo`, `no
 (57, '2023-12-26', 'Maquinaria', 'Tractor 34kg', 67, 'Ecua S.A.', 3, 'Aprobado'),
 (58, '2024-01-11', 'Maquinaria', 'PICADORA 123', 2, 'Ecua S.A.', 3, 'Aprobado'),
 (59, '2024-01-11', 'Herramienta', 'Podadora', 55, 'Ecua S.A.', 3, 'Aprobado'),
-(60, '2024-01-24', 'Herramienta', 'Pala', 45, 'Ecua S.A.', 3, 'Aprobado');
+(60, '2024-01-24', 'Herramienta', 'Pala', 45, 'Ecua S.A.', 3, 'Aprobado'),
+(61, '2024-01-25', 'Herramienta', 'Pala industrial', 34, 'Ecua S.A.', 3, 'Aprobado'),
+(62, '2024-01-28', 'Mango', 'Mango kent', 34, 'Ecua S.A.', 3, 'Denegado'),
+(63, '2024-01-21', 'Mango', 'Mango Tommy', 23, 'Ecua S.A.', 3, 'Eliminado'),
+(64, '2024-01-18', 'Mango', 'Mango manzana', 12, 'Ecua S.A.', 3, 'Aprobado'),
+(65, '2024-01-16', 'Mango', 'Mango kent', 34, 'Ecua S.A.', 3, 'Aprobado'),
+(66, '2024-01-20', 'Mango', 'Mango de x', 56, 'Ecua S.A.', 3, 'Aprobado'),
+(67, '2024-01-13', 'Herramienta', 'Picadora', 45, 'Ecua S.A.', 3, 'Aprobado'),
+(68, '2024-01-26', 'Maquinaria', 'TRACTOR INDUSTRIAL', 34, 'Ecua S.A.', 3, 'Aprobado'),
+(69, '2024-01-11', 'Mango', 'Mango tipo 34', 56, '', 3, 'Recibido');
 
 -- --------------------------------------------------------
 
@@ -403,7 +415,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `detalle_solicitud`
 --
 ALTER TABLE `detalle_solicitud`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -445,7 +457,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `total_insumos`
