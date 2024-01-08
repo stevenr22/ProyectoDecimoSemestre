@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <h2><b>Recepción nuevos insumos</b></h2>
+                            <h2><b>Registro de nuevos insumos</b></h2>
                         </div>
                     </div>
                 </div>

@@ -65,6 +65,14 @@
             </a>
         </li>
         <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_admin/Inventario_insumos.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-chart-pie"></i>
+                </span>
+                <span class="hide-menu">Inventario</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
             <a class="sidebar-link" href="../modulos_admin/tendencia_produccion.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-chart-arrows-vertical"></i>
