@@ -235,7 +235,7 @@
                 <span>
                     <i class="ti ti-send"></i>
                 </span>
-                <span class="hide-menu">Solicitudes recibidas</span>
+                <span class="hide-menu">Verificación de solicitudes</span>
             </a>
         </li>
         <li class="sidebar-item">
