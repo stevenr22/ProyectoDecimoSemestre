@@ -24,7 +24,8 @@ if (empty($fechSoli) || empty($selecttipoIns) || empty($nom_insu) || empty($Cant
         // Verifica si el stock es igual a 0 para permitir la solicitud
         if ($stockDisponible == 0) {
             // Inserta la solicitud
-            $sql = "INSERT INTO solicitudes (fecha_solicitud, tipo_insumo, nombre_insu, cantidad, id_usu) VALUES ('$fechSoli','$selecttipoIns','$nom_insu','$Canti','$id_usuario_empleado')";
+            $sql = "INSERT INTO solicitudes (fecha_solicitud, tipo_insumo, nombre_insu, cantidad, proveedor, id_usu) 
+            VALUES ('$fechSoli','$selecttipoIns','$nom_insu','$Canti','','$id_usuario_empleado')";
             
             $resultado = mysqli_query($conn, $sql);
 
