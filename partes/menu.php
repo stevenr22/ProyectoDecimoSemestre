@@ -176,11 +176,27 @@
             <span class="hide-menu">Estadísticas</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="../modulos_gerente/tendencias.php" aria-expanded="false">
+            <a class="sidebar-link" href="../modulos_gerente/tendencia_insumos.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-chart-bar"></i>
                 </span>
-                <span class="hide-menu">Tendencias</span>
+                <span class="hide-menu">Tendencia de insumos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_gerente/Inventario_insumos.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-chart-pie"></i>
+                </span>
+                <span class="hide-menu">Inventario</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="../modulos_gerente/tendencia_produccion.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-chart-arrows-vertical"></i>
+                </span>
+                <span class="hide-menu">Tendencia de producción</span>
             </a>
         </li>
         <li class="nav-small-cap">
