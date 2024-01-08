@@ -75,7 +75,7 @@
                                             FROM solicitudes as s
                                             JOIN usuario as u ON s.id_usu = u.id_usu
                                             JOIN rol as r ON u.id_rol = r.id_rol
-                                            WHERE (s.estado = 'Recibido' OR s.estado = 'Añadido' OR s.estado = 'Aprobado' OR s.estado = 'Verificado' OR s.estado = 'Enviado' OR s.estado = 'Denegado')
+                                            WHERE (s.estado = 'Recibido' OR s.estado = 'Añadido' OR s.estado = 'Aprobado' OR s.estado = 'Verificando' OR s.estado = 'Enviado' OR s.estado = 'Denegado')
                                             
                                             ");
 
