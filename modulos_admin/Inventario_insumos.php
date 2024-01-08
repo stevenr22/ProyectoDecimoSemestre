@@ -9,8 +9,8 @@
 
     <title>Inventario insumos .:|:. Mango</title>
     <?php include("../partes/enlaces.php");?>
- 
- 
+
+
 </head>
 
 <body>
@@ -45,11 +45,11 @@
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
-                        <div class="card w-100">
+                        <div class="card">
 
 
 
-                         
+
                         <div class="container justify-content-center align-items-center" style="width: 400px; height: 400px;">
                             <canvas id="graficoInventario" style="width: 100%; height: 100%;"></canvas>
                         </div>
@@ -61,7 +61,7 @@
 
                 </div>
             </div>
-            
+
 
 
         </div>
@@ -71,36 +71,59 @@
 
 
     <script>
-        // Datos de ejemplo para los insumos y sus cantidades
-        var insumos = ['Insumo A', 'Insumo B', 'Insumo C'];
-        var cantidades = [100, 150, 75];
+   document.addEventListener('DOMContentLoaded', function() {
+    // Realizar una solicitud AJAX para obtener los datos de insumos desde tu backend
+    fetch('../solicitar_datos/datos_inventario.php')
+        .then(response => response.json()) // Convertir la respuesta a formato JSON
+        .then(data => {
+            // Extraer y ordenar los datos necesarios para el gráfico
+            const insumosData = data.sort((a, b) => b.cantidad_total_usada - a.cantidad_total_usada);
+            const insumos = insumosData.map(item => item.nombre);
+            const cantidades = insumosData.map(item => item.cantidad_total_usada);
 
-        // Calcula el total de cantidades para calcular porcentajes
-        var total = cantidades.reduce((a, b) => a + b, 0);
+            // Obtener el contexto del canvas
+            const pie = document.getElementById('graficoInventario').getContext('2d');
 
-        // Calcula los porcentajes para cada insumo
-        var porcentajes = cantidades.map(cantidad => (cantidad / total) * 100);
-
-        // Obtén el contexto del canvas
-        const pie = document.getElementById('graficoInventario').getContext('2d');
-
-        // Crea el gráfico de pastel
-        new Chart(pie, {
-            type: 'pie',
-            data: {
-                labels: insumos,
-                datasets: [{
-                    data: porcentajes,
-                    backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
-                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false // Esto permite que el gráfico se ajuste al tamaño del contenedor
-            }
+            // Crear el gráfico de pastel con los datos obtenidos
+            new Chart(pie, {
+                type: 'pie',
+                data: {
+                    labels: insumos,
+                    datasets: [{
+                        data: cantidades,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            // Puedes agregar más colores según la cantidad de insumos
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            // Puedes agregar más colores según la cantidad de insumos
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Inventario de Insumos'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
         });
+});
 
     </script>
 
