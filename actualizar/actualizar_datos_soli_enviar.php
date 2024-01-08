@@ -33,6 +33,7 @@ if ($resultCheck->num_rows > 0) {
         tipo_insumo='$t_insu_soli', 
         nombre_insu='$insu_soli',
         cantidad='$canti_soli',
+        estado = 'Añadido',
         proveedor='$proveedor' WHERE id_solicitud = '$id_soli_reci'";
 
         if ($conn->query($sql) === TRUE) {
