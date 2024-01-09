@@ -75,7 +75,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <option value="2">Herramienta</option>
                                         <option value="3">Maquinaria</option>
                                         <option value="4">Mango</option>
-                                        <option value="5">Otro</option>
+                                    
 
 
 
