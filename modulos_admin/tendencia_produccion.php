@@ -73,8 +73,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card w-100">
-                            <div class="card-body">
-                                <!---GRAFICO DE LINEAS-->
+                       
+                            <div class="container justify-content-center align-items-center">
                                 <canvas id="graficoProduccion"></canvas>
                             </div>
 
@@ -116,6 +116,9 @@
             });
 
             const ctx = document.getElementById('graficoProduccion').getContext('2d');
+            ctx.canvas.width = 800;
+            ctx.canvas.height = 600;
+
 
             if (window.myChart) {
                 window.myChart.destroy();
