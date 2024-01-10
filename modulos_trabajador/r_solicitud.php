@@ -61,17 +61,78 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <input type="date" id="fechSoli" class="form-control"><br>
 
 
-                                    <label for="tipoInsumo">Tipo de Insumo:</label>
-                                    <select id="tipoInsumo" onchange="cargarNombresInsumo()">
-                                        <!-- Aquí se llenarán las opciones dinámicamente -->
-                                    </select>
-                                    
-                                    <label for="nombreInsumo">Nombre del Insumo:</label>
-                                    <select id="nombreInsumo">
-                                        <!-- Aquí se llenarán las opciones dinámicamente -->
+
+
+                                    <?php
+                                            // Suponiendo que ya tienes una conexión a la base de datos, por ejemplo, $conn
+                                            include("../bd/conexion.php");
+
+                                            // Consulta SQL para obtener los tipos de insumos
+                                            $query = "SELECT id_total_insumo, tipo FROM total_insumos";
+                                            $result = mysqli_query($conn, $query);
+
+                                            // Crear un array temporal para almacenar tipos únicos
+                                            $tempArray = [];
+
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while($row = mysqli_fetch_assoc($result)) {
+                                                    // Verifica si el tipo de insumo ya está en el array temporal
+                                                    if (!isset($tempArray[$row['tipo']])) {
+                                                        $tempArray[$row['tipo']] = $row['id_total_insumo'];
+                                                    }
+                                                }
+                                            }
+
+                                            // Convertir el array temporal en el formato deseado para $ti_insu
+                                            $ti_insu = [];
+                                            foreach ($tempArray as $tipo => $id_insumo) {
+                                                $ti_insu[] = ['tipo' => $tipo, 'id_total_insumo' => $id_insumo];
+                                            }
+
+                                            ?>
+
+
+                                    <label for="selecttipoIns">
+                                        Tipo de insumo:
+                                    </label>
+                                    <select name="selecttipoIns" class="form-select" id="selecttipoIns"
+                                        onchange="cargarInsumos()">
+                                        <!-- Opción inicial como placeholder -->
+                                        <option value="" selected disabled>Seleccione un tipo de insumo</option>
+
+                                        <?php foreach ($ti_insu as $ti_insumo): ?>
+                                        <option value="<?php echo $ti_insumo['tipo']; ?>">
+                                            <?php echo $ti_insumo['tipo']; ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                        <option value="otro">Otro</option>
+                                    </select><br>
+
+                                    <div id="otroInsumo" style="display: none;">
+                                        <label for="inputOtro">Ingrese otro tipo de insumo:</label>
+                                        <input type="text" class="form-control" id="inputOtro" name="inputOtro">
+                                    </div><br>
+
+
+                                    <!--NOMMBRE INSUMOS-->
+
+
+                                    <label for="selectInsumos">Nombre del insumo:</label>
+                                    <select name="selectInsumos" class="form-select" id="selectInsumos">
+                                        <option value="" selected disabled>Seleccione el nombre del insumo</option>
+
+                                        <!-- Las opciones se cargarán aquí mediante AJAX -->
                                     </select>
 
-                                 
+
+                                    <div id="otroNombreInsumo" style="display: none;">
+                                        <label for="inputOtroNombre">Ingrese nombre del insumo:</label>
+                                        <input type="text" class="form-control" id="inputOtroNombre"
+                                            name="inputOtroNombre">
+                                    </div><br>
+
+
+
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
                                     <br>
@@ -201,79 +262,6 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     //----------------------------------------------------------------
     //Registrar soli trabajador
 
-    $("#formRegisSoliInsuFalto").submit(function(e) {
-        e.preventDefault();
-
-        // Obtener los valores del formulario
-        var fechSoli = $.trim($("#fechSoli").val());
-        var selecttipoIns = $.trim($('#selecttipoIns option:selected').text());
-        var nom_insu = $.trim($("#nombre_insu").val());
-        var Canti = $.trim($("#Canti").val());
-        var id_usuario_empleado = $.trim($("#id_usuario_empleado").val());
-
-        console.log("Fecha Solicitud:", fechSoli,
-            "\nTipo de Insumo:", selecttipoIns,
-            "\nNombre del Insumo:", nom_insu,
-            "\nCantidad:", Canti,
-            "\nID del Usuario Empleado:", id_usuario_empleado);
-
-
-
-        // Enviar los datos mediante AJAX
-        $.ajax({
-            url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
-            type: "POST",
-            dataType: "json",
-            data: {
-                fechSoli: fechSoli,
-                selecttipoIns: selecttipoIns,
-                nom_insu: nom_insu,
-                Canti: Canti,
-                id_usuario_empleado: id_usuario_empleado
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro exitoso!',
-                    }).then((result) => {
-                        if (result.value) {
-                            location.reload();
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: response.message,
-                        icon: 'warning'
-                    });
-                }
-            },
-            error: function() {
-                Swal.fire({
-                    title: 'Error en la solicitud',
-                    icon: 'error'
-                });
-            }
-        });
-    });
-
-
-    function cargarNombresInsumo() {
-    var tipoSeleccionado = $("#tipoInsumo").val();
-    
-    $.ajax({
-        url: '../solicitar_datos/tipo_insumo.php',
-        method: 'POST',
-        data: { tipo: tipoSeleccionado },
-        dataType: 'json',
-        success: function(data) {
-            $('#nombreInsumo').empty(); // Limpiar opciones anteriores
-            $.each(data, function(index, item) {
-                $('#nombreInsumo').append('<option value="' + item.nombre + '">' + item.nombre + '</option>');
-            });
-        }
-    });
-}
 
 
 
@@ -351,6 +339,125 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     });
                 }
             });
+        });
+    });
+
+
+
+    //INPUT DINAMICO
+    function cargarInsumos() {
+        var select = document.getElementById("selecttipoIns");
+        var otroInsumo = document.getElementById("otroInsumo");
+        var otroNombreInsumo = document.getElementById("otroNombreInsumo");
+        var selectInsumos = document.getElementById("selectInsumos");
+
+
+
+
+        var tipoInsumo = $('#selecttipoIns').val();
+
+        if (tipoInsumo === "otro") {
+            // Mostrar campos de entrada, ocultar select y ocultar label
+            $("#otroInsumo, #otroNombreInsumo").show();
+            $("#selectInsumos, label[for='selectInsumos']").hide();
+        } else {
+            // Ocultar campos de entrada, mostrar select y mostrar label
+            $("#otroInsumo, #otroNombreInsumo").hide();
+            $("#selectInsumos, label[for='selectInsumos']").show();
+        }
+
+        $.ajax({
+            url: '../solicitar_datos/tipo_insumo.php',
+            type: 'POST',
+            data: {
+                tipoInsumo: tipoInsumo
+            },
+            success: function(response) {
+                $('#selectInsumos').empty(); // Limpiar el select actual
+                $('#selectInsumos').append(response); // Agregar nuevas opciones al select
+                $('#cantidadStockInput').val(''); // Limpiar el campo de cantidad
+            }
+        });
+
+
+    }
+    // Este código se ejecutará cuando cambies la opción seleccionada en el select
+    $('#selectInsumos').change(function() {
+        let id_insumo = $(this).val(); // Obtener el valor seleccionado
+        let nombre = $('#selectInsumos option:selected').text(); // Obtener el texto seleccionado
+
+    });
+    $(document).ready(function() {
+        $('#selectInsumos').change(function() {
+            var stockData = $('#selectInsumos option:selected').data('stock');
+
+
+        });
+    });
+
+    //REGISTRAR SOLICITUD
+
+
+    $("#formRegisSoliInsuFalto").submit(function(e) {
+        e.preventDefault();
+
+        // Obtener los valores del formulario
+        var fechSoli = $.trim($("#fechSoli").val());
+        var selecttipoIns = $('#selecttipoIns').val(); // Mantener el valor seleccionado del select sin trim
+        var nom_insu = selecttipoIns === 'otro' ? $.trim($("#inputOtroNombre").val()) : $.trim($(
+            '#selectInsumos option:selected').text());
+        var Canti = $.trim($("#Canti").val());
+        var id_usuario_empleado = $.trim($("#id_usuario_empleado").val());
+
+        // Si se seleccionó "Otro", asignar el valor del input al tipo de insumo
+        if (selecttipoIns === 'otro') {
+            selecttipoIns = $.trim($("#inputOtro").val());
+        }
+
+        console.log("Datos enviados:", {
+            fechSoli: fechSoli,
+            selecttipoIns: selecttipoIns,
+            nom_insu: nom_insu,
+            Canti: Canti,
+            id_usuario_empleado: id_usuario_empleado
+        });
+
+
+        // Enviar los datos mediante AJAX
+        $.ajax({
+            url: "../validacion_datos/validar_regis_solicitud_insu.php", // Asegúrate de que esta ruta sea correcta
+            type: "POST",
+            dataType: "json",
+            data: {
+                fechSoli: fechSoli,
+                selecttipoIns: selecttipoIns,
+                nom_insu: nom_insu, // Usamos el valor ajustado aquí
+                Canti: Canti,
+                id_usuario_empleado: id_usuario_empleado
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro exitoso!',
+                    }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'warning'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error en la solicitud',
+                    icon: 'error'
+                });
+            }
         });
     });
     </script>

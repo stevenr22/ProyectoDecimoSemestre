@@ -1,35 +1,26 @@
 <?php
-session_start();
 include("../bd/conexion.php");
-// Verificar si se está solicitando cargar nombres de insumo basados en un tipo específico
-if (isset($_POST['tipo'])) {
-    $tipo = $_POST['tipo'];
-    $stmt = $pdo->prepare("SELECT nombre FROM insumos WHERE tipo = :tipo AND stock = 0");
-    $stmt->execute(['tipo' => $tipo]);
+
+if(isset($_POST['tipoInsumo'])) {
+    $tipoInsumo = $_POST['tipoInsumo'];
     
-    $nombres = [];
-    while ($row = $stmt->fetch()) {
-        $nombres[] = $row['nombre'];
+    // Opción inicial como placeholder
+    $options = "<option value='' selected disabled>Seleccione un insumo</option>";
+    
+    $query = "SELECT
+    id_total_insumo, 
+    nombre, 
+    cantidad_total_usada AS cantidad_stock 
+FROM total_insumos 
+WHERE tipo = '$tipoInsumo'";
+    
+    $result = mysqli_query($conn, $query);
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $options .= "<option value='".$row['id_total_insumo']."' data-stock='".$row['cantidad_stock']."'>".$row['nombre']."</option>";
     }
-    
-    echo json_encode($nombres);
-    exit;
+
+    echo $options;
 }
 
-// Procesar solicitud de insumo
-if (isset($_POST['tipo'], $_POST['nombre'], $_POST['cantidad'])) {
-    $tipo = $_POST['tipo'];
-    $nombre = $_POST['nombre'];
-    $cantidad = $_POST['cantidad'];
-    
-    // Aquí deberías insertar la solicitud en tu base de datos, actualizar stock, etc.
-    // Por simplicidad, este es un ejemplo básico:
-    // $stmt = $pdo->prepare("INSERT INTO solicitudes (tipo, nombre, cantidad) VALUES (:tipo, :nombre, :cantidad)");
-    // $stmt->execute(['tipo' => $tipo, 'nombre' => $nombre, 'cantidad' => $cantidad]);
-
-    echo "Solicitud registrada con éxito para el insumo $nombre del tipo $tipo, cantidad: $cantidad.";
-    exit;
-}
-
-echo "Error: Datos insuficientes para procesar la solicitud.";
 ?>

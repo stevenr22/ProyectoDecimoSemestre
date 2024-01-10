@@ -48,7 +48,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card w-100">
                             <div class="card-body">
                                 <form id="formRegisUsoInsu" class="form-group">
-                                    <input type="text" class="form-control readonly-field" readonly name="id_usu"
+                                    <input type="hidden" class="form-control readonly-field" readonly name="id_usu"
                                         id="id_usu" value="<?php echo $_SESSION['DBid_usu'] ?>"><br>
                                     <div class="row">
                                         <div class="col">

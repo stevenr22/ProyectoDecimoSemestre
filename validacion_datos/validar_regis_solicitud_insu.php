@@ -1,6 +1,8 @@
 <?php
 session_start();
 include("../bd/conexion.php");
+
+
 $response = array(); // Inicializamos el array de respuesta
 
 $fechSoli = (isset($_POST['fechSoli'])) ? $_POST['fechSoli'] : '';
