@@ -87,35 +87,26 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             JOIN proveedor AS p ON s.proveedor = p.nombre_empre
                                             WHERE s.estado != 'Enviado'");
 
+
                                             while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
-                                                if ($estado == 'Denegado' || $estado == 'Recibido') {
-                                                    $mostrarBotonEnviar = false; // No mostrar el botón
-                                                } else {
-                                                    $mostrarBotonEnviar = true; // Mostrar el botón si hay un proveedor
-                                                }
-                                               
-
-
-
-
-                                                if ($estado == 'Recibido'){
+                                                // Determinar la clase para el estado y otras operaciones si las necesitas
+                                                if ($estado == 'Recibido') {
                                                     $clase_estado = 'Recibido';
-                                                }else if($estado == 'Aprobado'){
+                                                } elseif ($estado == 'Aprobado') {
                                                     $clase_estado = 'Aprobado';
-                                                } else if($estado== 'Entregado'){
+                                                } elseif ($estado == 'Entregado') {
                                                     $clase_estado = 'Entregado';
-                                                }else if($estado== 'Verificando'){
-                                                    // Actualiza el estado de "Enviado" a "Recibido"
+                                                } elseif ($estado == 'Verificando') {
                                                     $update = "UPDATE solicitudes SET estado = 'Recibido' WHERE id_solicitud = " . $arreglo['id_solicitud'];
-                                                    $conn->query($update); // Ejecuta la consulta para actualizar el estado
-                                                    $estado = 'Recibido'; // Actualiza el estado para mostrarlo en la tabla
-                                                    $clase_estado = 'Recibido'; // Actualiza la clase CSS correspondiente
-                                                }else{
+                                                    $conn->query($update);
+                                                    $estado = 'Recibido';
+                                                    $clase_estado = 'Recibido';
+                                                } else {
                                                     $clase_estado = 'Denegado';
                                                 }
-                                                ?>
+                                            ?>
                                             <tr class="<?php echo $clase_fila; ?>">
                                                 <td><?php echo $arreglo['id_solicitud'] ?></td>
                                                 <td><?php echo $arreglo['fecha_solicitud'] ?></td>
@@ -145,8 +136,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                             class="fa-solid fa-trash-can"></i></button>
 
                                                             
-                                                    <?php if ($mostrarBotonEnviar): ?>
-                                                        <button type="button" class="btn btn-success btn_enviar"  id="btn_enviar"
+                                                    <?php if ($estado == 'Aprobado'): ?>
+                                                        <button type="button" class="btn btn-success btn_enviar"
                                                             onclick="enviarDatosSolicitud('<?php echo $arreglo['id_solicitud']; ?>','<?php echo $arreglo['fecha_solicitud'] ?>','<?php echo $arreglo['tipo_insumo'] ?>','<?php echo $arreglo['nombre_insu'] ?>','<?php echo $arreglo['cantidad'] ?>',<?php echo $arreglo['id_prove'] ?>)">
                                                             <i class="fa-solid fa-paper-plane"></i>
                                                         </button>
@@ -311,7 +302,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
             var id_solicitud = $.trim($("#id_soli_verificar").val());
-            console.log(id_solicitud);
+     
 
 
 
