@@ -61,29 +61,17 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                     <input type="date" id="fechSoli" class="form-control"><br>
 
 
-
-
-                                    <label for="selecttipoIns">
-                                        Tipo de insumo
-                                    </label>
-
-
-                                    <select name="selecttipoIns" class="form-select" id="selecttipoIns">
-                                        <!-- Opción inicial como placeholder -->
-                                        <option value="" selected disabled>Seleccione un tipo de insumo</option>
-                                        <option value="1">Insecticida</option>
-                                        <option value="2">Herramienta</option>
-                                        <option value="3">Maquinaria</option>
-                                        <option value="4">Mango</option>
+                                    <label for="tipoInsumo">Tipo de Insumo:</label>
+                                    <select id="tipoInsumo" onchange="cargarNombresInsumo()">
+                                        <!-- Aquí se llenarán las opciones dinámicamente -->
+                                    </select>
                                     
+                                    <label for="nombreInsumo">Nombre del Insumo:</label>
+                                    <select id="nombreInsumo">
+                                        <!-- Aquí se llenarán las opciones dinámicamente -->
+                                    </select>
 
-
-
-                                    </select><br>
-
-                                    <label for="Nombre_insu">Nombre del insumo: </label>
-                                    <input type="text" class="form-control" id="nombre_insu"><br>
-
+                                 
                                     <label for="Canti">Cantidad: </label>
                                     <input type="number" id="Canti" class="form-control">
                                     <br>
@@ -233,66 +221,59 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
         // Enviar los datos mediante AJAX
         $.ajax({
-             url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
-             type: "POST",
-             dataType: "json",
-             data: {
-                 fechSoli: fechSoli,
-                 selecttipoIns: selecttipoIns,
-                 nom_insu: nom_insu,
-                 Canti: Canti,
-                 id_usuario_empleado: id_usuario_empleado
-             },
-             success: function(response) {
-                 if (response.status === 'success') {
-                     Swal.fire({
-                         icon: 'success',
-                         title: 'Registro exitoso!',
-                     }).then((result) => {
-                         if (result.value) {
-                             location.reload();
-                         }
-                     });
-                 } else {
-                     Swal.fire({
-                         title: response.message,
-                         icon: 'warning'
-                     });
-                 }
-             },
-             error: function() {
-                 Swal.fire({
-                     title: 'Error en la solicitud',
-                     icon: 'error'
-                 });
-             }
-         });
+            url: "../validacion_datos/validar_regis_solicitud_insu.php", // Reemplaza esto con la ruta de tu script de servidor que procesa el registro
+            type: "POST",
+            dataType: "json",
+            data: {
+                fechSoli: fechSoli,
+                selecttipoIns: selecttipoIns,
+                nom_insu: nom_insu,
+                Canti: Canti,
+                id_usuario_empleado: id_usuario_empleado
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro exitoso!',
+                    }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'warning'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error en la solicitud',
+                    icon: 'error'
+                });
+            }
+        });
     });
 
 
-    /*function cargarInsumos() {
-        var tipoInsumo = $('#selecttipoIns').val();
-
-        $.ajax({
-            url: '../solicitar_datos/datos_insumos.php',
-            type: 'POST',
-            data: {
-                tipoInsumo: tipoInsumo
-            },
-            success: function(response) {
-                $('#selectInsumos').empty(); // Limpiar el select actual
-                $('#selectInsumos').append(response); // Agregar nuevas opciones al select
-            }
-        });
-    }
-    // Este código se ejecutará cuando cambies la opción seleccionada en el select
-    $('#selectInsumos').change(function() {
-        let id_insumo = $(this).val(); // Obtener el valor seleccionado
-        let nombre = $('#selectInsumos option:selected').text(); // Obtener el texto seleccionado
-
-    });*/
-
-
+    function cargarNombresInsumo() {
+    var tipoSeleccionado = $("#tipoInsumo").val();
+    
+    $.ajax({
+        url: '../solicitar_datos/tipo_insumo.php',
+        method: 'POST',
+        data: { tipo: tipoSeleccionado },
+        dataType: 'json',
+        success: function(data) {
+            $('#nombreInsumo').empty(); // Limpiar opciones anteriores
+            $.each(data, function(index, item) {
+                $('#nombreInsumo').append('<option value="' + item.nombre + '">' + item.nombre + '</option>');
+            });
+        }
+    });
+}
 
 
 
@@ -341,21 +322,21 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                 window.location.reload(); // Recargar la página
                             }
                         });
-                    }else if (response.status === 'warning') {
-                    // Mostrar un mensaje si el estado es 'Añadido'
-                    toastr.warning(response.message, '', {
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000,
-                        extendedTimeOut: 1000,
-                        showDuration: 300,
-                        hideDuration: 1000,
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                      
-                    });
+                    } else if (response.status === 'warning') {
+                        // Mostrar un mensaje si el estado es 'Añadido'
+                        toastr.warning(response.message, '', {
+                            progressBar: true,
+                            positionClass: "toast-top-right",
+                            timeOut: 3000,
+                            extendedTimeOut: 1000,
+                            showDuration: 300,
+                            hideDuration: 1000,
+                            showEasing: "swing",
+                            hideEasing: "linear",
+                            showMethod: "fadeIn",
+                            hideMethod: "fadeOut",
+
+                        });
                     } else {
                         Swal.fire({
                             title: response.message,
