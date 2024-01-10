@@ -56,7 +56,7 @@
 
 
                     <div class="rojo">
-                        <button type="button" id="btn_pdf_arriba" class="btn">Exportar reporte
+                        <button type="button" id="btn_pdf_arriba" onclick="exportarPDF();" class="btn">Exportar reporte
                             <i class="fa-solid fa-download" style="vertical-align: middle;"></i>
                         </button>
 
@@ -374,6 +374,25 @@
                 Swal.fire('No se ha eliminado la parcela', '', 'info')
             }
         })
+    }
+
+    //Exportar reporte
+    function exportarPDF() {
+        var btn_pdf = document.getElementById("btnPDF");
+
+        toastr.success("Descargando...", "", {
+            progressBar: true,
+            positionClass: "toast-top-right",
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+            showDuration: 300,
+            hideDuration: 1000,
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        });
+        window.location.href = '../reportes/reporte_parcelas.php';
     }
     </script>
 

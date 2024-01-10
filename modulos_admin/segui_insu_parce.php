@@ -1,6 +1,15 @@
 <?php include("../autorizacion/admin.php");
-    $query = "SELECT * FROM parcela WHERE estado = 'Operando' or estado = 'Deshabilitado'
-    ORDER BY nombre ";
+    $query = "SELECT p.id_parcela, p.nombre, p.alto, p.ancho, t.nombre AS nombre_insu, t.tipo, t.fecha_agregada, us.cantidad_utilizada, p.estado
+    FROM uso_insumos AS us
+    JOIN parcela as p ON us.id_parcela = p.id_parcela
+    JOIN total_insumos as t ON t.id_total_insumo = us.id_total_insumo
+    WHERE p.estado = 'Operando' OR p.estado = 'Deshabilitado'
+    ";
+
+
+
+
+
     $result = mysqli_query($conn, $query);
 
     // Verificar si hay resultados
@@ -52,12 +61,18 @@
                 <?php
                     // Utiliza un bucle para recorrer las parcelas y generar las tablas
                     foreach ($parcelas as $parcela) {
+                     
                         $id_parcela = $parcela['id_parcela'];
+                                                
                         $nombre_parcela = $parcela['nombre'];
                         $alto = $parcela['alto'];
                         $ancho = $parcela['ancho'];
-                        $fecha_registro = $parcela['fecha_registro'];
-                        $estado_parcela = $parcela['estado']; 
+                        $nombre_insu = $parcela['nombre_insu'];
+                        $tipo = $parcela['tipo'];
+                        $fecha_agregada = $parcela['fecha_agregada'];
+                        $cantidad_utilizada = $parcela['cantidad_utilizada'];
+
+                        $estado_parcela = $parcela['estado'];
                         ?>
                 <div class="col-lg-6">
                    <div class="card w-100">
@@ -77,9 +92,15 @@
                                 <thead>
                                     <th><b>Código</b></th>
                                     <th><b>nombre</b></th>
-                                    <th><b>alto</b></th>
                                     <th><b>ancho</b></th>
-                                    <th><b>fecha registro</b></th>
+                                    <th><b>alto</b></th>
+                                    <th><b>Insumo utilizado</b></th>
+                                    <th><b>Tipo de Insumo utilizado</b></th>
+                                    <th><b>Cantidad suministrada</b></th>
+                                    <th><b>Fecha suministrada</b></th>
+                               
+
+
                                     
 
                                 </thead>
@@ -89,7 +110,13 @@
                                         <td><?php echo $nombre_parcela?></td>
                                         <td><?php echo $alto?></td>
                                         <td><?php echo $ancho?></td>
-                                        <td><?php echo $fecha_registro?></td>  
+                                        <td><?php echo $nombre_insu?></td>
+                                        <td><?php echo $tipo?></td>
+                                        <td><?php echo $cantidad_utilizada?></td>
+                                        <td><?php echo $fecha_agregada?></td>
+                                        
+
+                                       
                                     </tr>
                                 </tbody>
                             </table>
