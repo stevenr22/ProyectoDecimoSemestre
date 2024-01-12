@@ -79,8 +79,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                         $estado = 'Agotado';
                                                     }
 
-                                                    if ($estado == 'Operando') {
-                                                        $clase_estado = 'Operando';
+                                                    if ($estado == 'Disponible') {
+                                                        $clase_estado = 'Disponible';
                                                     } else if($estado == 'Agotado') {
                                                         $clase_estado = 'Agotado';  // Puedes definir una clase CSS específica para "Agotado" si lo deseas
                                                     }

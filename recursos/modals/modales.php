@@ -169,14 +169,14 @@
             <form class="form-group" id="formRegisProveedor">
                
                 <label for="Nombreprov">Nombre empresa: </label>
-                <input type="text" class="form-control" id="nom_prove" placeholder="Ingrese el nombre de la empresa">
+                <input type="text" class="form-control" onkeypress="return soloLetras(event)" id="nom_prove" placeholder="Ingrese el nombre de la empresa"><br>
                  
                 <label for="Contacto">Nombre del contacto: </label>
-                <input type="text" name="nomb_trab_prov" id="nomb_trab_prov" class="form-control" placeholder="Ingrese nombre del trabajador"><br>
+                <input type="text" name="nomb_trab_prov" id="nomb_trab_prov" class="form-control"  onkeypress="return soloLetras(event)" placeholder="Ingrese nombre del trabajador"><br>
 
                   
                 <label for="direc">Dirección: </label>
-                <input type="text" class="form-control" id="direc" placeholder="Ingrese la dirección">
+                <input type="text" class="form-control" id="direc" placeholder="Ingrese la dirección"><br>
                  
                 <label for="tele">N° de teléfono: </label>
                 <input type="tel" name="telefo" id="telefo" class="form-control" placeholder="Ingrese el número de teléfono"><br>
@@ -283,12 +283,11 @@
             <form class="form-group" id="formRegisRol">
 
                 <label for="Nombrerol">Nombre rol: </label>
-                <input type="text" class="form-control" id="nom_rol" placeholder="Ingrese el nombre del rol"><br>
+                <input type="text" class="form-control" onkeypress="return soloLetras(event)" id="nom_rol" placeholder="Ingrese el nombre del rol"><br>
 
 
                 <label for="Descripcion">Funciones: </label>
-                <input type="text" name="decrip_rol" id="decrip_rol" class="form-control"
-                    placeholder="Ingrese las funciones"><br>
+                <input type="text" name="decrip_rol" onkeypress="return soloLetras(event)" id="decrip_rol" class="form-control" placeholder="Ingrese las funciones"><br>
                 
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <button type="button" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
@@ -312,14 +311,14 @@
             <form class="form-group" id="formRegisRol">
 
                 <label>Código: </label>
-                <input type="text"  class="form-control" id="id_rol_act"><br>
+                <input type="text" class="form-control readonly-field" readonly id="id_rol_act"><br>
 
                 <label >Nombre rol: </label>
-                <input type="text" class="form-control" id="nom_rol_actu" placeholder="Ingrese el nombre del rol"><br>
+                <input type="text" onkeypress="return soloLetras(event)" class="form-control" id="nom_rol_actu" placeholder="Ingrese el nombre del rol"><br>
 
 
                 <label >Funciones: </label>
-                <input type="text" name="decrip_rol" id="decrip_rol_actu" class="form-control"
+                <input type="text" onkeypress="return soloLetras(event)" name="decrip_rol" id="decrip_rol_actu" class="form-control"
                     placeholder="Ingrese las funciones"><br>
                 
                 <button type="submit" class="btn btn-primary">Actualizar</button>

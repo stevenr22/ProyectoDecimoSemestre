@@ -10,9 +10,11 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proveedores .:|:. Mango</title>
+
+    <?php include("../partes/enlaces.php");?>
     <link rel="stylesheet" href="../recursos/noti/toastr.css">
     <link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
-    <?php include("../partes/enlaces.php");?>
+ 
 </head>
 
 <body>
@@ -44,6 +46,15 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         </div>
                     </div>
                 </div>
+                <div class="botones_container">
+                    <div class="rojo">
+                        <button type="button" id="btn_pdf_arriba" onclick="exportarPDF();" class="btn">Exportar reporte
+                            <i class="fa-solid fa-download" 
+                            style="vertical-align: middle;"></i>
+                        </button>
+
+                    </div>
+                </div><br>
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -59,8 +70,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                             <th>N° de teléfono</th>
                                             <th>Fecha de registro</th>
                                             <th>Estado</th>
-                                            <th class="acciones">Acciones</th>
-
+                                          
 
                                         </thead>
                                         <tbody>
@@ -85,19 +95,8 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                                 <td><?php echo $arreglo['num_tele'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
                                                 <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
-                                                <td class="text-center">
-
-                                                    <button type="button" class="btn btn-info"
-                                                        onclick="modalActuProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>','<?php echo $arreglo['nombre_traba'] ?>','<?php echo $arreglo['direccion'] ?>','<?php echo $arreglo['num_tele'] ?>','<?php echo $arreglo['fecha_regis'] ?>','<?php echo $arreglo['estado'] ?>');"
-                                                        id="celeste"><i class="fa-solid fa-pencil"></i></button>
-                                                    <button type="button" class="btn btn-warning"
-                                                        onclick="desabilitarProvee('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"
-                                                        id="naranja"><i class="ti ti-user-off"></i></button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="eliminarProveedor('<?php echo $arreglo['id_prove'] ?>','<?php echo $arreglo['nombre_empre'] ?>');"
-                                                        id="rojo"><i class="fa-solid fa-trash-can"></i></button>
-
-                                                </td>
+                                               
+                                               
 
                                             </tr>
 
@@ -124,6 +123,28 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
         </div>
     </div>
+
+    <script>
+            //Exportar reporte
+    function exportarPDF() {
+        toastr.success("Descargando...", "", {
+            progressBar: true,
+            positionClass: "toast-top-right",
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+            showDuration: 300,
+            hideDuration: 1000,
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        });
+        window.location.href = '../reportes/reporte_proveedores.php';
+    }
+
+    </script>
+
+
 
 
 

@@ -203,11 +203,6 @@
                                             </tr>
                                             <?php } ?>
                                         </tbody>
-
-                                        
-                                     
-
-
                                     </table>
                                 </div>
                             </div>
@@ -278,20 +273,6 @@
                 </div>
 
                 <?php include("../recursos/modals/modales.php");?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
 
