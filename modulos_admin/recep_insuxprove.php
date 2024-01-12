@@ -176,8 +176,8 @@
                                                         $estado = 'Agotado';
                                                     }
 
-                                                    if ($estado == 'Operando') {
-                                                        $clase_estado = 'Operando';
+                                                    if ($estado == 'Disponible') {
+                                                        $clase_estado = 'Disponible';
                                                     } else if($estado == 'Agotado') {
                                                         $clase_estado = 'Agotado';  // Puedes definir una clase CSS específica para "Agotado" si lo deseas
                                                     }
@@ -501,6 +501,67 @@
             modalActuRecepInsu.style.display = 'none';
         }
     }
+
+
+            //VALIDAR LETRAS
+            function soloLetras(e) {
+            var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+            for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+            }
+
+            if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+            }
+        }
+
+        //VALIDAR LETRAS Y NUMEROS
+        function soloLetrasYNumeros(e) {
+            var key = e.keyCode || e.which,
+                tecla = String.fromCharCode(key).toLowerCase(),
+                caracteresPermitidos = "0123456789 áéíóúabcdefghijklmnñopqrstuvwxyz",
+                especiales = [8, 37, 39, 46],
+                tecla_especial = false;
+
+            for (var i in especiales) {
+                if (key == especiales[i]) {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+
+            if (caracteresPermitidos.indexOf(tecla) == -1 && !tecla_especial) {
+                return false;
+            }
+        }
+
+        //VALIDAR NUMEOS
+        function validarNumeros(evt) {
+        let key = evt.key || String.fromCharCode(evt.which || evt.keyCode);
+        let input = evt.target.value;
+
+        // Permitir números, tecla de retroceso, tecla de entrada, y punto decimal
+        if (/[\d\b\r.]/.test(key)) {
+            // Si ya hay un punto decimal, y después de él hay dos dígitos, no permitir más
+            if (input.includes('.') && input.split('.')[1] && input.split('.')[1].length >= 2) {
+                evt.preventDefault();
+                return false;
+            }
+            return true;
+        } else {
+            evt.preventDefault();
+            return false;
+        }
+    }
+
 
     </script>
 

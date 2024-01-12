@@ -43,15 +43,15 @@
 
 
                 <label >Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce"><br>
+                <input type="text"  onkeypress="return soloLetras(event)" class="form-control" placeholder="Ingrese el nombre" id="nom_parce"><br>
 
                 <label >Ancho: </label>
-                <input type="number" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho"
+                <input type="number" onkeypress="validarNumeros(event);" name="ancho_parce" id="ancho_parce" placeholder="Ingrese el ancho"
                     class="form-control"><br>
 
 
                 <label >Alto: </label>
-                <input type="number" name="ancho_parce" id="alto_parce" placeholder="Ingrese el alto"
+                <input type="number" onkeypress="validarNumeros(event);" name="ancho_parce" id="alto_parce" placeholder="Ingrese el alto"
                     class="form-control"><br>
 
                 <label >Fecha de registro: </label>
@@ -84,15 +84,15 @@
 
 
                 <label >Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre" id="nom_parce_actu">
+                <input type="text" onkeypress="return soloLetras(event)" class="form-control" placeholder="Ingrese el nombre" id="nom_parce_actu"><br>
 
                 <label >Ancho: </label>
-                <input type="number" name="ancho_parce_actu" id="ancho_parce_actu" placeholder="Ingrese el ancho"
+                <input type="number" onkeypress="validarNumeros(event);" name="ancho_parce_actu" id="ancho_parce_actu" placeholder="Ingrese el ancho"
                     class="form-control"><br>
 
 
                 <label >Alto: </label>
-                <input type="number" name="alto_parce_actu" id="alto_parce_actu" placeholder="Ingrese el alto"
+                <input type="number" onkeypress="validarNumeros(event);" name="alto_parce_actu" id="alto_parce_actu" placeholder="Ingrese el alto"
                     class="form-control"><br>
 
                 <label >Fecha de registro: </label>
@@ -101,7 +101,7 @@
 
                 <br>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
-                <button type="button" onclick="eliminarParcela();" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
+                <button type="button"  onclick="cerrarGeneral()" class="btn btn-danger me-auto" onclick="cerrarGeneral()">Cerrar</button>
             </form>
         </div>
         
@@ -123,13 +123,13 @@
             <form  class="form-group" id="formRegisInsuCompra">
 
                 <label for="Nombre">Nombre: </label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre del insumo" id="nombre_insu">
+                <input type="text" onkeypress="return soloLetrasYNumeros(event)" class="form-control" placeholder="Ingrese el nombre del insumo" id="nombre_insu">
                 <br>
                 <label for="Tipo">Tipo: </label>
-                <input type="text" name="tip_insu" id="tip_insu" placeholder="Ingrese el tipo de insumo" class="form-control"><br>
+                <input type="text" onkeypress="return soloLetras(event)" name="tip_insu" id="tip_insu" placeholder="Ingrese el tipo de insumo" class="form-control"><br>
                 <br>
                 <label for="Cantida">Cantidad: </label>
-                <input type="int" name="canti_insu" id="canti_insu" placeholder="Ingrese la cantidad" class="form-control"><br>
+                <input type="number" onkeypress="validarNumeros(event);" name="canti_insu" id="canti_insu" placeholder="Ingrese la cantidad" class="form-control"><br>
                 <br>
                 <label for="fecha">Fecha registro: </label>
                 <input type="date" name="f_regis" id="f_regis" class="form-control"><br>
@@ -421,15 +421,15 @@
 
 
                 <label for="tipi">Tipo insumo: </label>
-                <input type="text" name="ti_insu_actua" id="ti_insu_actua" class="form-control"
+                <input type="text" onkeypress="return soloLetras(event)"  name="ti_insu_actua" id="ti_insu_actua" class="form-control"
                     placeholder="Ingrese el tipo de insumo"><br>
 
                 <label for="NombreInsu">Nombre insumo: </label>
-                <input type="text" name="nom_insu_actua" id="nom_insu_actua" class="form-control"
+                <input type="text" onkeypress="return soloLetrasYNumeros(event)" name="nom_insu_actua" id="nom_insu_actua" class="form-control"
                     placeholder="Ingrese el nombre del insumo"><br>
                 
                     <label for="Cantidad">Cantidad: </label>
-                <input type="text" name="canti_insu_actua" id="canti_insu_actua" class="form-control"
+                <input type="text" onkeypress="validarNumeros(event);" name="canti_insu_actua" id="canti_insu_actua" class="form-control"
                     placeholder="Ingrese la cantidad"><br>
 
                 <br>
@@ -469,8 +469,11 @@
 
 
                 <label >Nombre completo: </label>
-                <input type="text" class="form-control" name="NomCompleto" id="NomCompleto" 
-                    value="<?php echo $datos["DBnom_completoV2"];?>"><br>
+                <input type="text" onkeypress="return soloLetras(event)" class="form-control" name="NomCompleto" id="NomCompleto" 
+                    value="<?php echo $datos["DBnom_completoV2"];?>">
+                    <div id="errorCorreo" class="error-message"></div>
+                    <br>
+
 
 
 
@@ -479,6 +482,8 @@
                 <label >Correo electrónico: </label>
                 <input type="email" class="form-control" id="correo" name="correo"
                     value="<?php echo $datos["DBcorreoV2"];?>"><br>
+
+
 
 
                 <label for="Usuario">Nombre de usuario: </label>
@@ -521,29 +526,25 @@
 
 
                 <label >Código: </label>
-                <input type="text" class="form-control readonly-field" name="id_usuario" id="id_usuario"><br>
-
-
-
-
+                <input type="text" class="form-control readonly-field" readonly name="id_usuario" id="id_usuario"><br>
 
                 <label >Nombre completo: </label>
-                <input type="text" class="form-control readonly-field" id="NomCompleto_rol" name="NomCompleto_rol"><br>
+                <input type="text" class="form-control readonly-field" readonly id="NomCompleto_rol" name="NomCompleto_rol"><br>
 
                 <label >Correo: </label>
-                <input type="email" class="form-control readonly-field" id="correo_rol" name="correo_rol"><br>
+                <input type="email" class="form-control readonly-field" readonly id="correo_rol" name="correo_rol"><br>
 
                 <label >Nombre de usuario: </label>
-                <input type="text" class="form-control readonly-field" id="NomUsuario_rol" name="NomUsuario_rol"><br>
+                <input type="text" class="form-control readonly-field" readonly id="NomUsuario_rol" name="NomUsuario_rol"><br>
 
                 <label >Cargo: </label>
-                <input type="text" class="form-control readonly-field" id="cargo_rol" name="cargo_rol"><br>
+                <input type="text" class="form-control readonly-field" readonly id="cargo_rol" name="cargo_rol"><br>
 
 
 
                 <label >Rol asignado: </label>
                 <select name="selectRol" class="form-select" id="selectRol">
-                    <?php include '../solicitar_datos/cargar_roles.php'; ?>
+                   
                 </select>
 
                 <br>

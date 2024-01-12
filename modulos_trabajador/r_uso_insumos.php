@@ -156,7 +156,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                                         <div class="row">
                                             <div class="col">
                                                 <label for="CantidadUsar">Cantidad a utilizar:</label>
-                                                <input type="text" class="form-control" name="canti_utili"
+                                                <input type="text" onkeypress="validarNumeros(event);" class="form-control" name="canti_utili"
                                                     id="canti_utili">
 
                                             </div>
@@ -186,6 +186,26 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </div>
 
     <script>
+        //FUNCION VALIDAR NUMEROS
+    function validarNumeros(evt) {
+        let key = evt.key || String.fromCharCode(evt.which || evt.keyCode);
+        let input = evt.target.value;
+
+        // Permitir números, tecla de retroceso, tecla de entrada, y punto decimal
+        if (/[\d\b\r.]/.test(key)) {
+            // Si ya hay un punto decimal, y después de él hay dos dígitos, no permitir más
+            if (input.includes('.') && input.split('.')[1] && input.split('.')[1].length >= 2) {
+                evt.preventDefault();
+                return false;
+            }
+            return true;
+        } else {
+            evt.preventDefault();
+            return false;
+        }
+    }
+
+
     function cargarInsumos() {
         var tipoInsumo = $('#selecttipoIns').val();
 
@@ -234,80 +254,79 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
 
     function enviarUsoCantiInsu() {
-    var cantidad_a_restar = document.getElementById("canti_utili").value;
-    var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
-    var id_usuario = document.getElementById("id_usu").value;
-    var id_parcela = $('#selectParcela').val();
-    var id_insumo = $('#selectInsumos').val();
+        var cantidad_a_restar = document.getElementById("canti_utili").value;
+        var nombre_de_insumo_a_restar = $('#selectInsumos option:selected').text();
+        var id_usuario = document.getElementById("id_usu").value;
+        var id_parcela = $('#selectParcela').val();
+        var id_insumo = $('#selectInsumos').val();
 
-    var fech_uso = document.getElementById("fechUso").value;
-    var unidades_stock = document.getElementById("cantidadStockInput").value;
+        var fech_uso = document.getElementById("fechUso").value;
+        var unidades_stock = document.getElementById("cantidadStockInput").value;
 
-    console.log("Cantidad a restar: " + cantidad_a_restar +
-        "ID INSUMOS : " + id_insumo +
-        ", Nombre de insumo a restar: " +
-        nombre_de_insumo_a_restar + ", ID usuario: " +
-        id_usuario + ", ID parcela: " + id_parcela +
-        ", Fecha de uso: " + fech_uso +
-        "CANTIDAD STOCK: " + unidades_stock);
+        console.log("Cantidad a restar: " + cantidad_a_restar +
+            "ID INSUMOS : " + id_insumo +
+            ", Nombre de insumo a restar: " +
+            nombre_de_insumo_a_restar + ", ID usuario: " +
+            id_usuario + ", ID parcela: " + id_parcela +
+            ", Fecha de uso: " + fech_uso +
+            "CANTIDAD STOCK: " + unidades_stock);
 
-    // Validar campos vacíos
-    if (id_insumo === "" || cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" 
-    || id_parcela === "" || fech_uso === "") {
-        Swal.fire({
-            title: '¡Advertencia!',
-            text: 'Todos los campos son obligatorios.',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return; // Detener la ejecución si hay campos vacíos
-    }
+        // Validar campos vacíos
+        if (id_insumo === "" || cantidad_a_restar === "" || nombre_de_insumo_a_restar === "" || id_usuario === "" ||
+            id_parcela === "" || fech_uso === "") {
+            Swal.fire({
+                title: '¡Advertencia!',
+                text: 'Todos los campos son obligatorios.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar'
+            });
+            return; // Detener la ejecución si hay campos vacíos
+        }
 
-    $.ajax({
-        url: '../validacion_datos/restar_cantidad_insu.php',
-        type: 'POST',
-        data: {
-            cantidad_a_restar: cantidad_a_restar,
-            nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
-            id_insumo: id_insumo,
-            id_usuario: id_usuario,
-            id_parcela: id_parcela,
-            fech_uso: fech_uso
-        },
-        success: function(response) {
-            var responseData = JSON.parse(response); 
+        $.ajax({
+            url: '../validacion_datos/restar_cantidad_insu.php',
+            type: 'POST',
+            data: {
+                cantidad_a_restar: cantidad_a_restar,
+                nombre_de_insumo_a_restar: nombre_de_insumo_a_restar,
+                id_insumo: id_insumo,
+                id_usuario: id_usuario,
+                id_parcela: id_parcela,
+                fech_uso: fech_uso
+            },
+            success: function(response) {
+                var responseData = JSON.parse(response);
 
-            if (responseData.success) {
+                if (responseData.success) {
+                    Swal.fire({
+                        title: '¡Inserción exitosa!',
+                        text: responseData.message,
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: '¡Advertencia!',
+                        text: responseData.message,
+                        icon: 'warning',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            },
+            error: function() {
                 Swal.fire({
-                    title: '¡Inserción exitosa!',
-                    text: responseData.message,
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload(); 
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: '¡Advertencia!',
-                    text: responseData.message,
-                    icon: 'warning',
+                    title: '¡Error!',
+                    text: 'Hubo un error al procesar la solicitud.',
+                    icon: 'error',
                     confirmButtonText: 'Aceptar'
                 });
             }
-        },
-        error: function() {
-            Swal.fire({
-                title: '¡Error!',
-                text: 'Hubo un error al procesar la solicitud.',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    });
-}
-
+        });
+    }
     </script>
 
 </body>

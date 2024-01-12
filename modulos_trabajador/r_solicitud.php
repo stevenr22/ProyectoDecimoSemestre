@@ -110,7 +110,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                     <div id="otroInsumo" style="display: none;">
                                         <label for="inputOtro">Ingrese otro tipo de insumo:</label>
-                                        <input type="text" class="form-control" id="inputOtro" name="inputOtro">
+                                        <input type="text" onkeypress="return soloLetras(event)" class="form-control" id="inputOtro" name="inputOtro">
                                     </div><br>
 
 
@@ -127,14 +127,14 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 
                                     <div id="otroNombreInsumo" style="display: none;">
                                         <label for="inputOtroNombre">Ingrese nombre del insumo:</label>
-                                        <input type="text" class="form-control" id="inputOtroNombre"
+                                        <input type="text" onkeypress="return soloLetrasYNumeros(event)" class="form-control" id="inputOtroNombre"
                                             name="inputOtroNombre">
                                     </div><br>
 
 
 
                                     <label for="Canti">Cantidad: </label>
-                                    <input type="number" id="Canti" class="form-control">
+                                    <input type="number" onkeypress="validarNumeros(event);" id="Canti" class="form-control">
                                     <br>
                                     <button type="submit" id="btn_regis" class="btn btn-info">Enviar</button>
                                     <br>
@@ -250,6 +250,71 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     </div>
 
     <script>
+        //VALIDAR LETRAS
+        function soloLetras(e) {
+            var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+            for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+            }
+
+            if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+            }
+        }
+
+        //VALIDAR LETRAS Y NUMEROS
+        function soloLetrasYNumeros(e) {
+            var key = e.keyCode || e.which,
+                tecla = String.fromCharCode(key).toLowerCase(),
+                caracteresPermitidos = "0123456789 áéíóúabcdefghijklmnñopqrstuvwxyz",
+                especiales = [8, 37, 39, 46],
+                tecla_especial = false;
+
+            for (var i in especiales) {
+                if (key == especiales[i]) {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+
+            if (caracteresPermitidos.indexOf(tecla) == -1 && !tecla_especial) {
+                return false;
+            }
+        }
+
+        //VALIDAR NUMEOS
+        function validarNumeros(evt) {
+        let key = evt.key || String.fromCharCode(evt.which || evt.keyCode);
+        let input = evt.target.value;
+
+        // Permitir números, tecla de retroceso, tecla de entrada, y punto decimal
+        if (/[\d\b\r.]/.test(key)) {
+            // Si ya hay un punto decimal, y después de él hay dos dígitos, no permitir más
+            if (input.includes('.') && input.split('.')[1] && input.split('.')[1].length >= 2) {
+                evt.preventDefault();
+                return false;
+            }
+            return true;
+        } else {
+            evt.preventDefault();
+            return false;
+        }
+    }
+
+
+            
+
+
+
+
     function cerrarGeneral() {
         var modalAsignarRol = document.getElementById("modalSoliciTrabajadorActua");
 
@@ -259,8 +324,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
     }
 
 
-    //----------------------------------------------------------------
-    //Registrar soli trabajador
+   
 
 
 
