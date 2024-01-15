@@ -248,11 +248,11 @@
         </li>
        
         <li class="sidebar-item">
-                <a class="sidebar-link" href="../modulos_proveedores/solicitudes_empre.php" aria-expanded="false">
+                <a class="sidebar-link" href="../modulos_proveedores/solicitudes_empre.php" target="_blank" aria-expanded="false">
                 <span>
                   <i class="ti ti-truck-delivery"></i>
                 </span>
-                <span class="hide-menu">PROVEEDOR</span>
+                <span class="hide-menu">DASHBOARD PROVEEDOR</span>
                 </a>
             </li>
 
