@@ -96,17 +96,31 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                     datasets: [{
                         data: cantidades,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
-                            // Puedes agregar más colores según la cantidad de insumos
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            // Puedes agregar más colores según la cantidad de insumos
-                        ],
+                                'rgba(255, 99, 132, 0.6)', // Rojo
+                                'rgba(54, 162, 235, 0.6)', // Azul
+                                'rgba(255, 206, 86, 0.6)', // Amarillo
+                                'rgba(75, 192, 192, 0.6)', // Verde agua
+                                'rgba(153, 102, 255, 0.6)', // Morado
+                                'rgba(255, 159, 64, 0.6)', // Naranja
+                                'rgba(255, 0, 255, 0.6)', // Magenta
+                                'rgba(0, 255, 255, 0.6)', // Cian
+                                'rgba(128, 128, 128, 0.6)', // Gris
+                                'rgba(0, 0, 0, 0.6)' // Negro
+                                // Puedes seguir añadiendo más colores según lo necesites
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 0, 255, 1)',
+                                'rgba(0, 255, 255, 1)',
+                                'rgba(128, 128, 128, 1)',
+                                'rgba(0, 0, 0, 1)'
+                                // Asegúrate de mantener el mismo orden y cantidad de colores en ambos arrays
+                            ],
                         borderWidth: 1
                     }]
                 },
