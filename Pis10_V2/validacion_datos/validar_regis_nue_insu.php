@@ -22,27 +22,20 @@ if (empty($nombre_insu) || empty($tip_insu) || empty($canti_insu) || empty($f_re
         $response['status'] = 'success';
         $response['message'] = 'INSUMO REGISTRADO CON EXITO!';
 
-        //CANTIDAD ACTUAL ALMACENADA
-        $sql_total_insu = "SELECT SUM(cantidad) AS total_cantidad_insu FROM insumos WHERE nombre = '$nombre_insu' AND fecha_regis = '$f_regis'";
+        $sql_total_insu = "SELECT SUM(cantidad) AS total_cantidad_insu FROM insumos WHERE nombre = '$nombre_insu'";
         $resultado_total_insu = mysqli_query($conn, $sql_total_insu);
         $fila_total_insu = mysqli_fetch_assoc($resultado_total_insu);
-        $total_cantidad_insu = $fila_total_insu['total_cantidad_insu']; //40
+        $total_cantidad_insu = $fila_total_insu['total_cantidad_insu'];
 
-        // Verificar si ya existe un registro en total_insumos
         $sql_verificar_insu = "SELECT COUNT(*) AS total FROM total_insumos WHERE nombre = '$nombre_insu'";
         $resultado_verificar_insu = mysqli_query($conn, $sql_verificar_insu);
         $fila_verificar_insu = mysqli_fetch_assoc($resultado_verificar_insu);
-        $existe_insu = $fila_verificar_insu['total']; //1 QUE SI EXISTE
+        $existe_insu = $fila_verificar_insu['total'];
 
-        if ($existe_insu > 0) { //VALIDA QUE EXISTA, EN ESTE CASO SI EXISTE
-              // Actualizar la cantidad total usada y sumar la nueva cantidad
-              $sql_actualizar_insu = "UPDATE total_insumos 
-              SET cantidad_total_usada = cantidad_total_usada+$canti_insu, cantidad_sumada = cantidad_sumada + $canti_insu
-              WHERE nombre = '$nombre_insu'";
-
-            /*$sql_actualizar_insu = "UPDATE total_insumos 
+        if ($existe_insu > 0) {
+            $sql_actualizar_insu = "UPDATE total_insumos 
             SET cantidad_total_usada = $total_cantidad_insu, cantidad_sumada = CONCAT('+', $canti_insu)
-            WHERE nombre = '$nombre_insu'";*/
+            WHERE nombre = '$nombre_insu'";
 
 
 

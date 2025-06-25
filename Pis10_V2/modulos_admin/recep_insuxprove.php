@@ -72,8 +72,19 @@
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Categoría</th>
+
                                             <th>Fecha de registro</th>
+                                          
+
+                                           
+
+
+
                                             <th>Cantidad total por fecha</th>
+                                           
+                                          
+
+
                                         </thead>
                                         <tbody>
                                             <?php

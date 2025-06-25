@@ -1,0 +1,11 @@
+
+
+
+
+___________________________
+ADMINISTRADOR:
+usuario: admin
+contraseña: 123
+
+El rol empleado se puede crear desde registro.
+El rol gerente se puede asignar ese rol a empleado desde las funcionalidades del admin..
