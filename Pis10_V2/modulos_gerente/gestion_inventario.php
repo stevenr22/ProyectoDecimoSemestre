@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('../bd/conexion.php');
+include("../autorizacion/gerente.php");
 if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 ?>
 <!DOCTYPE html>
@@ -50,68 +49,51 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" style="width:100%">
+                                  <table class="table table-bordered" cellspacing="0">
                                         <thead>
-                                            <th>Código</th>
-                                            <th>Nombre</th>
-                                            <th>Categoría</th>
-                                            <th>Cantiadad Restada por aplicación</th>
-
-
-                                            <th>Cantidad Actual</th>
-
-
-                                            <th>Estado</th>
-
-
-
-
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Nombre</th>
+                                                <th>Categoría</th>
+                                                <th>Cantidad Restada por aplicación</th>
+                                                <th>Cantidad Actual</th>
+                                                <th>Estado</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                include("../bd/conexion.php");
-                                                $senten = $conn->query("SELECT * FROM total_insumos");
-                                                while ($arreglo = $senten->fetch_array()) {
-                                                    $estado = $arreglo['estado'];
+                                            include("../bd/conexion.php");
+                                            $senten = $conn->query("SELECT * FROM total_insumos");
+                                            while ($arreglo = $senten->fetch_array()) {
+                                                $estado = $arreglo['estado'];
 
-                                                    // Cambiar el estado a "Agotado" si cantidad_total_usada es 0
-                                                    if ($arreglo['cantidad_total_usada'] == 0) {
-                                                        $estado = 'Agotado';
-                                                    }
+                                                // Cambiar el estado a "Agotado" si cantidad_total_usada es 0
+                                                if ($arreglo['cantidad_total_usada'] == 0) {
+                                                    $estado = 'Agotado';
+                                                }
 
-                                                    if ($estado == 'Disponible') {
-                                                        $clase_estado = 'Disponible';
-                                                    } else if($estado == 'Agotado') {
-                                                        $clase_estado = 'Agotado';  // Puedes definir una clase CSS específica para "Agotado" si lo deseas
-                                                    }
+                                                if ($estado == 'Disponible') {
+                                                    $clase_estado = 'Disponible';
+                                                } else if ($estado == 'Agotado') {
+                                                    $clase_estado = 'Agotado';
+                                                }
                                             ?>
-                                            <tr>
-                                                <td><?php echo $arreglo['id_total_insumo'] ?></td>
-                                                <td><?php echo $arreglo['nombre'] ?></td>
-                                                <td><?php echo $arreglo['tipo'] ?></td>
-                                                <td>
-                                                    <p id="crojo">
-                                                        <?php echo $arreglo['cantidad_restada'] ?>
-
-
-                                                    </p>
-                                                </td>
-
-                                                <td>
-                                                    <h3 id="stock">
-                                                        <?php echo $arreglo['cantidad_total_usada'] ?>
-                                                    </h3>
-                                                </td>
-                                                <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
-                                            </tr>
+                                                <tr>
+                                                    <td><?php echo $arreglo['id_total_insumo'] ?></td>
+                                                    <td><?php echo $arreglo['nombre'] ?></td>
+                                                    <td><?php echo $arreglo['tipo'] ?></td>
+                                                    <td>
+                                                        <p id="crojo"><?php echo $arreglo['cantidad_restada'] ?></p>
+                                                    </td>
+                                                    <td>
+                                                        <h3 id="stock"><?php echo $arreglo['cantidad_total_usada'] ?></h3>
+                                                    </td>
+                                                    <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                </tr>
                                             <?php } ?>
                                         </tbody>
-
-
-
-
-
                                     </table>
+
                                 </div>
                             </div>
                         </div>

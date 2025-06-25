@@ -59,17 +59,21 @@
                             <div class="card-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" cellspcing="0">
                                         <thead>
-                                            <th><b>Código</b></th>
-                                            <th><b>Fecha solicitud</b></th>
-                                            <th><b>Tipo insumo solicitado</b></th>
-                                            <th><b>Nombre insumo solicitado</b></th>
-                                            <th><b>Cantidad</b></th>
-                                            <th><b>Nombre remitente</b></th>
-                                            <th><b>Cargo</b></th>
+                                            <tr>
+                                                 <th><b>Código</b></th>
+                                                <th><b>Fecha solicitud</b></th>
+                                                <th><b>Tipo insumo solicitado</b></th>
+                                                <th><b>Nombre insumo solicitado</b></th>
+                                                <th><b>Cantidad</b></th>
+                                                <th><b>Nombre remitente</b></th>
+                                                <th><b>Cargo</b></th>
 
-                                            <th><b>Estado</b></th>
+                                                <th><b>Estado</b></th>
+
+                                            </tr>
+                                           
 
 
                                         </thead>
@@ -111,9 +115,10 @@
 
 
                                             </tr>
+                                             <?php } ?>
 
                                         </tbody>
-                                        <?php } ?>
+                                       
 
                                     </table>
 

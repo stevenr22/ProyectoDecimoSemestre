@@ -169,7 +169,7 @@
             <form class="form-group" id="formRegisProveedor">
                
                 <label for="Nombreprov">Nombre empresa: </label>
-                <input type="text" class="form-control" onkeypress="return soloLetras(event)" id="nom_prove" placeholder="Ingrese el nombre de la empresa"><br>
+                <input type="text" class="form-control"  id="nom_prove" placeholder="Ingrese el nombre de la empresa"><br>
                  
                 <label for="Contacto">Nombre del contacto: </label>
                 <input type="text" name="nomb_trab_prov" id="nomb_trab_prov" class="form-control"  onkeypress="return soloLetras(event)" placeholder="Ingrese nombre del trabajador"><br>
@@ -179,7 +179,7 @@
                 <input type="text" class="form-control" id="direc" placeholder="Ingrese la dirección"><br>
                  
                 <label for="tele">N° de teléfono: </label>
-                <input type="tel" name="telefo" id="telefo" class="form-control" placeholder="Ingrese el número de teléfono"><br>
+                <input type="tel" name="telefo" id="telefo" class="form-control"  onkeypress="return validarNumeros(event)" placeholder="Ingrese el número de teléfono"><br>
 
                 <label for="fechregis">Fecha de registro: </label>
                 <input type="date" class="form-control" id="fech_regis_prov"><br>
@@ -208,20 +208,20 @@
 
 
                 <label >Código: </label>
-                <input type="text" class="form-control" id="id_prove_actua" placeholder="Ingrese el nombre de la empresa">
+                <input type="text" readonly class="form-control readonly-field" id="id_prove_actua" placeholder="Ingrese el nombre de la empresa">
 
                 <label >Nombre empresa: </label>
                 <input type="text" class="form-control" id="nom_prove_actua" placeholder="Ingrese el nombre de la empresa">
                  
                 <label >Nombre del contacto: </label>
-                <input type="text" name="nomb_trab_prov" id="nomb_trab_prov_actua" class="form-control" placeholder="Ingrese nombre del trabajador"><br>
+                <input type="text" name="nomb_trab_prov" onkeypress="return soloLetras(event)" id="nomb_trab_prov_actua" class="form-control" placeholder="Ingrese nombre del trabajador"><br>
 
                   
                 <label >Dirección: </label>
                 <input type="text" class="form-control" id="direc_actua" placeholder="Ingrese la dirección">
                  
                 <label >N° de teléfono: </label>
-                <input type="tel" name="telefo" id="telefo_actua" class="form-control" placeholder="Ingrese el número de teléfono"><br>
+                <input type="tel" name="telefo" id="telefo_actua" onkeypress="return validarNumeros(event)" class="form-control" placeholder="Ingrese el número de teléfono"><br>
 
                 <label >Fecha de registro: </label>
                 <input type="date" class="form-control" id="fech_regis_prov_actua"><br>

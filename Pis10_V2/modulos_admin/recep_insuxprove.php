@@ -67,24 +67,13 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" style="width:100%">
+                                    <table class="table  table-striped table-bordered" cellspacing="0">
                                         <thead>
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Categoría</th>
-
                                             <th>Fecha de registro</th>
-                                          
-
-                                           
-
-
-
                                             <th>Cantidad total por fecha</th>
-                                           
-                                          
-
-
                                         </thead>
                                         <tbody>
                                             <?php
@@ -102,19 +91,11 @@
                                                 <td><?php echo $arreglo['nombre'] ?></td>
                                                 <td><?php echo $arreglo['tipo'] ?></td>
                                                 <td><?php echo $arreglo['fecha_regis'] ?></td>
-
-                                               
-
-                                             
-
                                                 <td><?php echo $arreglo['cantidad'] ?></td>
-                                                
-
-
-
                                             </tr>
+                                            <?php } ?>
                                         </tbody>
-                                        <?php } ?>
+                                       
 
 
                                     </table>
@@ -147,7 +128,7 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" cellspacing="0">
                                         <thead>
                                             <th>Código</th>
                                             <th>Nombre</th>
@@ -225,7 +206,7 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="miTabla" class="table table-bordered" style="width:100%">
+                                    <table  class="table table-bordered"  cellspacing="0">
                                         <thead>
                                             <th>Código de factura</th>
                                             <th>Factura</th>

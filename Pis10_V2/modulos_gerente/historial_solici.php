@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('../bd/conexion.php');
+include("../autorizacion/gerente.php");
 if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 ?>
 <!DOCTYPE html>
@@ -64,62 +63,52 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
                             <div class="card-body">
                                 <div class="table-responsive">
 
-                                    <table id="tabla_solici_histori" class="table table-bordered" style="width:100%">
+                                   <table class="table table-bordered" cellspacing="0">
                                         <thead>
-                                            <th><b>Código</b></th>
-                                            <th><b>Fecha solicitud</b></th>
-                                            <th><b>Tipo insumo solicitado</b></th>
-                                            <th><b>Nombre insumo solicitado</b></th>
-                                            <th><b>Cantidad</b></th>
-                                            <th><b>Nombre remitente</b></th>
-                                            <th><b>Cargo</b></th>
-
-                                            <th><b>Estado</b></th>
-
-
+                                            <tr>
+                                                <th><b>Código</b></th>
+                                                <th><b>Fecha solicitud</b></th>
+                                                <th><b>Tipo insumo solicitado</b></th>
+                                                <th><b>Nombre insumo solicitado</b></th>
+                                                <th><b>Cantidad</b></th>
+                                                <th><b>Nombre remitente</b></th>
+                                                <th><b>Cargo</b></th>
+                                                <th><b>Estado</b></th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             include("../bd/conexion.php");
                                             $senten = $conn->query("SELECT s.id_solicitud, s.fecha_solicitud, s.tipo_insumo, s.nombre_insu, s.cantidad,
-                                            u.nombre_completo, r.cargo, s.estado
-                                            FROM usuario as u
-                                            JOIN rol as r ON u.id_rol = r.id_rol
-                                            JOIN solicitudes as s ON s.id_usu = u.id_usu
-                                            WHERE r.cargo = 'Empleado' AND (s.estado = 'Enviado' OR s.estado = 'Denegado' OR s.estado = 'Aprobado')
-                                            ORDER BY s.id_solicitud;
-                                            ");
-                                             while ($arreglo = $senten->fetch_array()) {
+                                                                        u.nombre_completo, r.cargo, s.estado
+                                                                    FROM usuario as u
+                                                                    JOIN rol as r ON u.id_rol = r.id_rol
+                                                                    JOIN solicitudes as s ON s.id_usu = u.id_usu
+                                                                    WHERE r.cargo = 'Empleado' AND (s.estado = 'Enviado' OR s.estado = 'Denegado' OR s.estado = 'Aprobado')
+                                                                    ORDER BY s.id_solicitud;");
+                                            while ($arreglo = $senten->fetch_array()) {
                                                 $estado = $arreglo['estado'];
 
                                                 if ($estado == 'Enviado') {
                                                     $clase_estado = 'Enviado';
-                                                }else if($estado == 'Aprobado'){
+                                                } else if ($estado == 'Aprobado') {
                                                     $clase_estado = 'Aprobado';
-                                                }
-                                                else {
+                                                } else {
                                                     $clase_estado = 'Denegado';
                                                 }
-                                                        
-                                                ?>
-                                            <tr>
-                                                <td><?php echo $arreglo['id_solicitud'] ?></td>
-                                                <td><?php echo $arreglo['fecha_solicitud'] ?></td>
-                                                <td><?php echo $arreglo['tipo_insumo'] ?></td>
-                                                <td><?php echo $arreglo['nombre_insu'] ?></td>
-                                                <td><?php echo $arreglo['cantidad'] ?></td>
-
-                                                <td><?php echo $arreglo['nombre_completo'] ?></td>
-                                                <td><?php echo $arreglo['cargo'] ?></td>
-
-                                                <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
-
-
-                                            </tr>
-
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $arreglo['id_solicitud'] ?></td>
+                                                    <td><?php echo $arreglo['fecha_solicitud'] ?></td>
+                                                    <td><?php echo $arreglo['tipo_insumo'] ?></td>
+                                                    <td><?php echo $arreglo['nombre_insu'] ?></td>
+                                                    <td><?php echo $arreglo['cantidad'] ?></td>
+                                                    <td><?php echo $arreglo['nombre_completo'] ?></td>
+                                                    <td><?php echo $arreglo['cargo'] ?></td>
+                                                    <td class="<?php echo $clase_estado; ?>"><?php echo $estado ?></td>
+                                                </tr>
+                                            <?php } ?>
                                         </tbody>
-                                        <?php } ?>
-
                                     </table>
 
 

@@ -75,6 +75,8 @@ try {
         $pdf->Cell(40, 8, $row['num_tele'], 1, 0, 'C');
         $pdf->Cell(50, 8, $row['fecha_regis'], 1, 0, 'C');
         $pdf->Cell(20, 8, $row['estado'], 1, 0, 'C');
+         // 🔽 Esto es lo que faltaba
+        $pdf->Ln();
     }
 
     $pdf->Output('D','Reporte de proveedores.pdf');

@@ -1,10 +1,13 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('.table').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        },
-        "pagingType": "full_numbers",
-        "searching": true,
-        "lengthChange": false  // Desactiva la opción de mostrar entradas por página
+        responsive: true,
+        autoWidth: false,
+        pagingType: "full_numbers",
+        lengthChange: false,    // Puedes poner true si quieres mostrar "Mostrar X registros"
+        searching: true,        // 🔍 Habilita la búsqueda
+        ordering: true,         // 🔼 Ordenamiento por columnas
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+        }
     });
 });

@@ -1,6 +1,8 @@
+
 <?php
-session_start();
-include('../bd/conexion.php');
+
+
+include("../autorizacion/gerente.php");
 if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
 ?>
 <!DOCTYPE html>

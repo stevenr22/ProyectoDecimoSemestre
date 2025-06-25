@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../inicio/dashboard.php">EMPRESA</a>
+                        <a class="nav-link" href="#">EMPRESA</a>
                     </li>
 
 
@@ -196,7 +196,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="formRegisFactu" class="form-group">
-
+                            <label for="id">Código Factura:</label>
                             <input type="text" class="form-control readonly-field" readonly name="id_soli" id="id_soli">
 
 

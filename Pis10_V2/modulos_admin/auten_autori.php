@@ -76,17 +76,17 @@
                                                 <td><?php echo $arreglo['correo'] ?></td>
 
                                                 <td class="text-center">
-                                                    <?php 
+                                                    <!--?php 
                                                         // Aquí verificamos si el cargo es diferente a "administrador"
-                                                        if ($arreglo['cargo'] != 'Administrador') {
-                                                        ?>
+                                                       // if ($arreglo['cargo'] != 'Administrador') {
+                                                        //?-->
                                                     <button type="button" class="btn btn-info"
                                                         onclick="abrirModal('<?php echo $arreglo['id_usu'];?>','<?php echo $arreglo['nombre_completo'];?>','<?php echo $arreglo['nombre_usu'];?>','<?php echo $arreglo['cargo'];?>','<?php echo $arreglo['correo'];?>');"
                                                         class="edit-button" id="celeste"><i
                                                             class="fa-solid fa-pencil"></i></button>
-                                                    <?php
+                                                    <!--?php
                                                         }
-                                                        ?>
+                                                        ?-->
 
                                                     <button type="button" class="btn btn-danger"
                                                         onclick="eliminarUsuario('<?php echo $arreglo['id_usu'];?>','<?php echo $arreglo['nombre_completo'];?>');"
@@ -221,11 +221,11 @@ function abrirModal(id_usuario, nombre_completo, nombre_usu, cargo, correo) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: 'El rol ha sido actualizado correctamente.',
+                        text: 'El rol ha sido actualizado correctamente. Por favor inicia sesión nuevamente.',
                         willClose: () => {
                             // Redirigir después de cerrar el modal
                             window.location.href =
-                                '../modulos_admin/auten_autori.php'; // Cambia esto según tu necesidad
+                                '../index.php'; // Cambia esto según tu necesidad
                         }
                     });
 

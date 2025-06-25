@@ -28,7 +28,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="../inicio/dashboard.php" class="text-nowrap logo-img">
+          <a href="#" class="text-nowrap logo-img">
             <img src="../recursos/img/GESTIÓN MANGO.png" width="100%" height="100%" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -157,7 +157,7 @@ if (isset($_SESSION['DBid_usu']) == false) header("location:../index.php");
               <div class="card-body">
                 <div class="card-title"><h2><b>Producción mundial</b></h2></div>
                 <div class="table-responsive">
-                  <table  id="miTabla2" class="table table-striped table-bordered" cellspacing="0">
+                  <table class="table table-striped table-bordered" cellspacing="0">
                     <thead>
                         <th><b>Pais</b></th>
                         <th><b>Tipo mango</b></th>

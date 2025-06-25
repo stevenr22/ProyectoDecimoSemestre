@@ -70,16 +70,20 @@
                         <div class="card w-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="miTablaprovee" class="table table-bordered" style="width:100%">
+                                    <table class="table table-bordered" cellspacing="0">
                                         <thead>
-                                            <th>Código</th>
-                                            <th>Empresa</th>
-                                            <th>Nombre contacto</th>
-                                            <th>Dirección</th>
-                                            <th>N° de teléfono</th>
-                                            <th>Fecha de registro</th>
-                                            <th>Estado</th>
-                                            <th class="acciones">Acciones</th>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Empresa</th>
+                                                <th>Nombre contacto</th>
+                                                <th>Dirección</th>
+                                                <th>N° de teléfono</th>
+                                                <th>Fecha de registro</th>
+                                                <th>Estado</th>
+                                                <th class="acciones">Acciones</th>
+
+                                            </tr>
+                                                
 
 
                                         </thead>
@@ -91,7 +95,7 @@
                                                     $estado = $arreglo['estado'];
 
                                                     if ($estado == 'Operando') {
-                                                        $clase_estado = 'operando';
+                                                        $clase_estado = 'Operando';
                                                     } else {
                                                         $clase_estado = 'Deshabilitado';
                                                     }
@@ -121,9 +125,9 @@
 
                                             </tr>
 
-
-                                        </tbody>
                                         <?php } ?>
+                                        </tbody>
+                                       
 
 
 
